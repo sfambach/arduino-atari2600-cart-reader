@@ -13,6 +13,8 @@ Project page: https://www.fambach.net/ (Retro Projekt – Atari 2600 ROM einlese
 
 Cartridge slot: pin 23 = +5 V, pins 12 and 24 = GND.
 
+Shields (THT, KiCad) for both boards: [`hardware/`](hardware/).
+
 ## Bankswitching
 
 | Scheme | Size | Status |
