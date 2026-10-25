@@ -38,6 +38,16 @@ Uno: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A4, SCL = A5 wi
 - Cartridge body sits over the slot: keep-out ±11 mm across the slot for parts taller than the slot.
 - Not built or tested yet.
 
+## Cartridge slot drawing
+
+[`slot-drawing/slot-masse.png`](slot-drawing/slot-masse.png) is a 2D dimension sketch of the 24-pin cartridge slot (top, front and side views), drawn from hand measurements; `zeichnung.py` regenerates it. It is the basis for the planned 3D-printed cartridge guide. A slot from another source may differ, so check these values first:
+
+- Pins 2×12, pitch 2.54 mm, rows 5.5 mm apart (centre to centre).
+- Overall length 51.2 mm, width 9 mm, height 19 mm above the board.
+- Mounting flanges 7.1 mm long, 6.4 mm wide (assumed), with a Ø2.8 mm hole centred 2.9 mm from the outer edge.
+- Flange underside 10.4 mm above the board, 3.4 mm below the slot top (flange height 5.2 mm, not yet confirmed).
+- Card slot opening: not yet measured.
+
 ## Rebuild
 
 Needs KiCad 7 (pcbnew Python), `xvfb-run`, Java and [Freerouting 1.9.0](https://github.com/freerouting/freerouting) at `/opt/tools/freerouting.jar` (or `FREEROUTING=`).
