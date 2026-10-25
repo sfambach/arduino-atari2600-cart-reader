@@ -1,17 +1,18 @@
 # 2D-Massskizze Atari-2600-Cartridge-Slot, von Hand gemessen (Stefan, 25.10.2026)
 import sys
 L, W = 51.3, 9.0
-ADP = 4.4                           # abgezogener Rundstift-Adapter (10,4 - 6), nicht verbaut
-H = 19.0 - ADP                      # Hoehe ab Unterkante Slot
+UP_H = 10.1                         # Oberteil (36,8 lang) ueber dem Unterteil
 INNER = 36.8                        # Steckleiste ohne Laschen
 LOW_L, LOW_H = 35.0, 6.0            # schmaler Unterteil unter den Laschen
+H = LOW_H + UP_H                    # Hoehe ab Unterkante Slot
 EAR = (L - INNER) / 2
 EAR_W = 7.1                         # Laschenbreite quer zu den Pinreihen
 HOLE_D, HOLE_EDGE = 2.8, 1.5
 HOLE_X = HOLE_EDGE + HOLE_D / 2
-EAR_H, EAR_TOP_GAP = 6.5, 3.4
-EAR_Z1 = H - EAR_TOP_GAP
-EAR_Z0 = EAR_Z1 - EAR_H             # gemessen waren 10,4 - ADP = 6
+EAR_H = 6.5
+EAR_Z0 = LOW_H                      # Laschen schliessen unten buendig mit dem Unterteil ab
+EAR_Z1 = EAR_Z0 + EAR_H
+EAR_TOP_GAP = H - EAR_Z1            # gemessen 3,1 bis 3,4
 STRIP_W = 2.5                       # Buchsenleiste einreihig, typisch
 PITCH, ROW, NPIN, PIN_D = 2.54, 5.5, 12, 0.5
 STRIP_L = NPIN * PITCH
@@ -70,9 +71,10 @@ for x0 in (fx, fx + L - EAR):
 for i in range(NPIN):
     ln(fx + pin_x0 + i * PITCH, base, fx + pin_x0 + i * PITCH, base + 3, PIN, 1.6)
 dimv(fx - 2.5, base - H, base, f(H))
-dimv(fx + L + 2.5, base - EAR_Z0, base, f(EAR_Z0) + ' ?', c=RED, left=False)
+dimv(fx + L + 2.5, base - EAR_Z0, base, f(EAR_Z0), left=False)
 dimv(fx + (L - LOW_L) / 2 - 2, base - LOW_H, base, f(LOW_H))
-dimv(fx + L + 2.5, base - H, base - EAR_Z1, '3,4', left=False)
+dimv(fx + L + 2.5, base - H, base - EAR_Z1, f(EAR_TOP_GAP) + ' ?', c=RED, left=False)
+dimv(fx - 5.5, base - H, base - LOW_H, f(UP_H))
 dimv(fx + L + 6, base - EAR_Z1, base - EAR_Z0, f(EAR_H), left=False)
 dimh(fx + (L - LOW_L) / 2, fx + (L + LOW_L) / 2, base - LOW_H + 2.2, '35')
 
@@ -109,19 +111,19 @@ dimv(ux - 2.5, uy + W / 2 - ROW / 2, uy + W / 2 + ROW / 2, '5,5')
 # --- Hinweise ---
 nx, ny = 32, 77
 notes = [('Offene Punkte (rot):', RED, True),
-         ('1. Lasche 6,5 hoch + 3,4 Absatz → Unterseite', '#222', False),
-         ('   bei 4,7, Unterteil aber 6 hoch: 1,3 mm Differenz.', '#222', False),
+         ('1. Rest über den Laschen: 6 + 10,1 − 12,5 = 3,6,', '#222', False),
+         ('   gemessen 3,1 bis 3,4. Ein Maß ist ca. 0,3 daneben.', '#222', False),
          ('2. Breite des 35er-Unterteils: gezeichnet 9.', '#222', False),
          ('3. Schlitz der Cartridge: Maße fehlen.', '#222', False),
          ('Passt: 36,8 + 2 × 7,2 = 51,2 ≈ 51,3 gemessen.', '#222', False),
          ('Loch Ø2,8 in 7,1 breiter Lasche: je 2,15 Rand.', '#222', False),
-         ('Rundstift-Adapter (4,4 mm) weggelassen:', '#222', False),
-         ('Höhen ab Unterkante Slot (19 − 4,4 = 14,6).', '#222', False),
+         ('Laschen bündig mit Unterteil (6 + 6,5 = 12,5).', '#222', False),
+         ('Höhen ab Unterkante Slot, ohne Rundstift-Adapter.', '#222', False),
          ('Lochmitte 2,9 mm von außen. Pins Ø0,5.', '#666', False)]
 for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 80 * S, 125 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
-      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v3</text>' + \
+      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v4</text>' + \
       f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Von Hand gemessen (Stefan, 25.10.2026), Maße in mm. Rot = unsicher oder abgeleitet.</text>' + ''.join(out) + '</svg>'
 open(sys.argv[1], 'w').write(svg)
