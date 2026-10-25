@@ -3,7 +3,7 @@
 NC = None
 CART = {1: 'A7', 2: 'A6', 3: 'A5', 4: 'A4', 5: 'A3', 6: 'A2', 7: 'A1', 8: 'A0', 9: 'D0', 10: 'D1', 11: 'D2', 12: 'GND',
         13: 'D3', 14: 'D4', 15: 'D5', 16: 'D6', 17: 'D7', 18: 'A12', 19: 'A10', 20: 'A11', 21: 'A9', 22: 'A8', 23: '+5V', 24: 'GND'}
-SLOT = ('Connector_Generic:Conn_02x12_Top_Bottom', 'Atari 2600 Cartridge-Slot', 'atari:Atari2600_Cart_Slot_2x12_P2.54mm_Row5.08mm')
+SLOT = ('Connector_Generic:Conn_02x12_Top_Bottom', 'Atari 2600 Cartridge-Slot', 'atari:Atari2600_Cart_Slot_2x12_P2.54mm_Row5.50mm')
 C100N = 'Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm'
 C10U = 'Capacitor_THT:CP_Radial_D5.0mm_P2.00mm'
 R = 'Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal'

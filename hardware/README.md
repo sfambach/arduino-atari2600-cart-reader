@@ -34,7 +34,7 @@ Uno: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A4, SCL = A5 wi
 
 ## Assumptions
 
-- **Slot row spacing 5.08 mm** (0.2"), pitch 2.54 mm. Measure your connector before ordering; the footprint is `lib/atari.pretty`.
+- **Slot row spacing 5.5 mm** centre to centre (measured: 6 mm across the outer pin edges, pins 0.5 mm), pitch 2.54 mm. Footprint: `lib/atari.pretty`.
 - Cartridge body sits over the slot: keep-out ±11 mm across the slot for parts taller than the slot.
 - Not built or tested yet.
 

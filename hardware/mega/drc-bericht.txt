@@ -1,5 +1,5 @@
-** Drc report for /mnt/attach/project-files/wp/atari-2600-rom/hardware/mega/atari2600-cart-reader-mega.kicad_pcb **
-** Created on 2026-10-08 16:03:57 **
+** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/mega/atari2600-cart-reader-mega.kicad_pcb **
+** Created on 2026-10-25 06:56:49 **
 
 ** Found 8 DRC violations **
 [silk_edge_clearance]: Silkscreen clipped by board edge
@@ -12,7 +12,7 @@
     @(100.0000 mm, 100.0000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(100.0000 mm, 153.3400 mm): Line on Edge.Cuts
+    @(201.6000 mm, 153.3400 mm): Line on Edge.Cuts
     @(100.0000 mm, 153.3400 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
