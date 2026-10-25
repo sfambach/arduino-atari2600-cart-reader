@@ -1,12 +1,12 @@
 (kicad_sch
   (version 20230121)
   (generator eeschema)
-  (uuid "ce326073-864b-4a1d-b07c-58e5fa503181")
+  (uuid "dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c")
   (paper "A4")
   (title_block
     (title "Atari 2600 Cart Reader - Mega-Shield")
-    (date "2026-10-08")
-    (rev "1.0")
+    (date "2026-10-25")
+    (rev "1.1")
     (company "fambach.net"))
   (lib_symbols
     (symbol "arduino-library:Arduino_Mega2560_R3_Shield"
@@ -2277,6 +2277,318 @@
             (effects
               (font
                 (size 1.27 1.27)))))))
+    (symbol "Device:Polyfuse"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0))
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "F"
+        (at -2.54 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "Polyfuse"
+        (at 2.54 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at 1.27 -5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)
+          hide))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "ki_keywords" "resettable fuse PTC PPTC polyfuse polyswitch"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "ki_description" "Resettable fuse, polymeric positive temperature coefficient"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "ki_fp_filters" "*polyfuse* *PTC*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (symbol "Polyfuse_0_1"
+        (rectangle
+          (start -0.762 2.54)
+          (end 0.762 -2.54)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy 0 2.54)
+            (xy 0 -2.54))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy -1.524 2.54)
+            (xy -1.524 1.524)
+            (xy 1.524 -1.524)
+            (xy 1.524 -2.54))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "Polyfuse_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27)))))))
+    (symbol "Transistor_BJT:BC327"
+      (pin_names
+        (offset 0)
+        hide)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "Q"
+        (at 5.08 1.905 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Value" "BC327"
+        (at 5.08 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+        (at 5.08 -1.905 0)
+        (effects
+          (font
+            (size 1.27 1.27)
+            italic)
+          (justify left)
+          hide))
+      (property "Datasheet" "http://www.onsemi.com/pub_link/Collateral/BC327-D.PDF"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)
+          hide))
+      (property "ki_keywords" "PNP Transistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "ki_description" "0.8A Ic, 45V Vce, PNP Transistor, TO-92"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "ki_fp_filters" "TO?92*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (symbol "BC327_0_1"
+        (polyline
+          (pts
+            (xy 0.635 0.635)
+            (xy 2.54 2.54))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy 0.635 -0.635)
+            (xy 2.54 -2.54)
+            (xy 2.54 -2.54))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy 0.635 1.905)
+            (xy 0.635 -1.905)
+            (xy 0.635 -1.905))
+          (stroke
+            (width 0.508)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy 2.286 -1.778)
+            (xy 1.778 -2.286)
+            (xy 1.27 -1.27)
+            (xy 2.286 -1.778)
+            (xy 2.286 -1.778))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type outline)))
+        (circle
+          (center 1.27 0)
+          (radius 2.8194)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "BC327_1_1"
+        (pin passive line
+          (at 2.54 5.08 270)
+          (length 2.54)
+          (name "C"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin input line
+          (at -5.08 0 0)
+          (length 5.715)
+          (name "B"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 2.54 -5.08 90)
+          (length 2.54)
+          (name "E"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "3"
+            (effects
+              (font
+                (size 1.27 1.27)))))))
+    (symbol "Device:R"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0))
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "R"
+        (at 2.032 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "R"
+        (at 0 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at -1.778 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "ki_keywords" "R res resistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "ki_description" "Resistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (property "ki_fp_filters" "R_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          hide))
+      (symbol "R_0_1"
+        (rectangle
+          (start -1.016 -2.54)
+          (end 1.016 2.54)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "R_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27)))))))
     (symbol "power:PWR_FLAG"
       (power)
       (pin_numbers hide)
@@ -2353,7 +2665,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "80178cbf-f854-4e07-9b5d-0ba411cb4bba")
+    (uuid "879983e0-9f26-4393-8459-6463a6e4a7bf")
     (property "Reference" "A1"
       (at 60 50 0)
       (effects
@@ -2377,195 +2689,195 @@
           (size 1.27 1.27))
         hide))
     (pin "3V3"
-      (uuid "fa15dde7-76e3-419d-a646-df2f1de66cc1"))
+      (uuid "37543d8b-3ae5-405c-b2ed-bd1b2b66e104"))
     (pin "5V1"
-      (uuid "e7c1235c-b405-4f20-9ee4-0218289dab5a"))
+      (uuid "237c1198-ed1b-4e71-ace8-ac08814ed0e3"))
     (pin "5V2"
-      (uuid "5adf5158-febf-4ef2-9c66-b806791aaac2"))
+      (uuid "30d39b9d-96d5-462a-9691-9bb3b8fcba25"))
     (pin "5V3"
-      (uuid "dc5306f3-bc88-4fcc-8496-b1b08146d6b1"))
+      (uuid "463b3634-c04a-4fe7-a48c-cc1744670e8c"))
     (pin "5V4"
-      (uuid "0792bf1f-a43b-49b4-872b-7007f1a00af5"))
+      (uuid "5be540fb-c7ba-4804-ae64-ff23abf1f3e4"))
     (pin "A0"
-      (uuid "1dfcc72b-b576-491f-9e61-b20c8347ba87"))
+      (uuid "3aa1097d-489b-44ea-9b59-fcd0b9d36f5e"))
     (pin "A1"
-      (uuid "2c0ef351-1b9f-4813-a391-417cdd122760"))
+      (uuid "f816d57c-e080-4ce8-8cef-14b16b9c2159"))
     (pin "A2"
-      (uuid "b6b12ca5-138f-4a0f-9001-d38cf3f1eafb"))
+      (uuid "b9d752ef-f679-4de5-a704-c7c22ab488ef"))
     (pin "A3"
-      (uuid "83425f1c-2542-407f-8945-424b93c3fdff"))
+      (uuid "81bb0389-4a27-4128-acf4-cdbc70d25d63"))
     (pin "A4"
-      (uuid "b2862156-9bbe-4bad-b765-4ddf3f511d9f"))
+      (uuid "c4797779-7ce0-4ee6-9e53-0c4988006145"))
     (pin "A5"
-      (uuid "e64ffe9a-5633-473c-ba2f-ab7327caa17b"))
+      (uuid "ac5c87b6-df31-4a05-bdb4-cb9e9c8d06ee"))
     (pin "A6"
-      (uuid "2f5677a1-0d10-4030-965b-5b80fc867bde"))
+      (uuid "da109a17-9829-49cc-bfbd-82c0b6eaf5f1"))
     (pin "A7"
-      (uuid "06d3388f-2040-4e96-91b1-9db1fab08a79"))
+      (uuid "1608c619-c6f8-42c6-a7d2-55aac3e28a47"))
     (pin "A8"
-      (uuid "c4bb6475-c95f-4407-aee6-3804040ff6bc"))
+      (uuid "8a3aaf6d-f9bb-47f8-aa2d-5d1cf80fcdc2"))
     (pin "A9"
-      (uuid "eb055f19-f633-4dbc-bdc5-e25d081265b3"))
+      (uuid "67dc63c8-800f-4a22-bfe7-8eca42592fc9"))
     (pin "A10"
-      (uuid "6810c2f7-bc0c-4766-9247-8a05b0e96dc4"))
+      (uuid "f9aae7fd-9978-4a4b-a4ae-3eeec2042597"))
     (pin "A11"
-      (uuid "7e71d041-29ac-443e-89ca-6eff6dc74946"))
+      (uuid "51443ea4-b0cb-4ae4-996b-d9ccd4433543"))
     (pin "A12"
-      (uuid "162ec9a0-8a18-437f-abe8-a421ba2b2c2c"))
+      (uuid "adef0b55-cb67-4965-b2cb-016b4372b5da"))
     (pin "A13"
-      (uuid "d26de86b-7ce7-4710-8e91-ad24d1f828d9"))
+      (uuid "b87aafbd-443c-4402-946b-3387538d4716"))
     (pin "A14"
-      (uuid "307f6826-7e50-4eba-9437-d8b586451966"))
+      (uuid "470e2e25-ebbd-4180-a3b9-3c5ae13d2ed7"))
     (pin "A15"
-      (uuid "f2545fa7-eadd-4b24-a113-fd751ad6654f"))
+      (uuid "a547ac11-bfb4-4675-bdc3-8499fb472db2"))
     (pin "AREF"
-      (uuid "468ee18b-047c-4312-8068-2d1f3ead9e58"))
+      (uuid "2c56c0c4-59ec-4efd-965c-aed728726eea"))
     (pin "D0"
-      (uuid "d600a1a4-5b5e-46b5-b197-804fbfcc6145"))
+      (uuid "1de8027c-6140-42d3-9373-c320d09fdf84"))
     (pin "D1"
-      (uuid "b160de81-0e06-4cc3-895a-b43cd655b093"))
+      (uuid "f6102c59-a0e9-4af1-ac16-07d5396a7732"))
     (pin "D2"
-      (uuid "d619f976-e471-489a-a7dd-2070e8573eb3"))
+      (uuid "6a74bdf7-a8bb-4f80-ac0d-2dca41bb95f3"))
     (pin "D3"
-      (uuid "03ca4387-6f6f-4194-b2ae-8640ed68f247"))
+      (uuid "d599b8c8-ef58-4d36-916f-c03a5a2201ff"))
     (pin "D4"
-      (uuid "9358649a-0eb9-484a-af1c-bf335fc92d48"))
+      (uuid "1634f7c6-5ffc-4aab-ade8-1d2760350912"))
     (pin "D5"
-      (uuid "dce1e490-1515-4517-8a17-b6d85c87324d"))
+      (uuid "d8e4ae3c-a4c1-46aa-9765-9e4c5769052f"))
     (pin "D6"
-      (uuid "5a4fbbd5-e4a7-4f35-bff1-238d9c10b5c1"))
+      (uuid "f4734058-13d5-4b81-b2fe-9f4d6d9bcc1b"))
     (pin "D7"
-      (uuid "6b6e6374-f94e-4afb-8322-6ed3adffc681"))
+      (uuid "c52f98f0-5fb3-4f7f-9ac9-cf1eaee1131c"))
     (pin "D8"
-      (uuid "e3f57b7c-dbcf-4368-91f7-d2a4325e2067"))
+      (uuid "be2ebae1-6825-428b-8746-522aebbbe9ff"))
     (pin "D9"
-      (uuid "acca315a-cb31-4539-8a92-96efd5a32d86"))
+      (uuid "38cca9d9-60fc-430f-ac9c-998608c425d8"))
     (pin "D10"
-      (uuid "696aad7f-2d49-4c21-b74f-c19d722d8e5b"))
+      (uuid "b67fecb7-70bd-408c-a1b0-9ff6c0eb73f7"))
     (pin "D11"
-      (uuid "657aacb3-65df-4040-8394-8a6b46f4a93c"))
+      (uuid "90831f3f-5401-41ae-8388-8d237e53e2ec"))
     (pin "D12"
-      (uuid "ccd72cb2-4c35-4856-882c-f7b0867b37ee"))
+      (uuid "75d0a276-67ef-490d-8c88-685b1d4a3d8e"))
     (pin "D13"
-      (uuid "882cc460-8c24-4c5c-a246-a17712ee2ace"))
+      (uuid "a16b7c3f-3f1d-40e0-8779-0aec79a55a89"))
     (pin "D14"
-      (uuid "c878485e-25ef-462e-9446-0edf3b1899cd"))
+      (uuid "493f2d07-fc28-4790-8598-511eee50248b"))
     (pin "D15"
-      (uuid "9ca1a440-1340-46c1-bb5e-e51dab4e6058"))
+      (uuid "cf2704d5-a7e3-479d-ab32-95c5b90e96ae"))
     (pin "D16"
-      (uuid "2d949670-060d-4f99-bf09-766f5fd36c68"))
+      (uuid "871ada74-9399-44c3-9cc1-154768ab0a54"))
     (pin "D17"
-      (uuid "1cae709e-69f8-44c2-ada3-3d6e352a51ee"))
+      (uuid "e011b6eb-0c22-49c9-8bac-4310aef7ae67"))
     (pin "D18"
-      (uuid "c7c0ce45-b302-428e-92ba-468df2be5711"))
+      (uuid "a7f38600-c71f-4124-a711-dfd55a5b7ef6"))
     (pin "D19"
-      (uuid "56bf067f-ba6f-451d-b2c3-32ce038fb98e"))
+      (uuid "71555417-4c4e-423d-974c-25046dc92b69"))
     (pin "D20"
-      (uuid "822a9ae4-2945-4367-9edc-ca1a2587ab5d"))
+      (uuid "d2c3cb40-c827-450f-8504-08730c6be3f7"))
     (pin "D21"
-      (uuid "ba08b77c-5c75-44f0-b09d-c787d66aeaa4"))
+      (uuid "0139b985-7a57-48c1-a676-c9d69d08ef46"))
     (pin "D22"
-      (uuid "169eca69-eb0c-4ac5-9517-0bc6ddd85572"))
+      (uuid "bdd96493-44e4-4851-84e5-a63913980e10"))
     (pin "D23"
-      (uuid "6c05dbb6-26ba-448a-891d-567f210105bf"))
+      (uuid "c4d9891a-5242-4720-90b7-405d1a241e51"))
     (pin "D24"
-      (uuid "efdf7ddc-0dd6-4e30-820e-8d7b9087e153"))
+      (uuid "311462aa-5e9e-47d6-b665-085d373169e4"))
     (pin "D25"
-      (uuid "ae36f233-9100-4b69-b5d6-6ebe5f1cf27b"))
+      (uuid "f975979f-a78e-49f2-b23e-ffafeb76ea5a"))
     (pin "D26"
-      (uuid "5e4a0333-3ae9-4503-a3d5-13ff144b778a"))
+      (uuid "d51a2664-a366-4cce-90ab-5d827b9beba1"))
     (pin "D27"
-      (uuid "64255cde-78e6-4fa8-b20c-3f714839766d"))
+      (uuid "ca09fa65-d866-429b-be71-e03c1da794a4"))
     (pin "D28"
-      (uuid "89cb76ea-36e7-4389-ba16-ea127bc955c4"))
+      (uuid "e378fbab-b582-4cc0-aaf2-6f0b66ce268e"))
     (pin "D29"
-      (uuid "f094122b-64a1-4d08-b7e3-4e9703e24e61"))
+      (uuid "eb178963-7e8c-4b82-9740-2564f588abbb"))
     (pin "D30"
-      (uuid "52c2e198-3485-4298-9d98-4605ca2abc2a"))
+      (uuid "703eb150-9501-4524-9f90-a497d06cb6ff"))
     (pin "D31"
-      (uuid "590c0565-5189-412d-84d2-0ae5ba3e4940"))
+      (uuid "944ad7f7-b509-4c00-b866-8f28989273e2"))
     (pin "D32"
-      (uuid "8360cbba-0d5a-485f-9a82-7ef9206ca32c"))
+      (uuid "2dfd659c-88f7-4424-8a1c-2f357b2d510f"))
     (pin "D33"
-      (uuid "94346b0f-1655-4917-af65-bc7aa2e2b2bc"))
+      (uuid "ef2d365f-5456-4619-b6f6-1583a8571b13"))
     (pin "D34"
-      (uuid "13abb961-ba4c-42e1-bf25-d2b6f525c5f1"))
+      (uuid "a203183f-445a-4421-a19e-caedb02d04d9"))
     (pin "D35"
-      (uuid "f77032cb-e130-48a0-a29b-2a8451c0a5a8"))
+      (uuid "7250edbb-2824-492b-9f72-149324d524d5"))
     (pin "D36"
-      (uuid "ae20ef19-f8a1-4fae-a845-95784fd00e05"))
+      (uuid "15254eed-d2e8-4526-aa24-1153a9d17f0b"))
     (pin "D37"
-      (uuid "73e4426e-f242-4508-b615-daedb09b65ee"))
+      (uuid "23f7f54a-540c-47ba-97a5-5cd2c85122c2"))
     (pin "D38"
-      (uuid "79f3c757-7bd7-49e8-ac99-20badb685986"))
+      (uuid "cfe6a7a8-0fcf-4aa1-b414-9592933e0414"))
     (pin "D39"
-      (uuid "a1cd9be3-fc31-4ea6-97c2-24ad20ff63a2"))
+      (uuid "17b024c6-6495-440f-95fd-c89c3514f2cc"))
     (pin "D40"
-      (uuid "06d7a361-ffd2-41e7-8b75-89ea27ed72c0"))
+      (uuid "59349ff9-549c-4943-b9c3-f6bb92b9c881"))
     (pin "D41"
-      (uuid "8a7cf5d1-faa7-4b30-98ed-6addb2919b31"))
+      (uuid "f00907f6-2cc1-45c2-bb0a-fbf59fdb9df1"))
     (pin "D42"
-      (uuid "92d408cc-9be3-4109-adc4-5b920e5642b9"))
+      (uuid "2ff41005-c4cd-4103-ba48-eb7a986aaeae"))
     (pin "D43"
-      (uuid "510a238e-a111-400e-bcf1-4c26438ef676"))
+      (uuid "43b71158-5e89-486f-9206-74c09887f999"))
     (pin "D44"
-      (uuid "d41ecff0-02dd-4f96-a5f2-7e693f3f9d60"))
+      (uuid "a6924c0e-d362-4838-bcc3-23a8296e5d68"))
     (pin "D45"
-      (uuid "375116d7-169b-4ad0-8e17-860d04a27983"))
+      (uuid "47bc892b-988b-4e06-a92f-3ba6c675087b"))
     (pin "D46"
-      (uuid "2a88161b-b723-44bf-a840-889e3c4676b4"))
+      (uuid "57910a0a-5f3c-4af6-915c-d2354846d206"))
     (pin "D47"
-      (uuid "25e2fcff-ad04-4952-9c59-c106b8194d69"))
+      (uuid "b582bb64-699c-4e0d-94c3-e2d929ddda2b"))
     (pin "D48"
-      (uuid "1565343a-3bf2-4095-89b5-401e124e4ac6"))
+      (uuid "ede4ff44-ec4b-48f7-bdfe-eab821817e86"))
     (pin "D49"
-      (uuid "dc09acdd-0ec3-442f-b8d8-97ae9033878c"))
+      (uuid "d7cd62db-31e2-4df5-b21a-27b94585a103"))
     (pin "D50"
-      (uuid "0b36d816-751a-4d68-b875-b30504511c63"))
+      (uuid "e9c1dbbf-afbc-4373-89ca-ee960142a3bc"))
     (pin "D51"
-      (uuid "95e6fe2f-fc1f-42b0-8ce8-41ed04199f95"))
+      (uuid "d6f1f8c8-766b-4cd7-9439-25c9e713e142"))
     (pin "D52"
-      (uuid "50683f05-b266-42ab-8375-275843e27cae"))
+      (uuid "28c3bcd9-14e9-491c-9641-f850bfdfb001"))
     (pin "D53"
-      (uuid "cd55448c-7d6d-4500-b17e-3fde18164068"))
+      (uuid "190f0fe2-c736-49f4-9037-f4c45793cc45"))
     (pin "GND1"
-      (uuid "e2a8e3db-ff93-4acf-8512-6c6702a38e6b"))
+      (uuid "980d9de5-16f0-478c-bdb8-9317c0bb2644"))
     (pin "GND2"
-      (uuid "e6562bac-bad3-4af1-a669-2b6e92e43b99"))
+      (uuid "e7f43036-fd4c-4c07-9c62-6ca96c5fa5c6"))
     (pin "GND3"
-      (uuid "a740c9e4-8bac-44f2-8d08-0206c4349f6a"))
+      (uuid "3e39992b-216a-4090-9b6d-bb8977a445b3"))
     (pin "GND4"
-      (uuid "0c6b8f21-98ec-48d9-8433-7b4187febce1"))
+      (uuid "7e0f7a07-865c-4fc6-b3e9-15ff3b3fe793"))
     (pin "GND5"
-      (uuid "d2498c19-637c-4abb-9bc9-b21c137e6cdb"))
+      (uuid "c4c0ab8b-bc48-4203-ab6a-924640677699"))
     (pin "GND6"
-      (uuid "fb396bef-99f2-4c31-b77a-0de3144f18e8"))
+      (uuid "05fa6253-08e4-4fe3-b003-def90e8aed94"))
     (pin "IORF"
-      (uuid "914c637e-3270-4ba6-b4a7-2a8735678b07"))
+      (uuid "0effcc69-95cc-4f6e-9a5c-e726eeedc078"))
     (pin "MISO"
-      (uuid "ed102d61-a0e0-435d-83cd-a2f74f998f79"))
+      (uuid "b890b5c7-7b63-465f-a0f2-f0e7be7c0468"))
     (pin "MOSI"
-      (uuid "66a0e921-a488-4546-b476-278862fb78fa"))
+      (uuid "67bcb08b-cc53-4e52-9052-6b1fca756a03"))
     (pin "RST1"
-      (uuid "07588c1a-a376-4413-875d-c082b3e8261c"))
+      (uuid "9979655a-184d-47d8-9d15-39c60cf5fa7c"))
     (pin "RST2"
-      (uuid "62ac36a4-03bb-4e08-8890-7faa1ba098ff"))
+      (uuid "26cb6a35-4786-457c-919e-89959a2c557d"))
     (pin "SCK"
-      (uuid "e1e6ee7d-0310-49fb-b1b9-23ce94bf4d0d"))
+      (uuid "d17ebe1e-398a-44d2-a6ce-af128ddd5e80"))
     (pin "SCL"
-      (uuid "a39e5d1a-7fca-4143-bb7e-b8203aab342c"))
+      (uuid "0fa8d074-9c30-4ec8-b685-d11a6088f77f"))
     (pin "SDA"
-      (uuid "0de2de24-b9b3-41af-924f-c278a2069de6"))
+      (uuid "79571f22-7934-4f77-af64-85d6e4681b89"))
     (pin "VIN"
-      (uuid "36813f98-f566-466c-99e8-8b6c9cc41435"))
+      (uuid "14dcb9e9-d400-48d0-ab66-9672d08349df"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "A1")
           (unit 1)))))
   (no_connect
     (at 26.98 141.91)
-    (uuid "868c6094-b835-4e80-9da1-26e68c1200ed"))
+    (uuid "7c513589-aee8-4868-b61a-bff40cd0acd6"))
   (symbol
     (lib_id "power:+5V")
     (at 26.98 134.29 270)
@@ -2573,7 +2885,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "8deb2bb2-3260-4578-83af-f0b313aca2ef")
+    (uuid "d93dcf94-b0cc-4569-825f-2893dff352d9")
     (property "Reference" "#PWR01"
       (at 26.98 134.29 0)
       (effects
@@ -2598,15 +2910,15 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "1016383e-b5d3-498c-b75a-dd7f1f951c37"))
+      (uuid "ee47d54c-2b82-47cb-9d40-b8d4861da1cf"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR01")
           (unit 1)))))
   (no_connect
     (at 63.81 33.96)
-    (uuid "2019c9a3-5428-4e02-80ef-acf6d2010016"))
+    (uuid "3437d847-3404-4f18-b393-15bacfafbb62"))
   (symbol
     (lib_id "power:+5V")
     (at 26.98 136.83 270)
@@ -2614,7 +2926,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "16d7f95e-4e81-4118-964a-e924e27ee223")
+    (uuid "4c1888b9-65c6-423b-bcff-775d5330b79c")
     (property "Reference" "#PWR02"
       (at 26.98 136.83 0)
       (effects
@@ -2639,10 +2951,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "85939ce2-c4f9-4004-b3e6-2832708ff521"))
+      (uuid "836ed7b1-ed86-476c-a587-3c635053395a"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR02")
           (unit 1)))))
   (symbol
@@ -2652,7 +2964,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "fd7c6c36-7834-4eb5-85ce-0c8fdb02992d")
+    (uuid "ea221d57-d249-4ce9-822e-41eaea79a205")
     (property "Reference" "#PWR03"
       (at 26.98 139.37 0)
       (effects
@@ -2677,309 +2989,317 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "6d5ef8e1-f0da-48a9-8232-f34e8eebc0fb"))
+      (uuid "7ce1db4b-591e-45b9-ba4f-3a1ce03ca9e8"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR03")
           (unit 1)))))
-  (no_connect
-    (at 26.98 78.41)
-    (uuid "8c014448-10ce-41b7-a991-9e4aa082ec03"))
+  (label "CART_SENSE"
+    (at 26.98 78.41 180)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid "bc0558b5-8e44-4093-be63-8de3438ee5ba"))
   (no_connect
     (at 26.98 80.95)
-    (uuid "983a9223-a859-48b2-b842-d854cad40721"))
+    (uuid "0dacbbbd-7438-4427-844b-c9d3998c1af2"))
   (no_connect
     (at 26.98 103.81)
-    (uuid "fddcc890-08c6-477d-a7e7-e2cdc1aa1051"))
+    (uuid "3fc1fbd0-595b-4693-86f6-2b5b7a90198c"))
   (no_connect
     (at 26.98 106.35)
-    (uuid "cf4636a3-4b56-4292-9ae7-f1740c66f0ec"))
+    (uuid "8477a267-98ef-4641-8ea7-8fdcc64d9c12"))
   (no_connect
     (at 26.98 108.89)
-    (uuid "7cbc7524-e311-4d50-9e51-073da6d2af32"))
+    (uuid "8f1501bf-5e1e-44f4-ba9f-6d79a6d9563d"))
   (no_connect
     (at 26.98 111.43)
-    (uuid "23d51a7f-892d-487d-9b59-5da2aff30936"))
+    (uuid "7d501e29-2af6-41db-af7c-350cd5e3e694"))
   (no_connect
     (at 26.98 113.97)
-    (uuid "cf87c568-2cdf-47f3-a240-5473db9b71df"))
+    (uuid "5c706479-c1e1-44bc-9bf0-a49d35f504e1"))
   (no_connect
     (at 26.98 116.51)
-    (uuid "9a47ca63-bb5e-4cb2-9ece-aacf48e912ce"))
+    (uuid "b3ba2fde-6faa-444e-be70-f68f0da81b4f"))
   (no_connect
     (at 26.98 83.49)
-    (uuid "f19c5c29-56bb-4ae2-afb6-b6380a863603"))
+    (uuid "5034adb7-f796-4872-af3b-8a9945d83ef3"))
   (no_connect
     (at 26.98 86.03)
-    (uuid "57a239fb-d09e-45e3-a4f6-0f456a948f90"))
+    (uuid "6cc944b8-8d52-4b3e-9990-5da8a71457f8"))
   (no_connect
     (at 26.98 88.57)
-    (uuid "1e012955-1b70-4be2-982a-6ffc49e37897"))
+    (uuid "8d4ea50a-5051-4917-99df-a112ad5a9e79"))
   (no_connect
     (at 26.98 91.11)
-    (uuid "855e29ce-bf71-43b8-bf3d-20559acd199a"))
+    (uuid "4d3e9705-cd7f-4832-93a9-44e5939aa99e"))
   (no_connect
     (at 26.98 93.65)
-    (uuid "5c3254c4-2d5d-4f5a-8115-d57a33afabea"))
+    (uuid "28e6eb9a-2183-4402-9816-2219e6d811f2"))
   (no_connect
     (at 26.98 96.19)
-    (uuid "3821146d-51da-49a0-aefc-c86e707c3180"))
+    (uuid "69fb47a7-1347-46e4-bab9-52aedd44d7f3"))
   (no_connect
     (at 26.98 98.73)
-    (uuid "c8177180-7baf-4d3d-8855-01036c905e38"))
+    (uuid "111ce4d9-c95c-4dec-9b56-ae984a5e2bec"))
   (no_connect
     (at 26.98 101.27)
-    (uuid "c6415923-e588-4956-9959-baa97584f61c"))
+    (uuid "1a5bd078-8a43-4ddd-9ef4-12569c4d7af4"))
   (no_connect
     (at 26.98 119.05)
-    (uuid "287a40ff-75b4-4729-bd3a-3ceaeed9dc1e"))
+    (uuid "911b5751-3526-4712-a2d7-7a0f95fe4314"))
   (no_connect
     (at 26.98 45.39)
-    (uuid "005d68f3-1067-4c32-88be-2b94ab5834c9"))
+    (uuid "123145a2-b7e9-4dde-97e2-c8acd5b6f461"))
   (no_connect
     (at 26.98 47.93)
-    (uuid "461ef4ea-264e-47a2-8fad-4eb4bf802038"))
+    (uuid "c5e9ec13-204a-4e35-a7e6-859c2ca7be47"))
   (no_connect
     (at 93.02 65.71)
-    (uuid "e1fe9485-4a18-4c8f-bd93-c19ba2266af1"))
+    (uuid "e48d3a67-1d3e-42a8-b2af-39541d3d9d83"))
   (no_connect
     (at 93.02 68.25)
-    (uuid "4504e35d-dcd0-49c5-9a5f-ad47cb78e984"))
+    (uuid "551c69f2-cbf3-4de4-b120-5ad51bd6de01"))
   (no_connect
     (at 93.02 70.79)
-    (uuid "fec83062-4139-4f85-a212-57e9ea1e958a"))
+    (uuid "ae4c71fd-e285-4869-9331-cb4f84d35e1a"))
   (no_connect
     (at 93.02 73.33)
-    (uuid "904ba261-4685-4f33-8d48-5ed1317bf7c8"))
+    (uuid "adb29231-f321-4033-8113-cbd4593c3d58"))
   (no_connect
     (at 26.98 63.17)
-    (uuid "5e8fb4f8-7252-4dd5-8432-eb6d2e68f686"))
+    (uuid "baf7b05c-cff0-4a4e-9d6d-91a287efb9f0"))
   (no_connect
     (at 26.98 60.63)
-    (uuid "f06c6d21-00c2-45cc-bf51-ee420a820d94"))
+    (uuid "2e48caf2-cf60-487f-b248-c20c40c731ef"))
   (no_connect
     (at 26.98 58.09)
-    (uuid "0f09a51d-d1b0-4946-8018-1ece501b6853"))
+    (uuid "0f9849e2-e1fb-43d3-af9c-03929f8f0977"))
   (no_connect
     (at 26.98 55.55)
-    (uuid "66f69372-4d49-4bc1-99f7-f84a330e37bd"))
+    (uuid "a8dc3ff5-5965-4655-bb4e-0883e1acf975"))
   (no_connect
     (at 26.98 53.01)
-    (uuid "7ddaec99-5b1e-4ac5-bbc9-5dbaab19dbfc"))
+    (uuid "9bfd39b9-db15-4bdb-a696-5ffc59b58147"))
   (no_connect
     (at 26.98 50.47)
-    (uuid "e6642558-25c4-426d-8230-a78a8059157d"))
+    (uuid "bf0eda2b-a7c4-4947-8ad7-2711f90adbf0"))
   (no_connect
     (at 93.02 45.39)
-    (uuid "75d40132-c45e-4033-b08f-21f49d5028ce"))
+    (uuid "46725f7e-b335-42ca-ab74-d96ec45a413b"))
   (no_connect
     (at 26.98 65.71)
-    (uuid "dc68f77e-cc2a-4623-949c-49417d924144"))
+    (uuid "38f81c48-9ae4-40a4-b166-0ccfd4d63cca"))
   (no_connect
     (at 26.98 68.25)
-    (uuid "70737e3b-ca5f-4500-a2ff-2db70c75b85e"))
+    (uuid "b7b0a553-f1b0-4672-bc00-1822cd0df5ab"))
   (label "A0"
     (at 93.02 75.87 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "73330d09-2f11-4f69-b6d4-288164c36535"))
+    (uuid "8cd52565-df16-46c3-8cc8-bf03b548a455"))
   (label "A1"
     (at 93.02 78.41 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "7139aacf-ce38-4988-a6b5-6ea9b00fcaa3"))
+    (uuid "712c5a51-107c-4fe4-b4ac-995d7bfe9195"))
   (label "A2"
     (at 93.02 80.95 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "cadf6822-1c51-4abc-a8f1-700d11ddc655"))
+    (uuid "8a158f4c-c564-450b-81ba-76a05aa30a1d"))
   (label "A3"
     (at 93.02 83.49 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "979419a0-59c3-4f89-a922-bcdcd1892ba3"))
+    (uuid "fd2377f3-9160-4dbe-b700-e5d9ebe0ae75"))
   (label "A4"
     (at 93.02 86.03 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "371265c6-c63e-4b04-aaad-54d4986efe48"))
+    (uuid "6064e42b-7cf8-4d44-8925-cf37e7f73452"))
   (label "A5"
     (at 93.02 88.57 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "b8a51513-e271-4b7f-8d95-980f925f53a7"))
+    (uuid "29403c8d-6099-4301-8b49-eddb3c0140e0"))
   (label "A6"
     (at 93.02 91.11 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "fae3a9f1-bcf8-4aac-8546-f8c6b12d7841"))
+    (uuid "c610d612-fb24-4953-bf98-cd8b141a4b95"))
   (label "A7"
     (at 93.02 93.65 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "2f71cba7-6c13-473d-98e6-00ef116e8ad6"))
+    (uuid "eb716384-e07d-4b3c-95e9-320009bee131"))
   (no_connect
     (at 93.02 47.93)
-    (uuid "b0c9095a-d813-4861-a7c7-48f43e98a87c"))
+    (uuid "2536829f-8f7c-4b7a-a3a7-d722373649df"))
   (no_connect
     (at 93.02 96.19)
-    (uuid "7c9c45af-68b2-4fbe-936e-5550aa33beed"))
+    (uuid "e4b0e17e-8afb-47f3-b1c4-128bfa64e62d"))
   (no_connect
     (at 93.02 98.73)
-    (uuid "0fd1093a-7bae-48f6-adb4-a3840d966c42"))
+    (uuid "f4d0e6d5-89a7-4085-acdc-b9cdabd19a84"))
   (no_connect
     (at 93.02 101.27)
-    (uuid "fbc88705-6fd2-46ae-8181-b8f222751242"))
+    (uuid "34ae2839-54d6-4628-b768-9be696f762f2"))
   (label "A12"
     (at 93.02 103.81 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "2ef38491-91c0-4c4f-8e9d-4de0ef540741"))
+    (uuid "fce7ff8a-c955-42ab-bdf7-3b7ec2e894e5"))
   (label "A11"
     (at 93.02 106.35 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "b504e4fd-d50e-4eab-986e-043859f4be87"))
+    (uuid "28b30c19-3e2c-4447-9f13-fdc96990b098"))
   (label "A10"
     (at 93.02 108.89 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "3023ceca-6ed4-4031-8451-47aac977b8ff"))
+    (uuid "88cdd185-1627-4075-a70e-91a1cec3a97e"))
   (label "A9"
     (at 93.02 111.43 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "802ef029-241a-4723-aa63-6e24b36f9504"))
+    (uuid "3d2c7df0-e504-4533-858a-6a026d6ff36b"))
   (label "A8"
     (at 93.02 113.97 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "568edd75-e239-411c-89cb-01526832f406"))
+    (uuid "6d3296f2-8cb0-4462-af74-7fa6af862a7c"))
   (no_connect
     (at 93.02 116.51)
-    (uuid "59bc3277-d01a-477a-802b-3e3f31398a54"))
+    (uuid "a621e286-0d09-4fdb-8856-432f071db15d"))
   (no_connect
     (at 93.02 119.05)
-    (uuid "59a10591-c406-452c-9d60-e18109d22a8b"))
+    (uuid "2fe3bcff-2eb6-4510-bf18-7d29e7c7b651"))
   (no_connect
     (at 93.02 50.47)
-    (uuid "aee9b627-a06d-41b0-80c4-5ede0caf3fc8"))
+    (uuid "ae0ede9c-1a6a-4e6a-a4ab-50b3f65c0f4d"))
   (no_connect
     (at 93.02 121.59)
-    (uuid "a5b3efc0-4561-4777-82ae-2af5099eae63"))
+    (uuid "ba9a9df5-9cbd-4d27-8ad7-8afc33784f88"))
   (no_connect
     (at 93.02 124.13)
-    (uuid "c165011f-47de-4b46-9a50-024fb04a299f"))
+    (uuid "b1872eb4-03a5-4d73-b2d4-dad1508013a1"))
   (label "D7"
     (at 93.02 126.67 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "b418c36d-4c15-40d7-a587-9251bd29a594"))
+    (uuid "51f89db8-eb2c-4b52-b24d-501aab4e66b8"))
   (label "D6"
     (at 93.02 129.21 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "cd5d1af8-47d9-45d3-8490-e964f98f86df"))
+    (uuid "fa863e89-21a4-4546-99cc-6a17aa347c3c"))
   (label "D5"
     (at 93.02 131.75 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "44628a8b-a91e-41ef-a177-0f73b3955af2"))
+    (uuid "58bc9c8c-690d-4763-a030-17b045fa8675"))
   (label "D4"
     (at 93.02 134.29 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "af4c98a8-d395-4682-bd34-c9181526bb7a"))
+    (uuid "cc730d18-3e4b-4414-9232-0201f0590a77"))
   (label "D3"
     (at 93.02 136.83 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "78fe19f1-5315-46dc-b218-be61d98ec833"))
+    (uuid "fd708bb5-5755-440b-ad49-37c942ad006d"))
   (label "D2"
     (at 93.02 139.37 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "46d10b87-8ebe-409c-80bb-e718cb390b40"))
+    (uuid "72e2fdd3-b6bc-4a0c-95e1-4bf8fb571f45"))
   (label "D1"
     (at 93.02 141.91 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "a2aec7ec-d66e-4634-8366-469d2d395088"))
+    (uuid "503b72ab-4175-4522-a794-2161d2634b82"))
   (label "D0"
     (at 93.02 144.45 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "289e997a-1088-42da-b3b0-10ccf9c25576"))
+    (uuid "c016e085-7276-48a3-89f8-44c5ae8cb00e"))
   (no_connect
     (at 93.02 53.01)
-    (uuid "3aa0dbb2-d23a-47ba-bd5f-6f28f9f62907"))
+    (uuid "e848e8d8-6650-4eb1-ab9d-fd8015609e69"))
   (no_connect
     (at 93.02 146.99)
-    (uuid "749a2010-96ca-4d79-a324-1dfa1cbeb739"))
+    (uuid "0ceb419d-ff92-4675-aef3-2ff21603d412"))
   (no_connect
     (at 93.02 149.53)
-    (uuid "595cfb3d-2177-49cc-b138-28c1196c8411"))
+    (uuid "175703e6-a04d-44d7-b968-0065c493dbad"))
   (no_connect
     (at 93.02 152.07)
-    (uuid "2476a5ea-d8cd-413d-a885-4f3fed3d8d36"))
+    (uuid "7a61f812-af50-421e-907c-b25444056f21"))
   (no_connect
     (at 93.02 154.61)
-    (uuid "b3a5b3e4-be13-4c53-b809-b5343aa3b6f6"))
+    (uuid "e92adad5-27d2-4108-9f2e-1ee79d1ce15c"))
   (no_connect
     (at 93.02 55.55)
-    (uuid "3ce188ba-6f7c-4df2-b235-41937b0589e8"))
+    (uuid "e05f3648-fdd9-4168-8f1c-a207d24a7060"))
   (no_connect
     (at 93.02 58.09)
-    (uuid "e114c1a1-f5c5-4df8-b2ac-d600df614e9f"))
-  (no_connect
-    (at 93.02 60.63)
-    (uuid "987ed6e9-edcf-4974-8073-e72994338114"))
+    (uuid "8fa3846b-8ea0-4947-9352-0006962bfd6d"))
+  (label "CART_PWR"
+    (at 93.02 60.63 0)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid "ef5ef34e-8208-4020-b269-f20c1e9d0c80"))
   (no_connect
     (at 93.02 63.17)
-    (uuid "1c7765cf-f63b-494d-8795-e966b054b098"))
+    (uuid "ba8efa41-ee11-4792-9261-2c5311dc6630"))
   (symbol
     (lib_id "power:GND")
     (at 26.98 144.45 90)
@@ -2987,7 +3307,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "ed79622b-e1b0-4ed5-ad90-518d08cbe91c")
+    (uuid "97ecbee5-e1d2-4247-bd07-444aaf19c0a6")
     (property "Reference" "#PWR04"
       (at 26.98 144.45 0)
       (effects
@@ -3012,10 +3332,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "f082d171-ad25-40e5-9ef0-81ec222f48a6"))
+      (uuid "03f3abfe-97f0-4281-a595-676b6b2840e4"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR04")
           (unit 1)))))
   (symbol
@@ -3025,7 +3345,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "276e7122-c894-4e1d-ae47-bd69cb475a6b")
+    (uuid "c94f3527-cdba-472d-a84b-0e9897058d38")
     (property "Reference" "#PWR05"
       (at 26.98 146.99 0)
       (effects
@@ -3050,10 +3370,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "5936cbfd-7ba8-449e-bff1-e200cee84920"))
+      (uuid "4b520a26-b816-4352-830b-6945a90fd14e"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR05")
           (unit 1)))))
   (symbol
@@ -3063,7 +3383,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "0d6cc079-54dd-42d1-8952-ce0201fa9668")
+    (uuid "c69f01f9-e715-4e08-8039-4b05f7175e20")
     (property "Reference" "#PWR06"
       (at 26.98 149.53 0)
       (effects
@@ -3088,15 +3408,15 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "2a8c5071-8ba1-41b5-8c4c-2821a82003b5"))
+      (uuid "b94bc2dc-b305-4e84-868a-efcfc075e9a6"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR06")
           (unit 1)))))
   (no_connect
     (at 66.35 33.96)
-    (uuid "788eda37-e783-4934-90c5-54023e279de9"))
+    (uuid "a12a7343-d1dc-4e6f-b415-01fb5d8a26c5"))
   (symbol
     (lib_id "power:GND")
     (at 26.98 152.07 90)
@@ -3104,7 +3424,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "72b7260d-29c8-4ffe-a48f-f262ac061413")
+    (uuid "fada8a1d-f389-493f-8e8c-abb7f84e99bc")
     (property "Reference" "#PWR07"
       (at 26.98 152.07 0)
       (effects
@@ -3129,10 +3449,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "e66e675e-5166-4166-baa5-270351eb970b"))
+      (uuid "b5d7a179-049a-409f-a455-d1ffbec9edea"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR07")
           (unit 1)))))
   (symbol
@@ -3142,7 +3462,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "96bc0be3-572d-4961-b0c3-3af36ea29ea1")
+    (uuid "5b911c09-cf56-4de3-8db6-95bbf056404e")
     (property "Reference" "#PWR08"
       (at 26.98 154.61 0)
       (effects
@@ -3167,39 +3487,39 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "86ee963e-09a3-44bd-a587-24018010fc31"))
+      (uuid "01b570ab-1203-4832-9be2-15e5d829e44a"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR08")
           (unit 1)))))
   (no_connect
     (at 26.98 126.67)
-    (uuid "7f069dda-49a9-462a-814b-b99813fceb4c"))
+    (uuid "cbfe6825-8e68-4ba8-a5d6-78d37f01ebee"))
   (no_connect
     (at 53.65 33.96)
-    (uuid "aa6cfd93-f5a0-4e38-9185-43a99624d38c"))
+    (uuid "5f83e1e2-4dd2-4a24-8a24-9dd85665bafb"))
   (no_connect
     (at 56.19 33.96)
-    (uuid "9f61077b-d265-4fc5-b63b-8fbd26513677"))
+    (uuid "0d80f416-d36f-488a-a15c-8467c411897c"))
   (no_connect
     (at 26.98 124.13)
-    (uuid "b3baddf4-3367-4bec-a6b1-8c550c70f0a8"))
+    (uuid "6c3b9689-60ac-402f-99a3-4a926bd7f70e"))
   (no_connect
     (at 61.27 33.96)
-    (uuid "4fef7e0f-6752-4481-b725-89fac4bfd322"))
+    (uuid "26b7f01b-289a-49a4-a8cd-c6fd5d93a80f"))
   (no_connect
     (at 58.73 33.96)
-    (uuid "9b327a05-3ce5-46a6-973c-2883da2d17d4"))
+    (uuid "a1d1fe6b-eaff-42bc-9d32-8dd2b449460f"))
   (no_connect
     (at 26.98 73.33)
-    (uuid "5adbfb9a-26c5-46af-a4da-961d341f830b"))
+    (uuid "824a3c29-16c6-4db7-bdf5-275d67f8a39f"))
   (no_connect
     (at 26.98 70.79)
-    (uuid "1583d15a-bc6c-4db2-b764-30e9bc338b30"))
+    (uuid "17e7ddc2-f05c-43a3-bc3f-5422fc0a763f"))
   (no_connect
     (at 26.98 131.75)
-    (uuid "260daccf-817d-4795-a351-1afdec7f890b"))
+    (uuid "56401bd4-adb7-442d-9f54-23ad493aacc7"))
   (symbol
     (lib_id "Connector_Generic:Conn_02x12_Top_Bottom")
     (at 215 100 0)
@@ -3207,7 +3527,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "42b7d623-9aed-410b-8606-09173c5a8b7a")
+    (uuid "d3d257a4-a91c-49a5-bbe7-14736ce9ff6e")
     (property "Reference" "J1"
       (at 215 82 0)
       (effects
@@ -3218,7 +3538,7 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Footprint" "atari:Atari2600_Cart_Slot_2x12_P2.54mm_Row5.50mm"
+    (property "Footprint" "atari:Atari2600_Cart_Slot_2x12_P2.54mm_Row5.50mm_Guide"
       (at 215 100 0)
       (effects
         (font
@@ -3231,56 +3551,56 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "2b82f0ad-e528-4dbd-9a02-ea838591b7af"))
+      (uuid "3069c18e-0346-489f-b895-0a5c00572684"))
     (pin "2"
-      (uuid "61748b53-766d-47e3-97d0-db538432def1"))
+      (uuid "9f758e4c-22e1-40d3-9ace-eb55e7837489"))
     (pin "3"
-      (uuid "bc9793a1-bd41-4dc2-a89d-b5cc31b047d9"))
+      (uuid "e501acd6-4a3e-4328-a55f-4c75c7dfcd95"))
     (pin "4"
-      (uuid "1ad037be-462a-436c-bdd7-a41b39c313af"))
+      (uuid "6ba9a1ab-b0de-4546-853d-080229e061e6"))
     (pin "5"
-      (uuid "edb97878-f2b1-48cd-a92b-a63319158cde"))
+      (uuid "f01c1924-4571-4d01-818a-0b552e34e26e"))
     (pin "6"
-      (uuid "e886a40e-d114-40ef-b77d-6517d0c83a00"))
+      (uuid "f4b05fa6-a866-46b4-b568-04faf95690cf"))
     (pin "7"
-      (uuid "484dadfc-cfd9-4ac7-a9d7-1951a74b9a5a"))
+      (uuid "6e293879-e79a-43d3-a984-b0192d20a874"))
     (pin "8"
-      (uuid "9e6e0ea8-69a8-44e3-98ff-69c38129540a"))
+      (uuid "e66faff8-1cb0-4024-b1bb-49d2cfbc6dec"))
     (pin "9"
-      (uuid "d306d9cb-ab4a-4a00-8744-916c878a350d"))
+      (uuid "05cd4c17-0e0a-42c6-a78f-3c7df8c096ef"))
     (pin "10"
-      (uuid "716bf0a7-5ea2-4b9e-941a-93ed85b946f8"))
+      (uuid "1c050255-2a9c-426b-a388-7d55d400de34"))
     (pin "11"
-      (uuid "052645ec-c71e-42d1-9894-78696fcbed78"))
+      (uuid "56b9d9a0-b4c6-4a9a-a998-89ce171aea40"))
     (pin "12"
-      (uuid "61c44888-98d5-4f28-941c-1131442b39b8"))
+      (uuid "b5ef6c7d-f6e1-4401-bb60-f2bcf1725dc0"))
     (pin "13"
-      (uuid "e74d0210-fc73-42a0-9a80-41e43617c6e8"))
+      (uuid "6d985d13-53a6-41ea-b673-fdcad5a01e95"))
     (pin "14"
-      (uuid "c27990c8-6989-4c25-88b6-734ddbd456a4"))
+      (uuid "4bd56559-40ce-4162-8b1a-0990771af4d2"))
     (pin "15"
-      (uuid "ad2b68b3-2442-428f-ab90-03862b8045f3"))
+      (uuid "6c4ed7df-5b4a-4ec6-9bcf-7bd0c5d730e8"))
     (pin "16"
-      (uuid "fa2a47f0-6150-498a-a849-bef88ab77285"))
+      (uuid "d8127053-ca99-4906-bb9c-bea4794b5706"))
     (pin "17"
-      (uuid "ce2ee64c-bbba-45ff-afd8-74568ce1f978"))
+      (uuid "280a2b6a-1750-4a1f-9f70-a81a3928f6af"))
     (pin "18"
-      (uuid "9988707a-cd5e-4a94-8b59-91a4a78864ec"))
+      (uuid "f8a3c163-eb2b-4b87-84b7-06d6cb0f34c2"))
     (pin "19"
-      (uuid "60d50943-6117-4df8-9270-cdf6ccc08027"))
+      (uuid "263e9ea9-f1cd-441c-a275-7ab8a55c6af4"))
     (pin "20"
-      (uuid "3a3480d7-973c-445d-9931-bfc46ce58e21"))
+      (uuid "4f80c90d-1de7-48be-8db5-ac8868ee02a9"))
     (pin "21"
-      (uuid "e1e02cd0-3a01-4adc-87f2-e76a1af8d6ce"))
+      (uuid "ee493b66-1bf2-4458-b0fb-85279037a71b"))
     (pin "22"
-      (uuid "63a4d579-3b20-4ba5-84c3-fcc155f1f023"))
+      (uuid "228adaa7-cbf4-4838-9d30-f48a48dea068"))
     (pin "23"
-      (uuid "5958a2a3-1268-4d39-b6bc-7c574119f023"))
+      (uuid "d327192b-3f77-4da8-ae67-95d8f687cecd"))
     (pin "24"
-      (uuid "3784611d-7928-491a-8016-09dc4599ba87"))
+      (uuid "085a5a51-fe0d-47c3-bf13-3b7250b01295"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "J1")
           (unit 1)))))
   (label "A7"
@@ -3289,21 +3609,21 @@
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "7ce0c9e0-25d5-479c-b888-9133c58ab7bf"))
+    (uuid "fa686494-dd79-4787-a63f-472f25d46a8e"))
   (label "D1"
     (at 209.92 110.16 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "933f2d29-975f-4280-8d3c-f0585d47d7ad"))
+    (uuid "44c66089-0faa-4f94-9f34-abeb431c5c59"))
   (label "D2"
     (at 209.92 112.7 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "6651bf0b-7a46-4374-a4fe-09cba3cd500e"))
+    (uuid "09876f7b-7a53-4d69-b37b-890289685b2b"))
   (symbol
     (lib_id "power:GND")
     (at 209.92 115.24 90)
@@ -3311,7 +3631,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "203f99a4-2cc9-489f-9e66-9eef64d35e0b")
+    (uuid "fd86d922-5104-4158-8902-3ab1deed7ea7")
     (property "Reference" "#PWR09"
       (at 209.92 115.24 0)
       (effects
@@ -3336,10 +3656,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "564c0501-9186-4b84-8e6e-c391d2bd2158"))
+      (uuid "12fc3f64-1906-4219-9784-3beafc29ceca"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR09")
           (unit 1)))))
   (label "D3"
@@ -3348,115 +3668,84 @@
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "fabd4776-1733-46f3-ad2c-9700caba54bd"))
+    (uuid "e08346a3-cf83-4f3c-898a-365f4c14477e"))
   (label "D4"
     (at 222.62 89.84 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "e43de8eb-cf41-4439-8ab6-ba183edaf6f9"))
+    (uuid "310648b9-1c94-4437-b437-a56152668c2c"))
   (label "D5"
     (at 222.62 92.38 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "8d2892c5-057c-407a-b3e6-e5e3853bb5b2"))
+    (uuid "b66eb240-19d7-4c62-b74e-5ab82195210a"))
   (label "D6"
     (at 222.62 94.92 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "763698f2-da9a-4056-b4b6-2499251f99e6"))
+    (uuid "74a224f8-2e80-47bd-a6be-2dfe0aa74ced"))
   (label "D7"
     (at 222.62 97.46 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "f60863da-1041-4607-a446-d609a7e525e6"))
+    (uuid "0c5af64f-4f7d-4452-a729-f9f716467f7e"))
   (label "A12"
     (at 222.62 100 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "cb6af0f8-ccfc-447a-bbaf-f17771f354ec"))
+    (uuid "824c8956-0c7f-458b-b6ee-ffd3d93c44bc"))
   (label "A10"
     (at 222.62 102.54 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "651f7b7c-c697-4642-a1b2-246437a63268"))
+    (uuid "3c660228-6530-42fd-8aa8-2c010d72f649"))
   (label "A6"
     (at 209.92 89.84 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "aaac2f74-a2d8-4851-a282-f08b4657eceb"))
+    (uuid "cf6bbbce-29ca-4a4f-9ba5-056fae1bf2e0"))
   (label "A11"
     (at 222.62 105.08 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "05763ccf-a1ee-47da-8730-19056bc114ec"))
+    (uuid "cea6fbc0-1a32-4962-aaab-be5b7f2ca5f0"))
   (label "A9"
     (at 222.62 107.62 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "498c4402-8a05-4ab8-a5c9-983466f68bcc"))
+    (uuid "48d5c68b-a8e1-4eb0-b59f-53de01d0ab19"))
   (label "A8"
     (at 222.62 110.16 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "9049d885-1a33-4140-b37b-91074a46623a"))
-  (symbol
-    (lib_id "power:+5V")
-    (at 222.62 112.7 90)
-    (unit 1)
-    (in_bom no)
-    (on_board yes)
-    (dnp no)
-    (uuid "7bb9848d-4842-48b3-b159-548f5fcd9a60")
-    (property "Reference" "#PWR10"
-      (at 222.62 112.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        hide))
-    (property "Value" "+5V"
-      (at 227.62 112.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (property "Footprint" ""
-      (at 222.62 112.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        hide))
-    (property "Datasheet" "~"
-      (at 222.62 112.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        hide))
-    (pin "1"
-      (uuid "2b834bfc-d1d3-4b16-af7a-b484b2aa7b0a"))
-    (instances
-      (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
-          (reference "#PWR10")
-          (unit 1)))))
+    (uuid "eb599113-ccde-4a54-8d7f-2aafbe41afe5"))
+  (label "CART_5V"
+    (at 222.62 112.7 0)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid "1582457b-d328-46b3-bd4b-8f802dcb9d9a"))
   (symbol
     (lib_id "power:GND")
     (at 222.62 115.24 270)
@@ -3464,8 +3753,8 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "67d3550e-9c46-4384-a1c3-f811812e9f97")
-    (property "Reference" "#PWR11"
+    (uuid "0b7ef602-1330-45b0-858a-3967559ff066")
+    (property "Reference" "#PWR10"
       (at 222.62 115.24 0)
       (effects
         (font
@@ -3489,11 +3778,11 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "ac948480-59fe-45b0-aa8b-96d9581e2cd4"))
+      (uuid "90568146-9bfa-471f-b8bc-dfb76db7950b"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
-          (reference "#PWR11")
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "#PWR10")
           (unit 1)))))
   (label "A5"
     (at 209.92 92.38 180)
@@ -3501,49 +3790,49 @@
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "987c430e-84fc-4ec7-a23f-01eb4d8daf1d"))
+    (uuid "efafa12f-c4ae-422e-a900-491603392dea"))
   (label "A4"
     (at 209.92 94.92 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "26dbaa5a-560e-45e4-ab31-72fcacfe3be4"))
+    (uuid "ac871265-106a-4f8c-8b91-41d98718189d"))
   (label "A3"
     (at 209.92 97.46 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "011427bd-f2b2-4501-8390-4c6dac72f80c"))
+    (uuid "861942a2-0bb7-49a9-a505-243f60d27a65"))
   (label "A2"
     (at 209.92 100 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "f025f172-b6cb-4bbf-b0d9-7a5212e3ff46"))
+    (uuid "7a87938f-19c4-4591-92b4-812bf7009cce"))
   (label "A1"
     (at 209.92 102.54 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "b5977a04-a4fe-490d-9143-0d6fb5c5db05"))
+    (uuid "f3a48de4-c557-4a53-8d65-184ef216543e"))
   (label "A0"
     (at 209.92 105.08 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "d4c8007d-36ed-4727-8413-75d1afd78721"))
+    (uuid "a47b85fc-9064-4ebe-a276-1034df94344c"))
   (label "D0"
     (at 209.92 107.62 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right))
-    (uuid "5234182a-3bc8-4b97-9f5a-e3396e66bf04"))
+    (uuid "eeadcedc-85d1-4e42-9fbe-77549e385926"))
   (symbol
     (lib_id "Device:C")
     (at 250 150 0)
@@ -3551,7 +3840,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "74281bd5-6d8e-4003-b3a4-0f9a07862d66")
+    (uuid "0ed463be-9ba3-437a-8b53-7bcc02068dea")
     (property "Reference" "C2"
       (at 252.5 148.7 0)
       (effects
@@ -3577,52 +3866,21 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "d60104d4-f1d2-4be4-8ba9-a92765fa9af9"))
+      (uuid "a95bd1fa-e0c5-4041-883b-51e1fa8ea0f7"))
     (pin "2"
-      (uuid "e0bedbd2-c568-4069-9b52-a9a4bdab6c20"))
+      (uuid "f1b5127c-fa41-4c74-a5e5-0f6b56044459"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "C2")
           (unit 1)))))
-  (symbol
-    (lib_id "power:+5V")
-    (at 250 146.19 0)
-    (unit 1)
-    (in_bom no)
-    (on_board yes)
-    (dnp no)
-    (uuid "e6446806-28c1-492c-a62e-9b00c6765bef")
-    (property "Reference" "#PWR12"
-      (at 250 146.19 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        hide))
-    (property "Value" "+5V"
-      (at 250 141.19 0)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (property "Footprint" ""
-      (at 250 146.19 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        hide))
-    (property "Datasheet" "~"
-      (at 250 146.19 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        hide))
-    (pin "1"
-      (uuid "d0355aaf-f461-4737-a1ee-5e91e92e86b8"))
-    (instances
-      (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
-          (reference "#PWR12")
-          (unit 1)))))
+  (label "CART_5V"
+    (at 250 146.19 90)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid "335ed970-b3c2-40fe-adde-4f7cec24a366"))
   (symbol
     (lib_id "power:GND")
     (at 250 153.81 0)
@@ -3630,8 +3888,8 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "0aaf16ed-ce89-41ca-ad59-13be612ef826")
-    (property "Reference" "#PWR13"
+    (uuid "c568d5cf-82d7-424c-b501-c43ac8dcf2a8")
+    (property "Reference" "#PWR11"
       (at 250 153.81 0)
       (effects
         (font
@@ -3655,11 +3913,11 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "855b485e-5021-447f-821e-9b6162a05ed6"))
+      (uuid "8f911b5b-37a9-4fae-9da2-617f9f870db2"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
-          (reference "#PWR13")
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "#PWR11")
           (unit 1)))))
   (symbol
     (lib_id "Device:C_Polarized")
@@ -3668,7 +3926,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "f481bb80-a0ca-4a76-b21b-99dfa4a9c30c")
+    (uuid "0c8f0ddc-8e80-4472-84c3-6ba1558bd915")
     (property "Reference" "C3"
       (at 267.5 148.7 0)
       (effects
@@ -3694,12 +3952,12 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "48865007-c4d4-4f54-bf2c-89bf37735281"))
+      (uuid "7ce3c8ac-7832-4787-8dde-1452dea160cf"))
     (pin "2"
-      (uuid "3cfc781b-e157-45c4-a9c8-d484d3d6007b"))
+      (uuid "a069dd36-6bd2-4f1e-84c3-0377b2cbd773"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "C3")
           (unit 1)))))
   (symbol
@@ -3709,8 +3967,8 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "a80a4ea8-4424-4124-a4d2-d0ac6df6b0ca")
-    (property "Reference" "#PWR14"
+    (uuid "d6e1e46e-3710-478b-b8b6-6b62c176aa1d")
+    (property "Reference" "#PWR12"
       (at 265 146.19 0)
       (effects
         (font
@@ -3734,11 +3992,11 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "92bfedb7-1236-4f66-9f5e-b2548d5bbd76"))
+      (uuid "dad8f9cb-b622-45a3-8301-5bb45d48a311"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
-          (reference "#PWR14")
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "#PWR12")
           (unit 1)))))
   (symbol
     (lib_id "power:GND")
@@ -3747,8 +4005,8 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "a54466d1-3b2d-437f-82eb-aabf05cc0baa")
-    (property "Reference" "#PWR15"
+    (uuid "a108f44c-391f-4fe4-99b8-f10dedf84f13")
+    (property "Reference" "#PWR13"
       (at 265 153.81 0)
       (effects
         (font
@@ -3772,10 +4030,407 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "7caef00f-9eaa-4979-8b5b-5738eb62339d"))
+      (uuid "342c04ab-c2b2-4fab-b316-e1c346ca87f3"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "#PWR13")
+          (unit 1)))))
+  (symbol
+    (lib_id "Device:Polyfuse")
+    (at 150 175 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "10ef1b0d-d842-4a29-98f6-1365903a921b")
+    (property "Reference" "F1"
+      (at 150 166 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "MF-R020 (200 mA)"
+      (at 150 184 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "atari:Fuse_PTC_Radial_P5.08mm"
+      (at 150 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Datasheet" "~"
+      (at 150 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (pin "1"
+      (uuid "ca5bda1f-4aab-48ac-af2e-a5acd7ad79e2"))
+    (pin "2"
+      (uuid "8e606fc6-fb9b-43cb-bcfd-56760ad9f55a"))
+    (instances
+      (project "atari2600-cart-reader-mega"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "F1")
+          (unit 1)))))
+  (symbol
+    (lib_id "power:+5V")
+    (at 150 171.19 0)
+    (unit 1)
+    (in_bom no)
+    (on_board yes)
+    (dnp no)
+    (uuid "33b9c90f-04c8-4c99-aa6c-a3f4d93da43c")
+    (property "Reference" "#PWR14"
+      (at 150 171.19 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Value" "+5V"
+      (at 150 166.19 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" ""
+      (at 150 171.19 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Datasheet" "~"
+      (at 150 171.19 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (pin "1"
+      (uuid "3f8191e2-c83a-4c4d-845c-a0bd8c3b4896"))
+    (instances
+      (project "atari2600-cart-reader-mega"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "#PWR14")
+          (unit 1)))))
+  (label "+5V_F"
+    (at 150 178.81 270)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid "a5d77425-7bcb-45c9-82d1-fd4ba558690c"))
+  (symbol
+    (lib_id "Transistor_BJT:BC327")
+    (at 170 175 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "5e22a283-87c2-446a-8a16-2229b8a5f7ab")
+    (property "Reference" "Q1"
+      (at 170 166 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "BC327"
+      (at 170 184 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+      (at 170 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Datasheet" "~"
+      (at 170 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (pin "1"
+      (uuid "d4d831a4-1c03-4221-9f5d-b0961e7b13cd"))
+    (pin "2"
+      (uuid "2a1e7027-ccb1-436f-8742-09a9e78ae503"))
+    (pin "3"
+      (uuid "1b015f8d-8107-42ac-829d-4c4743b2ca52"))
+    (instances
+      (project "atari2600-cart-reader-mega"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "Q1")
+          (unit 1)))))
+  (label "CART_5V"
+    (at 172.54 169.92 90)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid "9699ae6a-5f8c-41f8-8b5a-71b0d19cf553"))
+  (label "Q_BASE"
+    (at 164.92 175 180)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid "053ba8e5-604e-4fcc-ae3f-5205280c38f8"))
+  (label "+5V_F"
+    (at 172.54 180.08 270)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid "3f64e5a3-7bab-4ec4-bb25-fae9da8c7a6c"))
+  (symbol
+    (lib_id "Device:R")
+    (at 185 175 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "1471f83f-4b26-4603-8957-bee5eb1e5958")
+    (property "Reference" "R3"
+      (at 187.5 173.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "1k"
+      (at 187.5 176.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+      (at 185 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Datasheet" "~"
+      (at 185 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (pin "1"
+      (uuid "6ea9a176-8b5f-45fa-ab40-1ba9e356c01f"))
+    (pin "2"
+      (uuid "8f2ecd7c-fc90-4828-a35c-d019a70e40d2"))
+    (instances
+      (project "atari2600-cart-reader-mega"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "R3")
+          (unit 1)))))
+  (label "CART_PWR"
+    (at 185 171.19 90)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid "8c1f7fc0-7528-4873-8114-e452a3718174"))
+  (label "Q_BASE"
+    (at 185 178.81 270)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid "2a329cbe-cb79-437e-99ae-9c7707e710df"))
+  (symbol
+    (lib_id "Device:R")
+    (at 200 175 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "2807c9f8-21e5-4ec0-803c-c1c4641f0eb4")
+    (property "Reference" "R4"
+      (at 202.5 173.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "10k"
+      (at 202.5 176.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+      (at 200 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Datasheet" "~"
+      (at 200 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (pin "1"
+      (uuid "c5d07f68-3397-4867-9e95-b939cfad92b1"))
+    (pin "2"
+      (uuid "b517913d-f0fc-4542-82a1-d4ad30347725"))
+    (instances
+      (project "atari2600-cart-reader-mega"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "R4")
+          (unit 1)))))
+  (label "+5V_F"
+    (at 200 171.19 90)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid "812522c6-b371-4826-a691-d7e7db59b826"))
+  (label "Q_BASE"
+    (at 200 178.81 270)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid "50165c36-cdec-4484-a04f-1b7d66860ff5"))
+  (symbol
+    (lib_id "Device:R")
+    (at 215 175 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "3ab50636-0d32-4dbd-85be-ed829ce4ad39")
+    (property "Reference" "R5"
+      (at 217.5 173.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "10k"
+      (at 217.5 176.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+      (at 215 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Datasheet" "~"
+      (at 215 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (pin "1"
+      (uuid "cc4b6a61-f89d-4a2a-b28f-1ebe4df56dfd"))
+    (pin "2"
+      (uuid "81d2b7d7-7229-4dd7-92ec-7bcaeea503fa"))
+    (instances
+      (project "atari2600-cart-reader-mega"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "R5")
+          (unit 1)))))
+  (label "CART_5V"
+    (at 215 171.19 90)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid "1c5a0766-c24d-4320-9346-a3c3255f23ad"))
+  (label "CART_SENSE"
+    (at 215 178.81 270)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid "1faa4812-d30d-4f02-a4e1-01bb3137a078"))
+  (symbol
+    (lib_id "Device:R")
+    (at 230 175 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "91aa88f6-1cbd-404d-96da-0e1b32215eac")
+    (property "Reference" "R6"
+      (at 232.5 173.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "100k"
+      (at 232.5 176.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+      (at 230 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Datasheet" "~"
+      (at 230 175 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (pin "1"
+      (uuid "d31916b5-9b9f-4746-935c-0ee068c6f1e9"))
+    (pin "2"
+      (uuid "a4c7c78f-01c9-41f0-9324-26d33a741499"))
+    (instances
+      (project "atari2600-cart-reader-mega"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
+          (reference "R6")
+          (unit 1)))))
+  (label "CART_5V"
+    (at 230 171.19 90)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid "157409d4-eefa-4f48-b9b5-7f4879d5149e"))
+  (symbol
+    (lib_id "power:GND")
+    (at 230 178.81 0)
+    (unit 1)
+    (in_bom no)
+    (on_board yes)
+    (dnp no)
+    (uuid "e417adf9-d6d9-4d7e-ae1a-00345270e4ca")
+    (property "Reference" "#PWR15"
+      (at 230 178.81 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Value" "GND"
+      (at 230 183.81 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" ""
+      (at 230 178.81 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (property "Datasheet" "~"
+      (at 230 178.81 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        hide))
+    (pin "1"
+      (uuid "4a12e955-6c90-46a6-a890-0254c94aef1b"))
+    (instances
+      (project "atari2600-cart-reader-mega"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR15")
           (unit 1)))))
   (symbol
@@ -3785,7 +4440,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "4eec4b12-7ed6-4918-ac1a-60a8b579e407")
+    (uuid "89a796bd-7238-49f9-baf3-541387a5907b")
     (property "Reference" "#FLG01"
       (at 30 15 0)
       (effects
@@ -3810,10 +4465,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "080c99cb-04f4-40b6-83fe-bb12248acc36"))
+      (uuid "1a254376-6870-43bc-99fa-aca2efa46b15"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#FLG01")
           (unit 1)))))
   (symbol
@@ -3823,7 +4478,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "8b520e64-9ace-45dc-801b-946371b67f6b")
+    (uuid "2db2cd6f-7c58-4ec1-8f91-75d91fabd973")
     (property "Reference" "#PWR17"
       (at 30 15 0)
       (effects
@@ -3848,10 +4503,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "73ea9e36-936d-40a4-a0eb-196fc725b1a8"))
+      (uuid "ed858171-2d81-407e-9480-56e6a46c828d"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR17")
           (unit 1)))))
   (symbol
@@ -3861,7 +4516,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "d49b9636-0a3d-48d1-b2d9-b978e469e365")
+    (uuid "0fe4a693-45e0-4c7f-a09d-950963e42e17")
     (property "Reference" "#FLG02"
       (at 50 15 0)
       (effects
@@ -3886,10 +4541,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "35d448e9-e6bf-4c31-b410-840e6735e628"))
+      (uuid "a03cb604-08e8-4310-a087-ba908de7db58"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#FLG02")
           (unit 1)))))
   (symbol
@@ -3899,7 +4554,7 @@
     (in_bom no)
     (on_board yes)
     (dnp no)
-    (uuid "a4c7e62f-c71a-40de-8034-29f0ab198f4d")
+    (uuid "c70acb77-a9a7-4d96-a5bf-7a26e00d8fdf")
     (property "Reference" "#PWR19"
       (at 50 15 0)
       (effects
@@ -3924,10 +4579,10 @@
           (size 1.27 1.27))
         hide))
     (pin "1"
-      (uuid "c85dd1ef-fd0a-43d7-bc4f-e1c093dc753b"))
+      (uuid "11aa6a29-0362-4ed0-abcb-290bdba45e42"))
     (instances
       (project "atari2600-cart-reader-mega"
-        (path "/ce326073-864b-4a1d-b07c-58e5fa503181"
+        (path "/dd5fa98c-9f8c-4b54-8d02-0eb7ebfa3f9c"
           (reference "#PWR19")
           (unit 1)))))
   (text "Aufsteckplatine fuer Arduino Mega 2560. A0-A7 = PA0-PA7 (D22-D29), A8-A12 = PC0-PC4 (D37-D33), D0-D7 = PL0-PL7 (D49-D42).\nFirmware: github.com/sfambach/arduino-atari2600-cart-reader - fambach.net"
@@ -3936,7 +4591,7 @@
       (font
         (size 1.27 1.27))
       (justify left))
-    (uuid "7c73480a-5994-41b1-8b32-49fbcb85ae05"))
+    (uuid "6fa9b524-b80c-47cc-8810-4d3aaed27641"))
   (sheet_instances
     (path "/"
       (page "1"))))

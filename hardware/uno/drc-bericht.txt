@@ -1,7 +1,22 @@
 ** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/uno/atari2600-cart-reader-uno.kicad_pcb **
-** Created on 2026-10-25 06:56:12 **
+** Created on 2026-10-25 08:00:18 **
 
-** Found 8 DRC violations **
+** Found 12 DRC violations **
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(107.5700 mm, 137.8100 mm): Reference 'R4'
+    @(107.0300 mm, 134.5400 mm): Line on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(104.3700 mm, 137.8100 mm): Reference 'R3'
+    @(103.8300 mm, 134.5400 mm): Line on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(110.7700 mm, 137.8100 mm): Reference 'R5'
+    @(110.2300 mm, 134.5400 mm): Line on F.Silkscreen
+[lib_footprint_mismatch]: Footprint 'Arduino_Uno_R3_Shield' does not match copy in library 'arduino-library'.
+    Local override; Severity: warning
+    @(100.0000 mm, 153.3400 mm): Footprint A1
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
     @(168.5800 mm, 153.3400 mm): Line on Edge.Cuts

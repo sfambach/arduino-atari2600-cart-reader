@@ -138,7 +138,7 @@ texts = [[Sym('text'), B['note'], [Sym('at'), 30, 185, 0], eff(justify='left'), 
 
 sch = [Sym('kicad_sch'), [Sym('version'), 20230121], [Sym('generator'), Sym('eeschema')], [Sym('uuid'), ROOT],
        [Sym('paper'), 'A4'],
-       [Sym('title_block'), [Sym('title'), B['title']], [Sym('date'), '2026-10-08'], [Sym('rev'), '1.0'], [Sym('company'), 'fambach.net']],
+       [Sym('title_block'), [Sym('title'), B['title']], [Sym('date'), '2026-10-25'], [Sym('rev'), '1.1'], [Sym('company'), 'fambach.net']],
        [Sym('lib_symbols')] + list(libs.values())] + items + texts + [
        [Sym('sheet_instances'), [Sym('path'), '/', [Sym('page'), '1']]]]
 open(sys.argv[2], 'w').write(dump(sch) + '\n')

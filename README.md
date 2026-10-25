@@ -9,11 +9,11 @@ Project page: https://www.fambach.net/ (Retro Projekt – Atari 2600 ROM einlese
 | Board | Address bus | Data bus |
 |---|---|---|
 | Arduino Mega 2560 | A0-A7 = PA0-PA7, A8-A12 = PC0-PC4 | D0-D7 = PL0-PL7 |
-| Arduino Uno | MCP23017 (I2C 0x20): GPA0-7 = A0-A7, GPB0-4 = A8-A12 | D0-D7 = D2-D9 |
+| Arduino Uno / Nano | MCP23017 (I2C 0x20): GPA0-7 = A0-A7, GPB0-4 = A8-A12 | D0-D7 = D2-D9 |
 
-Cartridge slot: pin 23 = +5 V, pins 12 and 24 = GND.
+Cartridge slot: pin 23 = switched +5 V (BC327, LOW on D10 for Uno/Nano, D8 for Mega; sense on A0), pins 12 and 24 = GND.
 
-Shields (THT, KiCad) for both boards: [`hardware/`](hardware/).
+Boards (THT, KiCad) for Uno, Mega and Nano: [`hardware/`](hardware/).
 
 ## Bankswitching
 
@@ -31,7 +31,7 @@ Untested on hardware so far.
 
 ## Usage
 
-Serial 115200 baud: `L` lists schemes, `D <scheme> [kb]` dumps, `P <hexaddr>` reads one byte.
+Serial 115200 baud: `L` lists schemes, `D <scheme> [kb]` dumps, `P <hexaddr>` reads one byte, `S` prints the orientation and supply readings. The cartridge is powered only during `D`, `P` and `S`, and only after the orientation check passed (experimental, see [`hardware/`](hardware/)).
 
 ```
 pip install pyserial

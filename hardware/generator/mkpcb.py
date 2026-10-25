@@ -41,7 +41,22 @@ def pos(p):
 
 for ref, (lib_id, value, fpid, _, conn) in PARTS.items():
     lib, name = fpid.split(':')
-    f = pcbnew.FootprintLoad((LOCAL if lib in ('arduino-library', 'atari') else FP) + lib + '.pretty', name)
+    libdir = (LOCAL if lib in ('arduino-library', 'atari') else FP) + lib + '.pretty'
+    drop = B.get('drop', {})
+    if ref in drop or ref + '_holes' in drop:
+        # Variant without the ICSP header and selected mounting holes
+        tmp = '/tmp/taxcart-%s-%s.pretty' % (sys.argv[1], ref)
+        os.makedirs(tmp, exist_ok=True)
+        keep = []
+        for line in open('%s/%s.kicad_mod' % (libdir, name)):
+            if any('(pad "%s" ' % n in line for n in drop.get(ref, [])):
+                continue
+            if '(pad "" np_thru_hole' in line and any('(at %g %g)' % h in line for h in drop.get(ref + '_holes', [])):
+                continue
+            keep.append(line)
+        open('%s/%s.kicad_mod' % (tmp, name), 'w').write(''.join(keep))
+        libdir = tmp
+    f = pcbnew.FootprintLoad(libdir, name)
     f.SetFPID(pcbnew.LIB_ID(lib, name))
     f.SetReference(ref)
     f.SetPath(pcbnew.KIID_PATH('/' + UUIDS[ref]))
@@ -50,6 +65,10 @@ for ref, (lib_id, value, fpid, _, conn) in PARTS.items():
     kind = PLACE[ref]
     f.SetPosition(pcbnew.VECTOR2I(MM(100), MM(100)))
     if kind[0] == 'origin':
+        f.SetOrientationDegrees(kind[2])
+        p1 = (100, 100)
+        tx, ty = kind[1]
+    elif kind[0] == 'pos':
         f.SetOrientationDegrees(kind[2])
         p1 = (100, 100)
         tx, ty = kind[1]

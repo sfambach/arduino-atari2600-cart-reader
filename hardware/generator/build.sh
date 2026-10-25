@@ -34,3 +34,4 @@ python3 finish.py $B $T/route.kicad_pcb $T/route.ses $H/$N.kicad_pcb
 python3 -c "import pcbnew;b=pcbnew.LoadBoard('$H/$N.kicad_pcb');pcbnew.WriteDRCReport(b,'$H/drc-bericht.txt',pcbnew.EDA_UNITS_MILLIMETRES,True)"
 grep -E "^\[" $H/drc-bericht.txt | sed 's/\]:.*/]/' | sort | uniq -c || true
 grep -E "unconnected pads" $H/drc-bericht.txt
+python3 plate.py $H/$N.kicad_pcb
