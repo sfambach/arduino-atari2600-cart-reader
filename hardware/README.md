@@ -47,7 +47,7 @@ Uno: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A4, SCL = A5 wi
 - Lower part below the flanges: 35 mm long, 6 mm high (width assumed 9 mm).
 - Body between the flanges 36.8 mm. Mounting flanges 7.2 mm long, 7.1 mm wide (across the pin rows), 6.5 mm high, with a Ø2.8 mm hole centred 2.9 mm from the outer edge.
 - Flange underside flush with the top of the lower part (6 mm above the board), flange top at 12.5 mm. That leaves 3.6 mm to the slot top (confirmed).
-- Card slot opening: 33.3 mm long; width not yet measured.
+- Card slot opening: 33.3 mm long, 2.2 mm wide; the spring contacts close to about 1.4 mm (estimated), which suits a 1.6 mm cartridge PCB. Slot depth not measured.
 
 The measured slot sat on round-pin socket strips for extra height. They are not needed and are left out; the guide sets the cartridge height instead.
 

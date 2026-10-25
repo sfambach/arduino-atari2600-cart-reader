@@ -1,6 +1,8 @@
 # 2D-Massskizze Atari-2600-Cartridge-Slot, von Hand gemessen (Stefan, 25.10.2026)
 import sys
 L, W = 51.3, 9.0
+SLOT_W, CONTACT_GAP = 2.2, 1.4       # Schlitzbreite, Abstand eingedrueckter Federkontakte (geschaetzt)
+SLOT_DEPTH = 8.0                    # Annahme, nicht gemessen
 SLOT_L = 33.3                       # Schlitzlaenge (Stefan: "Schlitzbreite")
 UP_H = 10.1                         # Oberteil (36,8 lang) ueber dem Unterteil
 INNER = 36.8                        # Steckleiste ohne Laschen
@@ -47,8 +49,9 @@ ox, oy = 8, 13
 txt(ox + L / 2, oy - 5.5, 'Draufsicht (Cartridge-Seite)', 15, bold=True)
 rect(ox, oy + (W - EAR_W) / 2, EAR, EAR_W); rect(ox + L - EAR, oy + (W - EAR_W) / 2, EAR, EAR_W)
 rect(ox + EAR, oy, INNER, W)
-rect(ox + (L - SLOT_L) / 2, oy + W / 2 - 1.2, SLOT_L, 2.4, fill='#fafafa', dash='5,3')
-txt(ox + L / 2, oy + W / 2 + .45, 'Schlitz (Breite offen)', 10, '#888')
+rect(ox + (L - SLOT_L) / 2, oy + W / 2 - SLOT_W / 2, SLOT_L, SLOT_W, fill='#fafafa')
+txt(ox + L / 2, oy + W / 2 + .45, 'Schlitz', 10, '#888')
+dimv(ox + (L + SLOT_L) / 2 + 1.2, oy + W / 2 - SLOT_W / 2, oy + W / 2 + SLOT_W / 2, '2,2', left=False)
 dimh(ox + (L - SLOT_L) / 2, ox + (L + SLOT_L) / 2, oy + 1.4, f(SLOT_L))
 for xh in (ox + HOLE_X, ox + L - HOLE_X):
     circ(xh, oy + W / 2, HOLE_D)
@@ -90,6 +93,14 @@ rect(sx, sb - LOW_H, W, LOW_H)
 rect(sx, sb - H, W, H - LOW_H)
 rect(sx + (W - EAR_W) / 2, sb - EAR_Z1, EAR_W, EAR_Z1 - EAR_Z0)
 dimh(sx, sx + W, sb + 6.5, '9')
+rect(sx + W / 2 - SLOT_W / 2, sb - H, SLOT_W, SLOT_DEPTH, fill='white', dash='4,2')
+for side in (-1, 1):
+    xw, xc = sx + W / 2 + side * SLOT_W / 2, sx + W / 2 + side * CONTACT_GAP / 2
+    out.append(f'<polyline points="{xw*S:.1f},{(sb-H+1)*S:.1f} {xc*S:.1f},{(sb-H+3.5)*S:.1f} {xc*S:.1f},{(sb-H+5)*S:.1f} {xw*S:.1f},{(sb-H+7)*S:.1f}" fill="none" stroke="{PIN}" stroke-width="1.8"/>')
+dimh(sx + W / 2 - SLOT_W / 2, sx + W / 2 + SLOT_W / 2, sb - H - 1.5, '2,2')
+txt(sx + W + 1, sb - H + 4.5, 'Federkontakte, eingedrückt ca. 1,4', 10, PIN, 'start')
+txt(sx + W + 1, sb - H + 6.5, '→ Cartridge-Platine ca. 1,6', 10, PIN, 'start')
+txt(sx + W + 1, sb - H + 8.5, 'Schlitztiefe 8 (Annahme)', 10, RED, 'start')
 dimh(sx + W / 2 - ROW / 2, sx + W / 2 + ROW / 2, sb + 4.2, '5,5')
 txt(sx + W + 1, sb - LOW_H / 2 + .4, 'Breite unten ?', 10, RED, 'start')
 
@@ -111,10 +122,10 @@ dimh(ux + (L - LOW_L) / 2, ux + (L + LOW_L) / 2, uy + W + 7, '35')
 dimv(ux - 2.5, uy + W / 2 - ROW / 2, uy + W / 2 + ROW / 2, '5,5')
 
 # --- Hinweise ---
-nx, ny = 32, 77
+nx, ny = 40, 77
 notes = [('Offene Punkte (rot):', RED, True),
          ('1. Breite des 35er-Unterteils: gezeichnet 9.', '#222', False),
-         ('2. Schlitz: 33,3 lang, Breite (quer) fehlt.', '#222', False),
+         ('2. Schlitztiefe nicht gemessen (8 angenommen).', '#222', False),
          ('Passt: 36,8 + 2 × 7,2 = 51,2 ≈ 51,3 gemessen.', '#222', False),
          ('Loch Ø2,8 in 7,1 breiter Lasche: je 2,15 Rand.', '#222', False),
          ('Laschen bündig mit Unterteil (6 + 6,5 = 12,5).', '#222', False),
@@ -124,6 +135,6 @@ for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 80 * S, 125 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
-      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v6</text>' + \
+      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v7</text>' + \
       f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Von Hand gemessen (Stefan, 25.10.2026), Maße in mm. Rot = unsicher oder abgeleitet.</text>' + ''.join(out) + '</svg>'
 open(sys.argv[1], 'w').write(svg)
