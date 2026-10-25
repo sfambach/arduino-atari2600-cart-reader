@@ -38,6 +38,10 @@ Uno: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A4, SCL = A5 wi
 - Cartridge body sits over the slot: keep-out ±11 mm across the slot for parts taller than the slot.
 - Not built or tested yet.
 
+## Cartridge orientation
+
+[`pinout/pinout.png`](pinout/pinout.png) shows the cartridge contacts seen from below with the label up: pins 13–24 (D3 … +5V, GND) are on the label side, pins 1–12 (A7 … GND) on the back. Pin k sits opposite pin 25 − k, so a cartridge inserted the wrong way round puts +5V on D2. Sources: [WiringVCS](https://github.com/drzaiusx11/WiringVCS) and [The Hardware Book](https://isa.umh.es/temas/micros/doc/hwb/co_CartridgeAtari2600.html); quick check: pin 23 has continuity to the ROM's VCC pin.
+
 ## Cartridge slot drawing
 
 [`slot-drawing/slot-masse.png`](slot-drawing/slot-masse.png) is a 2D dimension sketch of the 24-pin cartridge slot (top, front, side and bottom views), measured by hand; `zeichnung.py` regenerates it. It is the basis for the planned 3D-printed cartridge guide. A slot from another source may differ, so check these values first:
