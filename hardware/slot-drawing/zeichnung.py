@@ -2,7 +2,7 @@
 import sys
 L, W = 51.3, 9.0
 SLOT_W, CONTACT_GAP = 2.2, 1.4       # Schlitzbreite, Abstand eingedrueckter Federkontakte (geschaetzt)
-SLOT_DEPTH = 8.0                    # Annahme, nicht gemessen
+SLOT_DEPTH = 9.0
 SLOT_L = 33.3                       # Schlitzlaenge (Stefan: "Schlitzbreite")
 UP_H = 10.1                         # Oberteil (36,8 lang) ueber dem Unterteil
 INNER = 36.8                        # Steckleiste ohne Laschen
@@ -100,7 +100,7 @@ for side in (-1, 1):
 dimh(sx + W / 2 - SLOT_W / 2, sx + W / 2 + SLOT_W / 2, sb - H - 1.5, '2,2')
 txt(sx + W + 1, sb - H + 4.5, 'Federkontakte, eingedrückt ca. 1,4', 10, PIN, 'start')
 txt(sx + W + 1, sb - H + 6.5, '→ Cartridge-Platine ca. 1,6', 10, PIN, 'start')
-txt(sx + W + 1, sb - H + 8.5, 'Schlitztiefe 8 (Annahme)', 10, RED, 'start')
+dimv(sx - 2.5, sb - H, sb - H + SLOT_DEPTH, f(SLOT_DEPTH))
 dimh(sx + W / 2 - ROW / 2, sx + W / 2 + ROW / 2, sb + 4.2, '5,5')
 txt(sx + W + 1, sb - LOW_H / 2 + .4, 'Breite unten ?', 10, RED, 'start')
 
@@ -125,7 +125,6 @@ dimv(ux - 2.5, uy + W / 2 - ROW / 2, uy + W / 2 + ROW / 2, '5,5')
 nx, ny = 40, 77
 notes = [('Offene Punkte (rot):', RED, True),
          ('1. Breite des 35er-Unterteils: gezeichnet 9.', '#222', False),
-         ('2. Schlitztiefe nicht gemessen (8 angenommen).', '#222', False),
          ('Passt: 36,8 + 2 × 7,2 = 51,2 ≈ 51,3 gemessen.', '#222', False),
          ('Loch Ø2,8 in 7,1 breiter Lasche: je 2,15 Rand.', '#222', False),
          ('Laschen bündig mit Unterteil (6 + 6,5 = 12,5).', '#222', False),
@@ -135,6 +134,6 @@ for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 80 * S, 125 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
-      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v7</text>' + \
+      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v8</text>' + \
       f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Von Hand gemessen (Stefan, 25.10.2026), Maße in mm. Rot = unsicher oder abgeleitet.</text>' + ''.join(out) + '</svg>'
 open(sys.argv[1], 'w').write(svg)
