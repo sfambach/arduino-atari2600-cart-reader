@@ -13,7 +13,7 @@ HOLE_X = HOLE_EDGE + HOLE_D / 2
 EAR_H = 6.5
 EAR_Z0 = LOW_H                      # Laschen schliessen unten buendig mit dem Unterteil ab
 EAR_Z1 = EAR_Z0 + EAR_H
-EAR_TOP_GAP = H - EAR_Z1            # gemessen 3,1 bis 3,4
+EAR_TOP_GAP = H - EAR_Z1            # bestaetigt 3,5 bis 3,6
 STRIP_W = 2.5                       # Buchsenleiste einreihig, typisch
 PITCH, ROW, NPIN, PIN_D = 2.54, 5.5, 12, 0.5
 STRIP_L = NPIN * PITCH
@@ -75,7 +75,7 @@ for i in range(NPIN):
 dimv(fx - 2.5, base - H, base, f(H))
 dimv(fx + L + 2.5, base - EAR_Z0, base, f(EAR_Z0), left=False)
 dimv(fx + (L - LOW_L) / 2 - 2, base - LOW_H, base, f(LOW_H))
-dimv(fx + L + 2.5, base - H, base - EAR_Z1, f(EAR_TOP_GAP) + ' ?', c=RED, left=False)
+dimv(fx + L + 2.5, base - H, base - EAR_Z1, f(EAR_TOP_GAP), left=False)
 dimv(fx - 5.5, base - H, base - LOW_H, f(UP_H))
 dimv(fx + L + 6, base - EAR_Z1, base - EAR_Z0, f(EAR_H), left=False)
 dimh(fx + (L - LOW_L) / 2, fx + (L + LOW_L) / 2, base - LOW_H + 2.2, '35')
@@ -113,10 +113,8 @@ dimv(ux - 2.5, uy + W / 2 - ROW / 2, uy + W / 2 + ROW / 2, '5,5')
 # --- Hinweise ---
 nx, ny = 32, 77
 notes = [('Offene Punkte (rot):', RED, True),
-         ('1. Rest über den Laschen: 6 + 10,1 − 12,5 = 3,6,', '#222', False),
-         ('   gemessen 3,1 bis 3,4. Ein Maß ist ca. 0,3 daneben.', '#222', False),
-         ('2. Breite des 35er-Unterteils: gezeichnet 9.', '#222', False),
-         ('3. Schlitz: 33,3 lang, Breite (quer) fehlt.', '#222', False),
+         ('1. Breite des 35er-Unterteils: gezeichnet 9.', '#222', False),
+         ('2. Schlitz: 33,3 lang, Breite (quer) fehlt.', '#222', False),
          ('Passt: 36,8 + 2 × 7,2 = 51,2 ≈ 51,3 gemessen.', '#222', False),
          ('Loch Ø2,8 in 7,1 breiter Lasche: je 2,15 Rand.', '#222', False),
          ('Laschen bündig mit Unterteil (6 + 6,5 = 12,5).', '#222', False),
@@ -126,6 +124,6 @@ for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 80 * S, 125 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
-      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v5</text>' + \
+      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v6</text>' + \
       f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Von Hand gemessen (Stefan, 25.10.2026), Maße in mm. Rot = unsicher oder abgeleitet.</text>' + ''.join(out) + '</svg>'
 open(sys.argv[1], 'w').write(svg)
