@@ -1,6 +1,7 @@
 # 2D-Massskizze Atari-2600-Cartridge-Slot, von Hand gemessen (Stefan, 25.10.2026)
 import sys
 L, W = 51.3, 9.0
+SLOT_L = 33.3                       # Schlitzlaenge (Stefan: "Schlitzbreite")
 UP_H = 10.1                         # Oberteil (36,8 lang) ueber dem Unterteil
 INNER = 36.8                        # Steckleiste ohne Laschen
 LOW_L, LOW_H = 35.0, 6.0            # schmaler Unterteil unter den Laschen
@@ -46,8 +47,9 @@ ox, oy = 8, 13
 txt(ox + L / 2, oy - 5.5, 'Draufsicht (Cartridge-Seite)', 15, bold=True)
 rect(ox, oy + (W - EAR_W) / 2, EAR, EAR_W); rect(ox + L - EAR, oy + (W - EAR_W) / 2, EAR, EAR_W)
 rect(ox + EAR, oy, INNER, W)
-rect(ox + EAR + 2, oy + W / 2 - 1.2, INNER - 4, 2.4, fill='#fafafa', dash='5,3')
-txt(ox + L / 2, oy + W / 2 + .45, 'Schlitz (Maße offen)', 10, '#888')
+rect(ox + (L - SLOT_L) / 2, oy + W / 2 - 1.2, SLOT_L, 2.4, fill='#fafafa', dash='5,3')
+txt(ox + L / 2, oy + W / 2 + .45, 'Schlitz (Breite offen)', 10, '#888')
+dimh(ox + (L - SLOT_L) / 2, ox + (L + SLOT_L) / 2, oy + 1.4, f(SLOT_L))
 for xh in (ox + HOLE_X, ox + L - HOLE_X):
     circ(xh, oy + W / 2, HOLE_D)
 dimh(ox, ox + L, oy + W + 6, f(L))
@@ -114,7 +116,7 @@ notes = [('Offene Punkte (rot):', RED, True),
          ('1. Rest über den Laschen: 6 + 10,1 − 12,5 = 3,6,', '#222', False),
          ('   gemessen 3,1 bis 3,4. Ein Maß ist ca. 0,3 daneben.', '#222', False),
          ('2. Breite des 35er-Unterteils: gezeichnet 9.', '#222', False),
-         ('3. Schlitz der Cartridge: Maße fehlen.', '#222', False),
+         ('3. Schlitz: 33,3 lang, Breite (quer) fehlt.', '#222', False),
          ('Passt: 36,8 + 2 × 7,2 = 51,2 ≈ 51,3 gemessen.', '#222', False),
          ('Loch Ø2,8 in 7,1 breiter Lasche: je 2,15 Rand.', '#222', False),
          ('Laschen bündig mit Unterteil (6 + 6,5 = 12,5).', '#222', False),
@@ -124,6 +126,6 @@ for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 80 * S, 125 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
-      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v4</text>' + \
+      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v5</text>' + \
       f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Von Hand gemessen (Stefan, 25.10.2026), Maße in mm. Rot = unsicher oder abgeleitet.</text>' + ''.join(out) + '</svg>'
 open(sys.argv[1], 'w').write(svg)
