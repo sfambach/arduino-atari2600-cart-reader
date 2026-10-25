@@ -53,7 +53,7 @@ Test the dump with the emulator [Stella](https://stella-emu.github.io/).
 
 ## AI disclosure
 
-This project is built with AI assistance. Stefan Fambach had the idea, wrote the concept and reviews and tests every change; the implementation (code and documentation) is written largely by Claude (Anthropic) via Claude Code.
+This project is built with AI assistance. Stefan Fambach had the idea, wrote the concept and reviews and tests every change; the implementation (schematics, PCB design files, firmware and documentation) is written largely by Claude (Anthropic) via Claude Code.
 
 ## License
 
