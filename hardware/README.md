@@ -43,10 +43,10 @@ Uno: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A4, SCL = A5 wi
 [`slot-drawing/slot-masse.png`](slot-drawing/slot-masse.png) is a 2D dimension sketch of the 24-pin cartridge slot (top, front, side and bottom views), measured by hand; `zeichnung.py` regenerates it. It is the basis for the planned 3D-printed cartridge guide. A slot from another source may differ, so check these values first:
 
 - Pins 2×12, pitch 2.54 mm, rows 5.5 mm apart (centre to centre).
-- Overall length 51.2 mm, width 9 mm, height 14.6 mm above the board.
+- Overall length 51.3 mm, width 9 mm, height 14.6 mm above the board.
 - Lower part below the flanges: 35 mm long, 6 mm high (width assumed 9 mm).
-- Mounting flanges 7.1 mm long, 6.4 mm wide (assumed), with a Ø2.8 mm hole centred 2.9 mm from the outer edge.
-- Flange underside 6 mm above the board, 3.4 mm below the slot top (flange height 5.2 mm, not yet confirmed).
+- Body between the flanges 36.8 mm. Mounting flanges 7.2 mm long, 7.1 mm wide (across the pin rows), 6.5 mm high, with a Ø2.8 mm hole centred 2.9 mm from the outer edge.
+- Flange top 3.4 mm below the slot top, so the flange underside sits 4.7 mm above the board; this does not yet match the 6 mm lower part (open).
 - Card slot opening: not yet measured.
 
 The measured slot sat on round-pin socket strips (4.4 mm extra height). They are not needed and are left out; the guide sets the cartridge height instead.
