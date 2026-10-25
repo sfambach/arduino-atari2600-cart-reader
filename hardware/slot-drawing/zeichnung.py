@@ -1,16 +1,23 @@
-# 2D-Massskizze Atari-2600-Cartridge-Slot nach Stefans Messung (25.10.2026)
+# 2D-Massskizze Atari-2600-Cartridge-Slot, von Hand gemessen (Stefan, 25.10.2026)
 import sys
-L, W, H = 51.2, 9.0, 19.0          # Gesamtlaenge, -breite, Hoehe ueber Platine
+L, W = 51.2, 9.0
+ADP = 4.4                           # abgezogener Rundstift-Adapter (10,4 - 6), nicht verbaut
+H = 19.0 - ADP                      # Hoehe ab Unterkante Slot
 INNER = 37.0                        # Steckleiste ohne Laschen
-EAR = (L - INNER) / 2               # Laschenlaenge (gemessen 7, Summe passt nur mit 7,1)
-EAR_W = 6.4                         # Laschenbreite (Annahme: "6,4 dick" = Breite)
-HOLE_D, HOLE_EDGE = 2.8, 1.5        # Loch, Abstand Lochrand zur Aussenkante
+LOW_L, LOW_H = 35.0, 6.0            # schmaler Unterteil unter den Laschen
+EAR = (L - INNER) / 2
+EAR_W = 6.4                         # Annahme: "6,4 dick" = Laschenbreite
+HOLE_D, HOLE_EDGE = 2.8, 1.5
 HOLE_X = HOLE_EDGE + HOLE_D / 2
-EAR_Z0, EAR_TOP_GAP = 10.4, 3.4     # Lasche ab Platine, Absatz bis Oberkante
+EAR_Z0, EAR_TOP_GAP = 10.4 - ADP, 3.4
 EAR_Z1 = H - EAR_TOP_GAP
+STRIP_W = 2.5                       # Buchsenleiste einreihig, typisch
 PITCH, ROW, NPIN, PIN_D = 2.54, 5.5, 12, 0.5
-S = 9                               # px pro mm
+STRIP_L = NPIN * PITCH
+S = 9
+RED, DIM, PIN, ADPC = '#c0392b', '#1f5fbf', '#c47a00', '#d9c7a0'
 out = []
+def f(v): return f'{v:.1f}'.replace('.', ',').replace(',0', '') if abs(v - round(v)) < 1e-6 else f'{v:.1f}'.replace('.', ',')
 def ln(x1, y1, x2, y2, c='#222', w=1.6, dash=None):
     out.append(f'<line x1="{x1*S:.1f}" y1="{y1*S:.1f}" x2="{x2*S:.1f}" y2="{y2*S:.1f}" stroke="{c}" stroke-width="{w}"' + (f' stroke-dasharray="{dash}"' if dash else '') + '/>')
 def rect(x, y, w, h, fill='#e8e8e8', c='#222', dash=None):
@@ -20,84 +27,98 @@ def circ(x, y, d, fill='white', c='#222'):
 def txt(x, y, t, size=13, c='#222', anchor='middle', rot=0, bold=False):
     tr = f' transform="rotate({rot} {x*S:.1f} {y*S:.1f})"' if rot else ''
     out.append(f'<text x="{x*S:.1f}" y="{y*S:.1f}" font-family="DejaVu Sans, sans-serif" font-size="{size}" fill="{c}" text-anchor="{anchor}"' + (' font-weight="bold"' if bold else '') + f'{tr}>{t}</text>')
-DIM = '#1f5fbf'
 def dimh(x1, x2, y, t, c=DIM):
     ln(x1, y, x2, y, c, 1.1); ln(x1, y - .8, x1, y + .8, c, 1.1); ln(x2, y - .8, x2, y + .8, c, 1.1)
     txt((x1 + x2) / 2, y - .5, t, 12, c)
 def dimv(x, y1, y2, t, c=DIM, left=True):
     ln(x, y1, x, y2, c, 1.1); ln(x - .8, y1, x + .8, y1, c, 1.1); ln(x - .8, y2, x + .8, y2, c, 1.1)
     txt(x - .6 if left else x + .6, (y1 + y2) / 2, t, 12, c, 'middle', -90 if left else 90)
-
 pin_x0 = (L - (NPIN - 1) * PITCH) / 2
+def pins(ox, cy):
+    for i in range(NPIN):
+        for dy in (ROW / 2, -ROW / 2):
+            circ(ox + pin_x0 + i * PITCH, cy + dy, PIN_D, PIN, PIN)
+
 # --- Draufsicht ---
-ox, oy = 8, 12
-txt(ox + L / 2, oy - 6, 'Draufsicht (von oben, Cartridge-Seite)', 15, bold=True)
+ox, oy = 8, 13
+txt(ox + L / 2, oy - 5.5, 'Draufsicht (Cartridge-Seite)', 15, bold=True)
 rect(ox, oy + (W - EAR_W) / 2, EAR, EAR_W); rect(ox + L - EAR, oy + (W - EAR_W) / 2, EAR, EAR_W)
 rect(ox + EAR, oy, INNER, W)
 rect(ox + EAR + 2, oy + W / 2 - 1.2, INNER - 4, 2.4, fill='#fafafa', dash='5,3')
 txt(ox + L / 2, oy + W / 2 + .45, 'Schlitz (Maße offen)', 10, '#888')
 for xh in (ox + HOLE_X, ox + L - HOLE_X):
     circ(xh, oy + W / 2, HOLE_D)
-for i in range(NPIN):
-    circ(ox + pin_x0 + i * PITCH, oy + W / 2 + ROW / 2, PIN_D, '#c47a00', '#c47a00')
-    circ(ox + pin_x0 + i * PITCH, oy + W / 2 - ROW / 2, PIN_D, '#c47a00', '#c47a00')
-txt(ox + pin_x0, oy + W / 2 + ROW / 2 + 2.3, '1', 11, '#c47a00'); txt(ox + pin_x0 + 11 * PITCH, oy + W / 2 + ROW / 2 + 2.3, '12', 11, '#c47a00')
-txt(ox + pin_x0, oy + W / 2 - ROW / 2 - 1.2, '24', 11, '#c47a00'); txt(ox + pin_x0 + 11 * PITCH, oy + W / 2 - ROW / 2 - 1.2, '13', 11, '#c47a00')
-dimh(ox, ox + L, oy + W + 7, f'{L:.1f}'.replace('.', ','))
-dimh(ox, ox + EAR, oy + W + 4, f'{EAR:.1f}'.replace('.', ','))
-dimh(ox + EAR, ox + L - EAR, oy + W + 4, f'{INNER:.0f}')
-dimh(ox + L - EAR, ox + L, oy + W + 4, f'{EAR:.1f}'.replace('.', ','))
-dimh(ox, ox + HOLE_X, oy - 2.5, f'{HOLE_X:.1f}'.replace('.', ','))
+dimh(ox, ox + L, oy + W + 6, f(L))
+dimh(ox, ox + EAR, oy + W + 3, f(EAR)); dimh(ox + EAR, ox + L - EAR, oy + W + 3, f(INNER)); dimh(ox + L - EAR, ox + L, oy + W + 3, f(EAR))
+dimh(ox, ox + HOLE_X, oy - 2.2, f(HOLE_X))
 txt(ox + HOLE_X, oy + W / 2 - 2.2, 'Ø2,8', 11, DIM)
 dimv(ox + L + 3, oy, oy + W, '9', left=False)
-dimv(ox + L + 6.5, oy + (W - EAR_W) / 2, oy + (W + EAR_W) / 2, '6,4 ?', c='#c0392b', left=False)
-dimv(ox - 2.5, oy + W / 2 - ROW / 2, oy + W / 2 + ROW / 2, '5,5')
-dimh(ox + pin_x0, ox + pin_x0 + PITCH, oy + W + 1.6, '2,54')
+dimv(ox + L + 6.5, oy + (W - EAR_W) / 2, oy + (W + EAR_W) / 2, '6,4 ?', c=RED, left=False)
+
 # --- Vorderansicht ---
-fx, fy = 8, 52
-txt(fx + L / 2, fy - 22, 'Vorderansicht (lange Seite)', 15, bold=True)
-base = fy
-ln(fx - 4, base, fx + L + 4, base, '#2e7d32', 2.2); txt(fx + L + 4.5, base + .4, 'Platine', 11, '#2e7d32', 'start')
-rect(fx + EAR, base - H, INNER, H)
+fx, base = 8, 60
+txt(fx + L / 2, base - H - 3, 'Vorderansicht (lange Seite)', 15, bold=True)
+ln(fx - 4, base, fx + L + 4, base, '#2e7d32', 2.2); txt(fx + L + 4.5, base + .4, 'Platine / Auflage', 11, '#2e7d32', 'start')
+rect(fx + (L - LOW_L) / 2, base - EAR_Z0, LOW_L, LOW_H)
+rect(fx + EAR, base - H, INNER, H - EAR_Z0)
 for x0 in (fx, fx + L - EAR):
     rect(x0, base - EAR_Z1, EAR, EAR_Z1 - EAR_Z0)
     xh = x0 + (HOLE_X if x0 == fx else EAR - HOLE_X)
-    ln(xh - HOLE_D / 2, base - EAR_Z1, xh - HOLE_D / 2, base - EAR_Z0, '#666', 1, '3,2'); ln(xh + HOLE_D / 2, base - EAR_Z1, xh + HOLE_D / 2, base - EAR_Z0, '#666', 1, '3,2')
+    for s in (-1, 1):
+        ln(xh + s * HOLE_D / 2, base - EAR_Z1, xh + s * HOLE_D / 2, base - EAR_Z0, '#666', 1, '3,2')
 for i in range(NPIN):
-    ln(fx + pin_x0 + i * PITCH, base, fx + pin_x0 + i * PITCH, base + 3, '#c47a00', 1.6)
-dimv(fx - 2.5, base - H, base, '19')
-dimv(fx + L + 2.5, base - EAR_Z0, base, '10,4', left=False)
+    ln(fx + pin_x0 + i * PITCH, base, fx + pin_x0 + i * PITCH, base + 3, PIN, 1.6)
+dimv(fx - 2.5, base - H, base, f(H))
+dimv(fx + L + 2.5, base - EAR_Z0, base, f(EAR_Z0), left=False)
 dimv(fx + L + 2.5, base - H, base - EAR_Z1, '3,4', left=False)
-dimv(fx + L + 6, base - EAR_Z1, base - EAR_Z0, f'{EAR_Z1-EAR_Z0:.1f} ?'.replace('.', ','), c='#c0392b', left=False)
+dimv(fx + L + 6, base - EAR_Z1, base - EAR_Z0, f(EAR_Z1 - EAR_Z0) + ' ?', c=RED, left=False)
+dimh(fx + (L - LOW_L) / 2, fx + (L + LOW_L) / 2, base - EAR_Z0 + 2.2, '35')
+
 # --- Seitenansicht ---
-sx, sy = 8, 82
-txt(sx + 12, sy - 22, 'Seitenansicht (kurze Seite)', 15, bold=True)
-rect(sx + (W - EAR_W) / 2, sy - EAR_Z1, EAR_W, EAR_Z1 - EAR_Z0)
-rect(sx, sy - H, W, H, fill='#e8e8e8')
-ln(sx + (W - EAR_W) / 2, sy - EAR_Z1, sx + (W - EAR_W) / 2, sy - EAR_Z0, '#222', 1.2)
-ln(sx + (W + EAR_W) / 2, sy - EAR_Z1, sx + (W + EAR_W) / 2, sy - EAR_Z0, '#222', 1.2)
-ln(sx - 4, sy, sx + W + 4, sy, '#2e7d32', 2.2)
+sx, sb = 8, 92
+txt(sx + 14, sb - H - 3, 'Seitenansicht (kurze Seite)', 15, bold=True)
+ln(sx - 4, sb, sx + W + 4, sb, '#2e7d32', 2.2)
 for yy in (W / 2 - ROW / 2, W / 2 + ROW / 2):
-    ln(sx + yy, sy, sx + yy, sy + 3, '#c47a00', 1.6)
-dimh(sx, sx + W, sy + 6, '9')
-dimh(sx + W / 2 - ROW / 2, sx + W / 2 + ROW / 2, sy + 3.8, '5,5')
-txt(sx + W / 2, sy - H - 1, '24 … 13', 10, '#c47a00')
+    ln(sx + yy, sb, sx + yy, sb + 3, PIN, 1.6)
+rect(sx, sb - EAR_Z0, W, LOW_H)
+rect(sx, sb - H, W, H - EAR_Z0)
+rect(sx + (W - EAR_W) / 2, sb - EAR_Z1, EAR_W, EAR_Z1 - EAR_Z0)
+dimh(sx, sx + W, sb + 6.5, '9')
+dimh(sx + W / 2 - ROW / 2, sx + W / 2 + ROW / 2, sb + 4.2, '5,5')
+txt(sx + W + 1, sb - EAR_Z0 + LOW_H / 2 + .4, 'Breite unten ?', 10, RED, 'start')
+
+# --- Unteransicht ---
+ux, uy = 8, 108
+txt(ux + L / 2, uy - 3, 'Unteransicht (Platinenseite)', 15, bold=True)
+rect(ux, uy + (W - EAR_W) / 2, EAR, EAR_W); rect(ux + L - EAR, uy + (W - EAR_W) / 2, EAR, EAR_W)
+rect(ux + EAR, uy, INNER, W, fill='#f2f2f2')
+rect(ux + (L - LOW_L) / 2, uy, LOW_L, W)
+for yy in (W / 2 - ROW / 2, W / 2 + ROW / 2):
+    pass
+for xh in (ux + HOLE_X, ux + L - HOLE_X):
+    circ(xh, uy + W / 2, HOLE_D)
+pins(ux, uy + W / 2)
+txt(ux + pin_x0, uy - .6, '1', 11, PIN); txt(ux + pin_x0 + 11 * PITCH, uy - .6, '12', 11, PIN)
+txt(ux + pin_x0, uy + W + 1.9, '24', 11, PIN); txt(ux + pin_x0 + 11 * PITCH, uy + W + 1.9, '13', 11, PIN)
+dimh(ux + pin_x0, ux + pin_x0 + PITCH, uy + W + 4.2, '2,54')
+dimh(ux + (L - LOW_L) / 2, ux + (L + LOW_L) / 2, uy + W + 7, '35')
+dimv(ux - 2.5, uy + W / 2 - ROW / 2, uy + W / 2 + ROW / 2, '5,5')
+
 # --- Hinweise ---
-nx, ny = 32, 63
-notes = [('Offene Punkte (rot):', '#c0392b', True),
-         ('1. 7 + 37 + 7 = 51 mm, gemessen 51,2 mm.', '#222', False),
-         ('   Gezeichnet mit Laschen je 7,1 mm.', '#222', False),
-         ('2. „6,4 dick“ als Laschenbreite gelesen:', '#222', False),
-         ('   (6,4 − 2,8) / 2 = 1,8 mm ≈ deine 2 mm.', '#222', False),
-         ('3. Laschenhöhe: 19 − 10,4 − 3,4 = 5,2 mm.', '#222', False),
-         ('   Ist die Lasche 5,2 oder 6,4 mm hoch?', '#222', False),
-         ('4. Lochmitte = 1,5 + 1,4 = 2,9 mm von außen.', '#222', False),
-         ('5. Schlitz für die Cartridge-Platine:', '#222', False),
-         ('   Länge und Breite fehlen noch.', '#222', False),
-         ('Maße in mm. Pins Ø0,5, Raster 2,54.', '#666', False)]
+nx, ny = 32, 77
+notes = [('Offene Punkte (rot):', RED, True),
+         ('1. 7 + 37 + 7 = 51, gemessen 51,2 → Laschen je 7,1.', '#222', False),
+         ('2. „6,4 dick“ als Laschenbreite gelesen.', '#222', False),
+         ('3. Laschenhöhe 19 − 10,4 − 3,4 = 5,2 (oder 6,4?).', '#222', False),
+         ('4. Breite des 35er-Unterteils: gezeichnet 9.', '#222', False),
+         ('5. Schlitz der Cartridge: Maße fehlen.', '#222', False),
+         ('Rundstift-Adapter (4,4 mm) weggelassen:', '#222', False),
+         ('Höhen ab Unterkante Slot (19 − 4,4 = 14,6).', '#222', False),
+         ('Lochmitte 2,9 mm von außen. Pins Ø0,5.', '#666', False)]
 for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
-w, h = 78 * S, 100 * S
+w, h = 80 * S, 125 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
-      f'<text x="{w/2}" y="34" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v1 (25.10.2026)</text>' + ''.join(out) + '</svg>'
+      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v2 (ohne Adapter)</text>' + \
+      f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Von Hand gemessen (Stefan, 25.10.2026), Maße in mm. Rot = unsicher oder abgeleitet.</text>' + ''.join(out) + '</svg>'
 open(sys.argv[1], 'w').write(svg)
