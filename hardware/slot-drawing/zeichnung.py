@@ -6,6 +6,7 @@ SLOT_DEPTH = 9.0
 SLOT_L = 33.3                       # Schlitzlaenge (Stefan: "Schlitzbreite")
 UP_H = 10.1                         # Oberteil (36,8 lang) ueber dem Unterteil
 INNER = 36.8                        # Steckleiste ohne Laschen
+LOW_W = 7.4
 LOW_L, LOW_H = 35.0, 6.0            # schmaler Unterteil unter den Laschen
 H = LOW_H + UP_H                    # Hoehe ab Unterkante Slot
 EAR = (L - INNER) / 2
@@ -89,7 +90,7 @@ txt(sx + 14, sb - H - 3, 'Seitenansicht (kurze Seite)', 15, bold=True)
 ln(sx - 4, sb, sx + W + 4, sb, '#2e7d32', 2.2)
 for yy in (W / 2 - ROW / 2, W / 2 + ROW / 2):
     ln(sx + yy, sb, sx + yy, sb + 3, PIN, 1.6)
-rect(sx, sb - LOW_H, W, LOW_H)
+rect(sx + (W - LOW_W) / 2, sb - LOW_H, LOW_W, LOW_H)
 rect(sx, sb - H, W, H - LOW_H)
 rect(sx + (W - EAR_W) / 2, sb - EAR_Z1, EAR_W, EAR_Z1 - EAR_Z0)
 dimh(sx, sx + W, sb + 6.5, '9')
@@ -102,14 +103,14 @@ txt(sx + W + 1, sb - H + 4.5, 'Federkontakte, eingedrückt ca. 1,4', 10, PIN, 's
 txt(sx + W + 1, sb - H + 6.5, '→ Cartridge-Platine ca. 1,6', 10, PIN, 'start')
 dimv(sx - 2.5, sb - H, sb - H + SLOT_DEPTH, f(SLOT_DEPTH))
 dimh(sx + W / 2 - ROW / 2, sx + W / 2 + ROW / 2, sb + 4.2, '5,5')
-txt(sx + W + 1, sb - LOW_H / 2 + .4, 'Breite unten ?', 10, RED, 'start')
+dimh(sx + (W - LOW_W) / 2, sx + (W + LOW_W) / 2, sb - LOW_H / 2, f(LOW_W))
 
 # --- Unteransicht ---
 ux, uy = 8, 108
 txt(ux + L / 2, uy - 3, 'Unteransicht (Platinenseite)', 15, bold=True)
 rect(ux, uy + (W - EAR_W) / 2, EAR, EAR_W); rect(ux + L - EAR, uy + (W - EAR_W) / 2, EAR, EAR_W)
 rect(ux + EAR, uy, INNER, W, fill='#f2f2f2')
-rect(ux + (L - LOW_L) / 2, uy, LOW_L, W)
+rect(ux + (L - LOW_L) / 2, uy + (W - LOW_W) / 2, LOW_L, LOW_W)
 for yy in (W / 2 - ROW / 2, W / 2 + ROW / 2):
     pass
 for xh in (ux + HOLE_X, ux + L - HOLE_X):
@@ -124,7 +125,7 @@ dimv(ux - 2.5, uy + W / 2 - ROW / 2, uy + W / 2 + ROW / 2, '5,5')
 # --- Hinweise ---
 nx, ny = 40, 77
 notes = [('Offene Punkte (rot):', RED, True),
-         ('1. Breite des 35er-Unterteils: gezeichnet 9.', '#222', False),
+         ('Einsteckrichtung (Etikettseite) noch offen.', '#222', False),
          ('Passt: 36,8 + 2 × 7,2 = 51,2 ≈ 51,3 gemessen.', '#222', False),
          ('Loch Ø2,8 in 7,1 breiter Lasche: je 2,15 Rand.', '#222', False),
          ('Laschen bündig mit Unterteil (6 + 6,5 = 12,5).', '#222', False),
@@ -134,6 +135,6 @@ for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 80 * S, 125 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
-      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v8</text>' + \
+      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Atari 2600 Cartridge-Slot – Maßskizze v9</text>' + \
       f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Von Hand gemessen (Stefan, 25.10.2026), Maße in mm. Rot = unsicher oder abgeleitet.</text>' + ''.join(out) + '</svg>'
 open(sys.argv[1], 'w').write(svg)
