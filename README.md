@@ -46,6 +46,15 @@ Test the dump with the emulator [Stella](https://stella-emu.github.io/).
 - [Cart Reader](https://github.com/sanni/cartreader) by sanni (GPLv3)
 - [vcsreaderfw](https://github.com/keoni29/vcsreaderfw) by Koen van Vliet (MIT)
 
+## Authors
+
+- **Stefan Fambach** (SteFam) – idea and concept, review and testing – https://www.fambach.net
+- **Claude** (Anthropic AI) – implementation, via Claude Code
+
+## AI disclosure
+
+This project is built with AI assistance. Stefan Fambach had the idea, wrote the concept and reviews and tests every change; the implementation (code and documentation) is written largely by Claude (Anthropic) via Claude Code.
+
 ## License
 
 GPLv3
