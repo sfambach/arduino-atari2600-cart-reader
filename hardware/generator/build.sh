@@ -31,6 +31,7 @@ python3 -c "import pcbnew;b=pcbnew.LoadBoard('$T/route.kicad_pcb');pcbnew.Export
 rm -f $T/route.ses
 (cd $T && timeout 1200 xvfb-run -a java -jar ${FREEROUTING:-/opt/tools/freerouting.jar} -de $T/route.dsn -do $T/route.ses -mp ${PASSES:-60} 2>&1 | grep -E "completed|unrouted|incomplete" | tail -3)
 python3 finish.py $B $T/route.kicad_pcb $T/route.ses $H/$N.kicad_pcb
+python3 labels.py $B $H/$N.kicad_pcb
 python3 -c "import pcbnew;b=pcbnew.LoadBoard('$H/$N.kicad_pcb');pcbnew.WriteDRCReport(b,'$H/drc-bericht.txt',pcbnew.EDA_UNITS_MILLIMETRES,True)"
 grep -E "^\[" $H/drc-bericht.txt | sed 's/\]:.*/]/' | sort | uniq -c || true
 grep -E "unconnected pads" $H/drc-bericht.txt

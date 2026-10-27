@@ -8,9 +8,9 @@ Three through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout mat
 | [`mega/`](mega/) | Arduino Mega 2560 shield | 101.6 × 53.3 mm | direct port wiring (PA, PC, PL) |
 | [`nano/`](nano/) | carrier for a plugged-in Arduino Nano | 80 × 62 mm | same circuit and firmware as the Uno, 2 × M3 holes |
 
-Each folder: KiCad 7 project, schematic PDF, Gerber + drill ZIP, render, DRC report (0 errors, 0 unconnected; remaining warnings are silkscreen cosmetics and, on the shields, the modified shield footprint).
+Each folder: KiCad 7 project, schematic PDF, Gerber + drill ZIP, render, DRC report (0 errors, 0 unconnected; remaining warnings are silkscreen near the board edge and, on the shields, the modified shield footprint).
 
-Changes in 1.1: switched cartridge supply with polyfuse and orientation check, mounting holes for the slot flanges (M2.5) as fixing points for the 3D-printed guide, ICSP header removed from the shields (firmware goes over USB), Uno: the mounting hole next to the ICSP header removed, Mega: slot moved to the middle of the board.
+Changes in 1.1: switched cartridge supply with polyfuse and orientation check, mounting holes for the slot flanges (M2.5) as fixing points for the 3D-printed guide, ICSP header removed from the shields (firmware goes over USB), Uno: the mounting hole next to the ICSP header removed, Mega: slot moved to the middle of the board. Silkscreen: each part shows reference and value ("R4 10k"), "fambach.net" in the front title.
 
 ## Switched cartridge supply
 

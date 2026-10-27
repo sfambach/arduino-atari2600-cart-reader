@@ -1,23 +1,7 @@
-** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/mega/atari2600-cart-reader-mega.kicad_pcb **
-** Created on 2026-10-25 08:01:19 **
+** Drc report for atari2600-cart-reader-mega.kicad_pcb **
+** Created on 2026-10-27 22:34:14 **
 
-** Found 14 DRC violations **
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; Severity: warning
-    @(147.5700 mm, 142.3100 mm): Reference 'R4'
-    @(147.0300 mm, 139.0400 mm): Line on F.Silkscreen
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; Severity: warning
-    @(144.3700 mm, 142.3100 mm): Reference 'R3'
-    @(143.8300 mm, 139.0400 mm): Line on F.Silkscreen
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; Severity: warning
-    @(150.7700 mm, 142.3100 mm): Reference 'R5'
-    @(150.2300 mm, 139.0400 mm): Line on F.Silkscreen
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; Severity: warning
-    @(135.0000 mm, 106.2000 mm): PCB Text 'Atari 2600 Cart Reader - Mega v1.1' on F.Silkscreen
-    @(151.0000 mm, 107.2500 mm): Reference 'C3'
+** Found 10 DRC violations **
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
     @(122.0000 mm, 130.0000 mm): PCB Text 'github.com/sfambach/arduino-atari2...' on B.Silkscreen

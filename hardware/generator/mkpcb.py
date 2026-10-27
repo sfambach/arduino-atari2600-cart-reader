@@ -105,23 +105,6 @@ for i in range(4):
     s.SetEnd(pcbnew.VECTOR2I(MM(pts[(i + 1) % 4][0]), MM(pts[(i + 1) % 4][1])))
     b.Add(s)
 
-def text(t, x, y, size=1.0, layer=pcbnew.F_SilkS, rot=0):
-    s = pcbnew.PCB_TEXT(b)
-    s.SetText(t)
-    s.SetLayer(layer)
-    s.SetPosition(pcbnew.VECTOR2I(MM(x), MM(y)))
-    s.SetTextSize(pcbnew.VECTOR2I(MM(size), MM(size)))
-    s.SetTextThickness(MM(size * 0.15))
-    s.SetTextAngleDegrees(rot)
-    if layer == pcbnew.B_SilkS:
-        s.SetMirrored(True)
-    b.Add(s)
-
-for t, x, y, sz in B['texts']:
-    text(t, x, y, sz)
-for t, x, y, sz in B['btexts']:
-    s = text(t, x, y, sz, pcbnew.B_SilkS)
-
 def zone(layer):
     z = pcbnew.ZONE(b)
     z.SetLayer(layer)

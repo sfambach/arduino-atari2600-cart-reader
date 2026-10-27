@@ -80,7 +80,7 @@ UNO = dict(
         'C2': ('pads', (106, 109), (111, 109)),
         'C3': ('pads', (114.5, 109), (116.5, 109)),
     },
-    texts=[('Atari 2600 Cart Reader - Uno v1.1', 134.3, 106.2, 1.2), ('MCP23017', 134, 142.3, 1.0)],
+    texts=[('Atari 2600 Cart Reader - Uno v1.1 - fambach.net', 139, 106.2, 1.0)],
     btexts=[('fambach.net', 134.3, 113.5, 1.0), ('github.com/sfambach/arduino-atari2600-cart-reader', 134.3, 115.5, 0.8)],
 )
 
@@ -119,7 +119,7 @@ MEGA = dict(
         'C2': ('pads', (140, 111), (145, 111)),
         'C3': ('pads', (150, 111), (152, 111)),
     },
-    texts=[('Atari 2600 Cart Reader - Mega v1.1', 135, 106.2, 1.2)],
+    texts=[('Atari 2600 Cart Reader - Mega v1.1 - fambach.net', 135, 106.2, 1.2)],
     btexts=[('fambach.net', 122, 128, 1.0), ('github.com/sfambach/arduino-atari2600-cart-reader', 122, 130, 0.8)],
 )
 
@@ -169,7 +169,7 @@ NANO = dict(
         'H1': ('pos', (NX + 3.5, NY + 31), 0),
         'H2': ('pos', (NX + 76.5, NY + 31), 0),
     },
-    texts=[('Atari 2600 Cart Reader - Nano v1.1', NX + 40, NY + 3.5, 1.2), ('MCP23017', NX + 28.5, NY + 31.8, 1.0)],
+    texts=[('Atari 2600 Cart Reader - Nano v1.1 - fambach.net', NX + 40, NY + 3.5, 1.2)],
     btexts=[('fambach.net', NX + 40, NY + 37.5, 1.0), ('github.com/sfambach/arduino-atari2600-cart-reader', NX + 40, NY + 39.5, 0.8)],
 )
 

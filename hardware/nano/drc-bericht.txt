@@ -1,23 +1,7 @@
-** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/nano/atari2600-cart-reader-nano.kicad_pcb **
-** Created on 2026-10-25 08:04:42 **
+** Drc report for atari2600-cart-reader-nano.kicad_pcb **
+** Created on 2026-10-27 22:34:18 **
 
-** Found 4 DRC violations **
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; Severity: warning
-    @(112.7700 mm, 146.8100 mm): Reference 'R5'
-    @(112.2300 mm, 143.5400 mm): Line on F.Silkscreen
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; Severity: warning
-    @(109.5700 mm, 146.8100 mm): Reference 'R4'
-    @(109.0300 mm, 143.5400 mm): Line on F.Silkscreen
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; Severity: warning
-    @(106.3700 mm, 146.8100 mm): Reference 'R3'
-    @(105.8300 mm, 143.5400 mm): Line on F.Silkscreen
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; Severity: warning
-    @(153.8100 mm, 129.6300 mm): Reference 'R2'
-    @(150.5400 mm, 129.3700 mm): Line on F.Silkscreen
+** Found 0 DRC violations **
 
 ** Found 0 unconnected pads **
 
