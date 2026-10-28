@@ -1,7 +1,15 @@
-** Drc report for atari2600-cart-reader-nano.kicad_pcb **
-** Created on 2026-10-27 22:34:18 **
+** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/nano/atari2600-cart-reader-nano.kicad_pcb **
+** Created on 2026-10-28 06:55:28 **
 
-** Found 0 DRC violations **
+** Found 2 DRC violations **
+[starved_thermal]: Thermal relief connection to zone incomplete (zone min spoke count 2; actual 1)
+    Local override; Severity: error
+    @(100.5000 mm, 100.5000 mm): Zone [GND] on F.Cu
+    @(145.1200 mm, 158.2400 mm): PTH pad 4 [GND] of A1
+[starved_thermal]: Thermal relief connection to zone incomplete (zone min spoke count 2; actual 1)
+    Local override; Severity: error
+    @(100.5000 mm, 100.5000 mm): Zone [GND] on B.Cu
+    @(143.4800 mm, 127.9800 mm): PTH pad 16 [GND] of U1
 
 ** Found 0 unconnected pads **
 

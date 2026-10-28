@@ -1,6 +1,6 @@
 # Boards
 
-Three through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout matches `AtariCartReader/hal.h`. Version 1.1.
+Three through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout matches `AtariCartReader/hal.h`. Version 1.2.
 
 | Variant | Board | Size | Notes |
 |---|---|---|---|
@@ -9,6 +9,8 @@ Three through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout mat
 | [`nano/`](nano/) | carrier for a plugged-in Arduino Nano | 80 × 62 mm | same circuit and firmware as the Uno, 2 × M3 holes |
 
 Each folder: KiCad 7 project, schematic PDF, Gerber + drill ZIP, render, DRC report (0 errors, 0 unconnected; remaining warnings are silkscreen near the board edge and, on the shields, the modified shield footprint).
+
+Changes in 1.2: reset button (SW1, on the Arduino RESET line) and read button (SW2, A1 to GND), 6 × 6 mm tactile switches; Uno: C1 moved right to make room.
 
 Changes in 1.1: switched cartridge supply with polyfuse and orientation check, mounting holes for the slot flanges (M2.5) as fixing points for the 3D-printed guide, ICSP header removed from the shields (firmware goes over USB), Uno: the mounting hole next to the ICSP header removed, Mega: slot moved to the middle of the board. Silkscreen: each part shows reference and value ("R4 10k"), "fambach.net" in the front title.
 
@@ -51,6 +53,7 @@ Uno / Nano: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A4, SCL 
 | F1 | Polyfuse 200 mA radial, 5.08 mm (MF-R020, RXEF020) | 1 | 1 | 1 |
 | C1, C2 | 100 nF ceramic, 5 mm pitch | 2 | 1 | 2 |
 | C3 | 10 µF electrolytic, 5 mm, 2 mm pitch | 1 | 1 | 1 |
+| SW1, SW2 | Tactile switch 6 × 6 mm THT (reset, read) | 2 | 2 | 2 |
 | – | Stacking headers (Uno: 6, 8, 8, 10; Mega shield set) or 2 × 15 female headers (Nano) | 1 set | 1 set | 2 |
 | – | M2.5 screws for the slot flanges / guide | 2 | 2 | 2 |
 

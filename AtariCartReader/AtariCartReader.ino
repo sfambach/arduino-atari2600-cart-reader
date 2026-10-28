@@ -165,8 +165,26 @@ void dump(const Scheme *s, uint8_t kb) {
   else if (n == "3F") dump3F(kb);
 }
 
+const uint8_t READ_BUTTON = A1;  // LOW = pressed (button to GND, internal pull-up)
+String lastScheme = "4K";
+uint8_t lastKb = 4;
+
+// Dumps with the scheme of the last D command (4K until one was given); the host saves it with dump.py listen.
+void readButton() {
+  if (digitalRead(READ_BUTTON) == HIGH) return;
+  delay(20);
+  if (digitalRead(READ_BUTTON) == HIGH) return;
+  if (cartOn()) {
+    dump(findScheme(lastScheme), lastKb);
+    cartOff();
+  }
+  while (digitalRead(READ_BUTTON) == LOW) {}
+  delay(20);
+}
+
 void setup() {
   Serial.begin(115200);
+  pinMode(READ_BUTTON, INPUT_PULLUP);
   digitalWrite(CART_PWR, HIGH);
   pinMode(CART_PWR, OUTPUT);
   halInit();
@@ -174,6 +192,7 @@ void setup() {
 }
 
 void loop() {
+  readButton();
   if (!Serial.available()) return;
   String line = Serial.readStringUntil('\n');
   line.trim();
@@ -194,6 +213,8 @@ void loop() {
     if (!s) { Serial.println(F("ERR scheme")); return; }
     uint8_t kb = s->kb;
     if (sp > 0 && s->name[0] == '3') kb = arg.substring(sp + 1).toInt();
+    lastScheme = s->name;
+    lastKb = kb;
     if (!cartOn()) return;
     dump(s, kb);
     cartOff();

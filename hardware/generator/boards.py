@@ -9,6 +9,7 @@ C10U = 'Capacitor_THT:CP_Radial_D5.0mm_P2.00mm'
 R = 'Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal'
 FUSE = 'atari:Fuse_PTC_Radial_P5.08mm'
 TO92 = 'Package_TO_SOT_THT:TO-92_Inline'
+BUTTON = 'Button_Switch_THT:SW_PUSH_6mm'
 POWER = {'+5V', 'GND'}
 
 
@@ -21,6 +22,14 @@ def cart_power(sch_x, sch_y):
         'R4': ('Device:R', '10k', R, (sch_x + 50, sch_y), {'1': '+5V_F', '2': 'Q_BASE'}),
         'R5': ('Device:R', '10k', R, (sch_x + 65, sch_y), {'1': 'CART_5V', '2': 'CART_SENSE'}),
         'R6': ('Device:R', '100k', R, (sch_x + 80, sch_y), {'1': 'CART_5V', '2': 'GND'}),
+    }
+
+
+def buttons(sch_x, sch_y):
+    # Reset on the Arduino's RESET line, read button on A1 (internal pull-up, LOW = pressed).
+    return {
+        'SW1': ('Switch:SW_Push', 'Reset', BUTTON, (sch_x, sch_y), {'1': 'RESET', '2': 'GND'}),
+        'SW2': ('Switch:SW_Push', 'Read', BUTTON, (sch_x + 20, sch_y), {'1': 'READ', '2': 'GND'}),
     }
 X0, Y0 = 100, 153.34  # Ursprung der Shield-Footprints = linke untere Ecke des Arduino
 
@@ -35,7 +44,8 @@ UNO_PINS = ['3V3', '5V1', '5V2', 'A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'AREF', 'D0
 MEGA_PINS = UNO_PINS + ['5V3', '5V4', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15', 'GND5', 'GND6'] + \
     ['D%d' % i for i in range(14, 54)]
 
-uno_conn = {'5V1': '+5V', 'GND1': 'GND', 'GND2': 'GND', 'GND3': 'GND', 'A4': 'SDA', 'A5': 'SCL', 'D10': 'CART_PWR', 'A0': 'CART_SENSE'}
+uno_conn = {'5V1': '+5V', 'GND1': 'GND', 'GND2': 'GND', 'GND3': 'GND', 'A4': 'SDA', 'A5': 'SCL', 'D10': 'CART_PWR', 'A0': 'CART_SENSE',
+            'RST1': 'RESET', 'A1': 'READ'}
 for i in range(8):
     uno_conn['D%d' % (i + 2)] = 'D%d' % i
 mcp = {'9': '+5V', '10': 'GND', '11': NC, '12': 'SCL', '13': 'SDA', '14': NC, '15': 'GND', '16': 'GND', '17': 'GND',
@@ -62,6 +72,7 @@ UNO = dict(
         'C2': ('Device:C', '100n', C100N, (250, 150), {'1': 'CART_5V', '2': 'GND'}),
         'C3': ('Device:C_Polarized', '10u', C10U, (265, 150), {'1': '+5V', '2': 'GND'}),
         **cart_power(150, 175),
+        **buttons(150, 200),
     },
     drop={'A1': ['MISO', 'MOSI', 'SCK', 'RST2', '5V2', 'GND4'], 'A1_holes': [(66.04, -35.56)]},
     place={
@@ -76,16 +87,18 @@ UNO = dict(
         'U1': ('at', (117.6, 146.1), 90),
         'R1': ('pads', (153.4, 138.5), (161.02, 138.5)),
         'R2': ('pads', (153.4, 143.5), (161.02, 143.5)),
-        'C1': ('pads', (154.5, 110), (159.5, 110)),
+        'C1': ('pads', (160.5, 110), (165.5, 110)),
+        'SW1': ('at', (144, 108.5), 0),
+        'SW2': ('at', (154, 108.5), 0),
         'C2': ('pads', (106, 109), (111, 109)),
         'C3': ('pads', (114.5, 109), (116.5, 109)),
     },
-    texts=[('Atari 2600 Cart Reader - Uno v1.1 - fambach.net', 139, 106.2, 1.0)],
+    texts=[('Atari 2600 Cart Reader - Uno v1.2 - fambach.net', 139, 105.7, 1.0)],
     btexts=[('fambach.net', 134.3, 113.5, 1.0), ('github.com/sfambach/arduino-atari2600-cart-reader', 134.3, 115.5, 0.8)],
 )
 
 mega_conn = {'5V1': '+5V', '5V3': '+5V', '5V4': '+5V', 'GND1': 'GND', 'GND2': 'GND', 'GND3': 'GND', 'GND5': 'GND',
-             'GND6': 'GND', 'D8': 'CART_PWR', 'A0': 'CART_SENSE'}
+             'GND6': 'GND', 'D8': 'CART_PWR', 'A0': 'CART_SENSE', 'RST1': 'RESET', 'A1': 'READ'}
 for i in range(8):
     mega_conn['D%d' % (22 + i)] = 'A%d' % i      # PA0-PA7
     mega_conn['D%d' % (49 - i)] = 'D%d' % i      # PL0-PL7
@@ -105,6 +118,7 @@ MEGA = dict(
         'C2': ('Device:C', '100n', C100N, (250, 150), {'1': 'CART_5V', '2': 'GND'}),
         'C3': ('Device:C_Polarized', '10u', C10U, (265, 150), {'1': '+5V', '2': 'GND'}),
         **cart_power(150, 175),
+        **buttons(150, 200),
     },
     drop={'A1': ['MISO', 'MOSI', 'SCK', 'RST2', '5V2', 'GND4']},
     place={
@@ -118,8 +132,10 @@ MEGA = dict(
         'R6': ('pads', (151.6, 138.5), (151.6, 146.12)),
         'C2': ('pads', (140, 111), (145, 111)),
         'C3': ('pads', (150, 111), (152, 111)),
+        'SW1': ('at', (178.5, 137), 0),
+        'SW2': ('at', (188.5, 137), 0),
     },
-    texts=[('Atari 2600 Cart Reader - Mega v1.1 - fambach.net', 135, 106.2, 1.2)],
+    texts=[('Atari 2600 Cart Reader - Mega v1.2 - fambach.net', 135, 106.2, 1.2)],
     btexts=[('fambach.net', 122, 128, 1.0), ('github.com/sfambach/arduino-atari2600-cart-reader', 122, 130, 0.8)],
 )
 
@@ -127,7 +143,7 @@ NANO_PINS = {'1': 'D1/TX', '2': 'D0/RX', '3': 'RESET1', '4': 'GND', '5': 'D2', '
              '10': 'D7', '11': 'D8', '12': 'D9', '13': 'D10', '14': 'D11', '15': 'D12', '16': 'D13', '17': '3V3', '18': 'AREF',
              '19': 'A0', '20': 'A1', '21': 'A2', '22': 'A3', '23': 'A4', '24': 'A5', '25': 'A6', '26': 'A7', '27': '+5V',
              '28': 'RESET2', '29': 'GND', '30': 'VIN'}
-nano_by_name = dict(uno_conn, **{'+5V': '+5V', 'GND': 'GND'})
+nano_by_name = dict(uno_conn, **{'+5V': '+5V', 'GND': 'GND', 'RESET1': 'RESET'})
 nano_conn = {num: nano_by_name.get(name) for num, name in NANO_PINS.items()}
 NX, NY = 100, 100  # linke obere Ecke der Nano-Platine
 
@@ -150,6 +166,7 @@ NANO = dict(
         'H1': ('Mechanical:MountingHole', 'M3', 'MountingHole:MountingHole_3.2mm_M3', (280, 60), {}),
         'H2': ('Mechanical:MountingHole', 'M3', 'MountingHole:MountingHole_3.2mm_M3', (290, 60), {}),
         **cart_power(150, 175),
+        **buttons(150, 200),
     },
     place={
         'A1': ('at', (NX + 37.5, NY + 58.24), 90),
@@ -166,10 +183,12 @@ NANO = dict(
         'R4': ('pads', (NX + 7.2, NY + 43), (NX + 7.2, NY + 50.62)),
         'R5': ('pads', (NX + 10.4, NY + 43), (NX + 10.4, NY + 50.62)),
         'R6': ('pads', (NX + 13.6, NY + 43), (NX + 13.6, NY + 50.62)),
+        'SW1': ('at', (NX + 67.5, NY + 34), 0),
+        'SW2': ('at', (NX + 9.5, NY + 53.5), 0),
         'H1': ('pos', (NX + 3.5, NY + 31), 0),
         'H2': ('pos', (NX + 76.5, NY + 31), 0),
     },
-    texts=[('Atari 2600 Cart Reader - Nano v1.1 - fambach.net', NX + 40, NY + 3.5, 1.2)],
+    texts=[('Atari 2600 Cart Reader - Nano v1.2 - fambach.net', NX + 40, NY + 3.5, 1.2)],
     btexts=[('fambach.net', NX + 40, NY + 37.5, 1.0), ('github.com/sfambach/arduino-atari2600-cart-reader', NX + 40, NY + 39.5, 0.8)],
 )
 
