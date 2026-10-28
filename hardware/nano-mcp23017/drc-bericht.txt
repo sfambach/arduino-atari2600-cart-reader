@@ -1,0 +1,10 @@
+** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/nano-mcp23017/atari2600-cart-reader-nano-mcp23017.kicad_pcb **
+** Created on 2026-10-28 07:14:50 **
+
+** Found 0 DRC violations **
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **

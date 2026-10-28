@@ -1,0 +1,25 @@
+** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/nano/atari2600-cart-reader-nano.kicad_pcb **
+** Created on 2026-10-28 07:17:20 **
+
+** Found 4 DRC violations **
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(164.5000 mm, 133.2250 mm): PCB Text 'C4 100n' on F.Silkscreen
+    @(166.5000 mm, 133.2000 mm): Line on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; Severity: warning
+    @(164.5000 mm, 133.2250 mm): PCB Text 'C4 100n' on F.Silkscreen
+[starved_thermal]: Thermal relief connection to zone incomplete (zone min spoke count 2; actual 1)
+    Local override; Severity: error
+    @(100.5000 mm, 100.5000 mm): Zone [GND] on F.Cu
+    @(152.6800 mm, 135.6000 mm): PTH pad 8 [GND] of U2
+[starved_thermal]: Thermal relief connection to zone incomplete (zone min spoke count 2; actual 1)
+    Local override; Severity: error
+    @(100.5000 mm, 100.5000 mm): Zone [GND] on F.Cu
+    @(145.1200 mm, 158.2400 mm): PTH pad 4 [GND] of A1
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **

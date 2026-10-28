@@ -1,15 +1,60 @@
 /*
- Atari 2600 Cartridge Reader for Arduino Mega 2560 / Uno
+ Atari 2600 Cartridge Reader for Arduino Mega 2560 / Uno / Nano
  Based on ideas from retrocartdumper (SvOlli) and Cart Reader (sanni), GPLv3.
 
  Serial 115200 baud, commands terminated by newline:
    L                list bankswitching schemes
    D <scheme> [kb]  dump ROM, answer "OK <bytes>\n" followed by raw data
    P <hexaddr>      read single byte (debug)
+   S                show the orientation and supply readings (calibration)
+
+ The cartridge is only powered while a command runs. Before switching on, the
+ firmware checks the orientation with the supply off: a weak pull-up on data
+ line D2 back-feeds the cartridge's VCC rail through the ROM's input protection
+ diode only if pin 11 really is D2. A reversed cartridge (or none) leaves the
+ sense input low, and the supply stays off. Experimental: thresholds still need
+ to be confirmed on real hardware.
 */
 #include "hal.h"
 
+struct Scheme { const char *name; uint8_t kb; };  // before any function: Arduino inserts prototypes there
+
 const uint16_t ROM = 0x1000;
+// ADC thresholds, to be calibrated on hardware with the S command.
+const int SENSE_ORIENTATION = 40;  // ~0.2 V: D2 back-feeds the cartridge rail
+const int SENSE_POWERED = 900;     // ~4.4 V: supply is on and not overloaded
+
+int senseOrientation() {
+  digitalWrite(CART_PWR, HIGH);
+  halRelease();
+  halDrive();  // all address lines low: keeps the ROM disabled in either orientation (slot A1 meets a reversed cart's A12)
+  halPullupD2(true);
+  delay(5);
+  int v = analogRead(CART_SENSE);
+  halPullupD2(false);
+  return v;
+}
+
+void cartOff() {
+  halRelease();
+  digitalWrite(CART_PWR, HIGH);
+}
+
+bool cartOn() {
+  if (senseOrientation() < SENSE_ORIENTATION) {
+    Serial.println(F("ERR no cartridge or inserted the wrong way round"));
+    return false;
+  }
+  halDrive();
+  digitalWrite(CART_PWR, LOW);
+  delay(20);
+  if (analogRead(CART_SENSE) < SENSE_POWERED) {
+    cartOff();
+    Serial.println(F("ERR cartridge supply too low (short?)"));
+    return false;
+  }
+  return true;
+}
 
 uint8_t peek(uint16_t addr) {
   halSetAddr(addr);
@@ -94,7 +139,6 @@ void dump3F(uint8_t kb) {
   }
 }
 
-struct Scheme { const char *name; uint8_t kb; };
 const Scheme schemes[] = {
   {"2K", 2}, {"4K", 4}, {"F8", 8}, {"F8SC", 8}, {"F6", 16}, {"F6SC", 16},
   {"F4", 32}, {"F4SC", 32}, {"E0", 8}, {"E7", 16}, {"FA", 12}, {"FE", 8}, {"3F", 8},
@@ -121,13 +165,34 @@ void dump(const Scheme *s, uint8_t kb) {
   else if (n == "3F") dump3F(kb);
 }
 
+const uint8_t READ_BUTTON = A1;  // LOW = pressed (button to GND, internal pull-up)
+String lastScheme = "4K";
+uint8_t lastKb = 4;
+
+// Dumps with the scheme of the last D command (4K until one was given); the host saves it with dump.py listen.
+void readButton() {
+  if (digitalRead(READ_BUTTON) == HIGH) return;
+  delay(20);
+  if (digitalRead(READ_BUTTON) == HIGH) return;
+  if (cartOn()) {
+    dump(findScheme(lastScheme), lastKb);
+    cartOff();
+  }
+  while (digitalRead(READ_BUTTON) == LOW) {}
+  delay(20);
+}
+
 void setup() {
   Serial.begin(115200);
+  pinMode(READ_BUTTON, INPUT_PULLUP);
+  digitalWrite(CART_PWR, HIGH);
+  pinMode(CART_PWR, OUTPUT);
   halInit();
   Serial.println(F("READY Atari 2600 Cart Reader"));
 }
 
 void loop() {
+  readButton();
   if (!Serial.available()) return;
   String line = Serial.readStringUntil('\n');
   line.trim();
@@ -148,10 +213,25 @@ void loop() {
     if (!s) { Serial.println(F("ERR scheme")); return; }
     uint8_t kb = s->kb;
     if (sp > 0 && s->name[0] == '3') kb = arg.substring(sp + 1).toInt();
+    lastScheme = s->name;
+    lastKb = kb;
+    if (!cartOn()) return;
     dump(s, kb);
+    cartOff();
   } else if (cmd == 'P') {
     uint16_t a = strtol(arg.c_str(), nullptr, 16);
+    if (!cartOn()) return;
     Serial.println(peek(a), HEX);
+    cartOff();
+  } else if (cmd == 'S') {
+    int o = senseOrientation();
+    Serial.print(F("orientation ")); Serial.println(o);
+    if (o >= SENSE_ORIENTATION) {
+      digitalWrite(CART_PWR, LOW);
+      delay(20);
+      Serial.print(F("supply ")); Serial.println(analogRead(CART_SENSE));
+    }
+    cartOff();
   } else {
     Serial.println(F("ERR cmd"));
   }

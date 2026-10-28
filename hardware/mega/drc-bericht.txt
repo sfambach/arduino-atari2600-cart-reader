@@ -1,0 +1,48 @@
+** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/mega/atari2600-cart-reader-mega.kicad_pcb **
+** Created on 2026-10-28 07:16:09 **
+
+** Found 10 DRC violations **
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; Severity: warning
+    @(122.0000 mm, 130.0000 mm): PCB Text 'github.com/sfambach/arduino-atari2...' on B.Silkscreen
+[lib_footprint_mismatch]: Footprint 'Arduino_Mega2560_R3_Shield' does not match copy in library 'arduino-library'.
+    Local override; Severity: warning
+    @(100.0000 mm, 153.3400 mm): Footprint A1
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(100.0000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(100.0000 mm, 100.0000 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(100.0000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(100.0000 mm, 100.0000 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(201.6000 mm, 153.3400 mm): Line on Edge.Cuts
+    @(100.0000 mm, 153.3400 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(100.0000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(197.5360 mm, 100.0000 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(201.6000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(199.0600 mm, 152.0700 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(201.6000 mm, 153.3400 mm): Line on Edge.Cuts
+    @(199.0600 mm, 153.3400 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(201.6000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(201.6000 mm, 115.2400 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(201.6000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(201.6000 mm, 149.5300 mm): Line on B.Silkscreen
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **
