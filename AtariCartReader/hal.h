@@ -37,8 +37,17 @@ inline void halWriteData(uint8_t data) { PORTL = data; DDRL = 0xFF; }
 inline void halReleaseData() { DDRL = 0x00; PORTL = 0x00; }
 
 #elif defined(__AVR_ATmega328P__)
-// Arduino Uno / Nano: address bus via MCP23017 (I2C 0x20, GPA0-7 = A0-A7, GPB0-4 = A8-A12),
-// data bus D0-D7 = D2-D9 (PD2-PD7, PB0-PB1)
+// Arduino Uno / Nano: data bus D0-D7 = D2-D9 (PD2-PD7, PB0-PB1).
+// Address bus: two 74HC595 on SPI (MOSI D11, SCK D13, latch A2; U1 = A0-A7, U2 = A8-A12),
+// or with ADDR_MCP23017 defined the MCP23017 boards (I2C 0x20, GPA0-7 = A0-A7, GPB0-4 = A8-A12).
+// #define ADDR_MCP23017
+const uint8_t CART_PWR = 10;       // PB2, LOW = cartridge on (BC327)
+const uint8_t CART_SENSE = A0;
+inline void halReleaseDataPins() {
+  DDRD &= 0x03; PORTD &= 0x03;
+  DDRB &= 0xFC; PORTB &= 0xFC;
+}
+#if defined(ADDR_MCP23017)
 #include <Wire.h>
 const uint8_t MCP_ADDR = 0x20;
 inline void mcpWrite(uint8_t reg, uint8_t a, uint8_t b) {
@@ -46,18 +55,14 @@ inline void mcpWrite(uint8_t reg, uint8_t a, uint8_t b) {
   Wire.write(reg); Wire.write(a); Wire.write(b);
   Wire.endTransmission();
 }
-const uint8_t CART_PWR = 10;       // PB2, LOW = cartridge on (BC327)
-const uint8_t CART_SENSE = A0;
 inline void halRelease() {
   mcpWrite(0x00, 0xFF, 0xFF);  // IODIRA/IODIRB: all inputs
-  DDRD &= 0x03; PORTD &= 0x03;
-  DDRB &= 0xFC; PORTB &= 0xFC;
+  halReleaseDataPins();
 }
 inline void halDrive() {
   mcpWrite(0x12, 0x00, 0x00);  // GPIOA/GPIOB low before switching to output
   mcpWrite(0x00, 0x00, 0x00);
 }
-inline void halPullupD2(bool on) { if (on) PORTD |= 0x10; else PORTD &= ~0x10; }  // D2 = PD4
 inline void halInit() {
   Wire.begin();
   Wire.setClock(400000);
@@ -66,6 +71,30 @@ inline void halInit() {
 inline void halSetAddr(uint16_t addr) {
   mcpWrite(0x12, addr & 0xFF, (addr >> 8) & 0x1F);  // GPIOA/GPIOB
 }
+#else
+#include <SPI.h>
+const uint8_t SR_LATCH = A2;
+inline void halSetAddr(uint16_t addr) {
+  SPI.transfer((addr >> 8) & 0x1F);  // shifted on into U2 (A8-A12)
+  SPI.transfer(addr & 0xFF);         // stays in U1 (A0-A7)
+  digitalWrite(SR_LATCH, HIGH);
+  digitalWrite(SR_LATCH, LOW);
+}
+// The 74HC595 outputs cannot float (OE is tied low); LOW does not feed an unpowered cartridge.
+inline void halRelease() {
+  halSetAddr(0);
+  halReleaseDataPins();
+}
+inline void halDrive() { halSetAddr(0); }
+inline void halInit() {
+  pinMode(SR_LATCH, OUTPUT);
+  digitalWrite(SR_LATCH, LOW);
+  SPI.begin();
+  SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE0));
+  halRelease();
+}
+#endif
+inline void halPullupD2(bool on) { if (on) PORTD |= 0x10; else PORTD &= ~0x10; }  // D2 = PD4
 inline uint8_t halReadData() { return (PIND >> 2) | ((PINB & 0x03) << 6); }
 inline void halWriteData(uint8_t data) {
   PORTD = (PORTD & 0x03) | (data << 2);
@@ -73,10 +102,7 @@ inline void halWriteData(uint8_t data) {
   DDRD |= 0xFC;
   DDRB |= 0x03;
 }
-inline void halReleaseData() {
-  DDRD &= 0x03; PORTD &= 0x03;
-  DDRB &= 0xFC; PORTB &= 0xFC;
-}
+inline void halReleaseData() { halReleaseDataPins(); }
 #else
 #error "Board not supported (Mega 2560, Uno or Nano)"
 #endif

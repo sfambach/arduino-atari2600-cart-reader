@@ -82,7 +82,7 @@ def props(ref, value, x, y, away=90):
         r = [Sym('property'), 'Reference', ref, [Sym('at'), x + 2.5, y - 1.3, 0], eff(justify='left')]
         v = [Sym('property'), 'Value', value, [Sym('at'), x + 2.5, y + 1.3, 0], eff(justify='left')]
         return [r, v]
-    d = {'A1': 50, 'U1': 30, 'J1': 18}.get(ref, 9)
+    d = {'A1': 50, 'U1': 18, 'U2': 18, 'J1': 18}.get(ref, 9)
     return [prop('Reference', ref, x, y - d), prop('Value', value, x, y + d)]
 
 pwr_n = [0]
@@ -138,7 +138,7 @@ texts = [[Sym('text'), B['note'], [Sym('at'), 30, 185, 0], eff(justify='left'), 
 
 sch = [Sym('kicad_sch'), [Sym('version'), 20230121], [Sym('generator'), Sym('eeschema')], [Sym('uuid'), ROOT],
        [Sym('paper'), 'A4'],
-       [Sym('title_block'), [Sym('title'), B['title']], [Sym('date'), '2026-10-25'], [Sym('rev'), '1.1'], [Sym('company'), 'fambach.net']],
+       [Sym('title_block'), [Sym('title'), B['title']], [Sym('date'), '2026-10-28'], [Sym('rev'), '1.2'], [Sym('company'), 'fambach.net']],
        [Sym('lib_symbols')] + list(libs.values())] + items + texts + [
        [Sym('sheet_instances'), [Sym('path'), '/', [Sym('page'), '1']]]]
 open(sys.argv[2], 'w').write(dump(sch) + '\n')

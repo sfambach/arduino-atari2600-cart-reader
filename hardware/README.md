@@ -1,16 +1,18 @@
 # Boards
 
-Three through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout matches `AtariCartReader/hal.h`. Version 1.2.
+Through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout matches `AtariCartReader/hal.h`. Version 1.2.
 
 | Variant | Board | Size | Notes |
 |---|---|---|---|
-| [`uno/`](uno/) | Arduino Uno R3 shield | 68.6 × 53.3 mm | address bus via MCP23017 |
+| [`uno/`](uno/) | Arduino Uno R3 shield | 68.6 × 53.3 mm | address bus via 2 × 74HC595 (SPI) |
 | [`mega/`](mega/) | Arduino Mega 2560 shield | 101.6 × 53.3 mm | direct port wiring (PA, PC, PL) |
 | [`nano/`](nano/) | carrier for a plugged-in Arduino Nano | 80 × 62 mm | same circuit and firmware as the Uno, 2 × M3 holes |
+| [`uno-mcp23017/`](uno-mcp23017/) | Uno shield, alternative | 68.6 × 53.3 mm | address bus via MCP23017 (I²C), firmware with `#define ADDR_MCP23017` in `hal.h` |
+| [`nano-mcp23017/`](nano-mcp23017/) | Nano carrier, alternative | 80 × 62 mm | address bus via MCP23017 (I²C), firmware with `#define ADDR_MCP23017` |
 
 Each folder: KiCad 7 project, schematic PDF, Gerber + drill ZIP, render, DRC report (0 errors, 0 unconnected; remaining warnings are silkscreen near the board edge and, on the shields, the modified shield footprint).
 
-Changes in 1.2: read button (SW2, A1 to GND) on all boards, reset button (SW1, on the Arduino RESET line) on the Uno and Mega shields (the Nano's own reset button stays reachable), 6 × 6 mm tactile switches; Uno: C1 moved right to make room.
+Changes in 1.2: Uno and Nano address bus via two 74HC595 on SPI (MOSI D11, SCK D13, latch A2) instead of the MCP23017, which costs about 1.75 € (Reichelt); the MCP23017 boards stay as `-mcp23017` variants. Read button (SW2, A1 to GND) on all boards, reset button (SW1, on the Arduino RESET line) on the Uno and Mega shields (the Nano's own reset button stays reachable), 6 × 6 mm tactile switches; Uno: C1 moved right to make room.
 
 Changes in 1.1: switched cartridge supply with polyfuse and orientation check, mounting holes for the slot flanges (M2.5) as fixing points for the 3D-printed guide, ICSP header removed from the shields (firmware goes over USB), Uno: the mounting hole next to the ICSP header removed, Mega: slot moved to the middle of the board. Silkscreen: each part shows reference and value ("R4 10k"), "fambach.net" in the front title.
 
@@ -31,31 +33,34 @@ Changes in 1.1: switched cartridge supply with polyfuse and orientation check, m
 
 | Cartridge pin | Signal | Uno shield / Nano board | Mega shield |
 |---|---|---|---|
-| 8 … 1 | A0 … A7 | MCP23017 GPA0 … GPA7 | D22 … D29 (PA0 … PA7) |
-| 22, 21, 19, 20, 18 | A8, A9, A10, A11, A12 | MCP23017 GPB0 … GPB4 | D37 … D33 (PC0 … PC4) |
+| 8 … 1 | A0 … A7 | U1 QA … QH (74HC595) | D22 … D29 (PA0 … PA7) |
+| 22, 21, 19, 20, 18 | A8, A9, A10, A11, A12 | U2 QA … QE (74HC595) | D37 … D33 (PC0 … PC4) |
 | 9, 10, 11, 13 … 17 | D0 … D7 | D2 … D9 | D49 … D42 (PL0 … PL7) |
 | 23 | +5 V (switched) | BC327 collector | BC327 collector |
 | 12, 24 | GND | GND | GND |
 
-Uno / Nano: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A4, SCL = A5 with 4k7 pull-ups.
+Uno / Nano: U1 SER = MOSI (D11), U1 QH' → U2 SER, SRCLK = SCK (D13), RCLK = latch (A2), OE to GND, SRCLR to +5 V; U2 QF–QH unused. The firmware shifts A8–A12 first, then A0–A7.
+
+MCP23017 variants: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A4, SCL = A5 with 4k7 pull-ups; GPA0–7 = A0–A7, GPB0–4 = A8–A12.
 
 ## Bill of materials
 
 | Ref | Part | Uno | Mega | Nano |
 |---|---|---|---|---|
 | J1 | Atari 2600 cartridge slot, 2 × 12, 2.54 mm | 1 | 1 | 1 |
-| U1 | MCP23017-E/SP (DIP-28) + DIP-28 socket | 1 | – | 1 |
-| R1, R2 | 4.7 kΩ, axial | 2 | – | 2 |
+| U1, U2 | 74HC595 (DIP-16) + DIP-16 socket | 2 | – | 2 |
 | R3 | 1 kΩ, axial | 1 | 1 | 1 |
 | R4, R5 | 10 kΩ, axial | 2 | 2 | 2 |
 | R6 | 100 kΩ, axial | 1 | 1 | 1 |
 | Q1 | BC327 (PNP, TO-92) | 1 | 1 | 1 |
 | F1 | Polyfuse 200 mA radial, 5.08 mm (MF-R020, RXEF020) | 1 | 1 | 1 |
-| C1, C2 | 100 nF ceramic, 5 mm pitch | 2 | 1 | 2 |
+| C1, C2, C4 | 100 nF ceramic, 5 mm pitch | 3 | 1 (C2) | 3 |
 | C3 | 10 µF electrolytic, 5 mm, 2 mm pitch | 1 | 1 | 1 |
 | SW1, SW2 | Tactile switch 6 × 6 mm THT (SW1 reset, SW2 read) | 2 | 2 | 1 (SW2) |
 | – | Stacking headers (Uno: 6, 8, 8, 10; Mega shield set) or 2 × 15 female headers (Nano) | 1 set | 1 set | 2 |
 | – | M2.5 screws for the slot flanges / guide | 2 | 2 | 2 |
+
+MCP23017 variants instead of U1/U2 and C4: U1 MCP23017-E/SP (DIP-28) + DIP-28 socket, R1/R2 4.7 kΩ axial, C1 100 nF.
 
 ## Assumptions
 

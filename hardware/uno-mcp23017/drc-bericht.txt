@@ -1,0 +1,59 @@
+** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/uno-mcp23017/atari2600-cart-reader-uno-mcp23017.kicad_pcb **
+** Created on 2026-10-28 07:14:12 **
+
+** Found 13 DRC violations **
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; Severity: warning
+    @(134.3000 mm, 113.5000 mm): PCB Text 'fambach.net' on B.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; Severity: warning
+    @(166.0400 mm, 112.7000 mm): Line on B.Silkscreen
+[starved_thermal]: Thermal relief connection to zone incomplete (zone min spoke count 2; actual 1)
+    Local override; Severity: error
+    @(100.5000 mm, 100.5000 mm): Zone [GND] on B.Cu
+    @(144.0000 mm, 113.0000 mm): PTH pad 2 [GND] of SW1
+[starved_thermal]: Thermal relief connection to zone incomplete (zone min spoke count 2; actual 1)
+    Local override; Severity: error
+    @(100.5000 mm, 100.5000 mm): Zone [GND] on F.Cu
+    @(126.4160 mm, 102.5400 mm): PTH pad GND1 [GND] of A1
+[lib_footprint_mismatch]: Footprint 'Arduino_Uno_R3_Shield' does not match copy in library 'arduino-library'.
+    Local override; Severity: warning
+    @(100.0000 mm, 153.3400 mm): Footprint A1
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(100.0000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(100.0000 mm, 100.0000 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(100.0000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(100.0000 mm, 100.0000 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(100.0000 mm, 153.3400 mm): Line on Edge.Cuts
+    @(100.0000 mm, 153.3400 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(100.0000 mm, 100.0000 mm): Line on Edge.Cuts
+    @(164.5160 mm, 100.0000 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(168.5800 mm, 100.0000 mm): Line on Edge.Cuts
+    @(166.0400 mm, 152.0700 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(168.5800 mm, 153.3400 mm): Line on Edge.Cuts
+    @(166.0400 mm, 153.3400 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(168.5800 mm, 100.0000 mm): Line on Edge.Cuts
+    @(168.5800 mm, 115.2400 mm): Line on B.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(168.5800 mm, 100.0000 mm): Line on Edge.Cuts
+    @(168.5800 mm, 149.5300 mm): Line on B.Silkscreen
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **

@@ -1,23 +1,19 @@
 ** Drc report for /home/user/arduino-atari2600-cart-reader/hardware/uno/atari2600-cart-reader-uno.kicad_pcb **
-** Created on 2026-10-28 06:49:30 **
+** Created on 2026-10-28 07:11:24 **
 
-** Found 12 DRC violations **
+** Found 11 DRC violations **
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
     @(134.3000 mm, 113.5000 mm): PCB Text 'fambach.net' on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
     @(166.0400 mm, 112.7000 mm): Line on B.Silkscreen
-[starved_thermal]: Thermal relief connection to zone incomplete (zone min spoke count 2; actual 1)
-    Local override; Severity: error
-    @(100.5000 mm, 100.5000 mm): Zone [GND] on B.Cu
-    @(144.0000 mm, 113.0000 mm): PTH pad 2 [GND] of SW1
 [lib_footprint_mismatch]: Footprint 'Arduino_Uno_R3_Shield' does not match copy in library 'arduino-library'.
     Local override; Severity: warning
     @(100.0000 mm, 153.3400 mm): Footprint A1
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(100.0000 mm, 153.3400 mm): Line on Edge.Cuts
+    @(168.5800 mm, 153.3400 mm): Line on Edge.Cuts
     @(100.0000 mm, 100.0000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
@@ -25,7 +21,7 @@
     @(100.0000 mm, 100.0000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(100.0000 mm, 153.3400 mm): Line on Edge.Cuts
+    @(168.5800 mm, 153.3400 mm): Line on Edge.Cuts
     @(100.0000 mm, 153.3400 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
