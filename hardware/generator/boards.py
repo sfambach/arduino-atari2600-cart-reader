@@ -143,7 +143,7 @@ NANO_PINS = {'1': 'D1/TX', '2': 'D0/RX', '3': 'RESET1', '4': 'GND', '5': 'D2', '
              '10': 'D7', '11': 'D8', '12': 'D9', '13': 'D10', '14': 'D11', '15': 'D12', '16': 'D13', '17': '3V3', '18': 'AREF',
              '19': 'A0', '20': 'A1', '21': 'A2', '22': 'A3', '23': 'A4', '24': 'A5', '25': 'A6', '26': 'A7', '27': '+5V',
              '28': 'RESET2', '29': 'GND', '30': 'VIN'}
-nano_by_name = dict(uno_conn, **{'+5V': '+5V', 'GND': 'GND', 'RESET1': 'RESET'})
+nano_by_name = dict(uno_conn, **{'+5V': '+5V', 'GND': 'GND'})
 nano_conn = {num: nano_by_name.get(name) for num, name in NANO_PINS.items()}
 NX, NY = 100, 100  # linke obere Ecke der Nano-Platine
 
@@ -166,7 +166,7 @@ NANO = dict(
         'H1': ('Mechanical:MountingHole', 'M3', 'MountingHole:MountingHole_3.2mm_M3', (280, 60), {}),
         'H2': ('Mechanical:MountingHole', 'M3', 'MountingHole:MountingHole_3.2mm_M3', (290, 60), {}),
         **cart_power(150, 175),
-        **buttons(150, 200),
+        'SW2': buttons(150, 200)['SW2'],  # the Nano's own reset button stays reachable
     },
     place={
         'A1': ('at', (NX + 37.5, NY + 58.24), 90),
@@ -183,8 +183,7 @@ NANO = dict(
         'R4': ('pads', (NX + 7.2, NY + 43), (NX + 7.2, NY + 50.62)),
         'R5': ('pads', (NX + 10.4, NY + 43), (NX + 10.4, NY + 50.62)),
         'R6': ('pads', (NX + 13.6, NY + 43), (NX + 13.6, NY + 50.62)),
-        'SW1': ('at', (NX + 67.5, NY + 34), 0),
-        'SW2': ('at', (NX + 9.5, NY + 53.5), 0),
+        'SW2': ('at', (NX + 67.5, NY + 34), 0),
         'H1': ('pos', (NX + 3.5, NY + 31), 0),
         'H2': ('pos', (NX + 76.5, NY + 31), 0),
     },
