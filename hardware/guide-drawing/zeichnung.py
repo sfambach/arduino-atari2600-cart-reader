@@ -3,8 +3,8 @@ import sys
 # --- Messwerte Stefan 14.11.2026 ---
 SHELL_IN_L, SHELL_IN_W = 75.0, 15.5      # Cartridge-Gehaeuse innen (Steckende)
 SHELL_OUT_L, SHELL_OUT_W = 82.5, 20.4    # aussen
-PCB_A, PCB_B = 9.0, 6.0                  # Innenwand -> Cartridge-Platine, Seite A / Seite B
-PCB_T = 0.5                              # unsicher (Stefan: 0,5-0,6); 9 + 6 + 0,5 = 15,5 passt
+PCB_A, PCB_B = 9.24, 4.84                # Innenwand -> Cartridge-Platine, Seite A / B (aus ATARI_CARY_REV_2_holder.stl, Stefan gemessen ~9 / ~6)
+PCB_T = 1.6
 SLOT_TOP = 25.0                          # Oberkante Slot ueber Platine (Slot B auf Stiftleisten)
 SHELL_Z = 6.5                            # Unterkante Gehaeuse ueber Platine, Cartridge gesteckt
 # --- Slot B ---
@@ -13,7 +13,7 @@ SL_L, SL_W = 37.0, 9.5
 CLR = 0.3                                # Luft je Seite zum Gehaeuse
 SLV_L, SLV_W = SHELL_IN_L - 2 * CLR, SHELL_IN_W - 2 * CLR   # Huelse aussen
 CAV_L, CAV_W = 52.0, 10.0                # Aussparung fuer den Slot (passt auch fuer Slot A mit Laschen 51,3 x 9)
-OFF = (PCB_A + PCB_T / 2) - SHELL_IN_W / 2  # Versatz Slotmitte gegen Huelsenmitte = Verpolschutz
+OFF = (PCB_A + PCB_T / 2 - (PCB_B + PCB_T / 2)) / 2  # 2,2: groesster Versatz ist die sichere Seite
 BASE_L, BASE_W = 61.0, 17.0              # Grundplatte = freie Flaeche auf allen Platinen
 HOLE_X, HOLE_D = 22.75, 2.7              # M2,5-Loecher der Platine (Abstand 45,5)
 S = 9
@@ -44,7 +44,9 @@ cx, cy = ox + SLV_L / 2, oy + SLV_W / 2
 txt(cx, oy - 7.5, 'Draufsicht', 15, bold=True)
 rect(cx - BASE_L / 2, cy + OFF - BASE_W / 2, BASE_L, BASE_W, fill='#f4f4f4', dash='5,3')
 rect(ox, oy, SLV_L, SLV_W, fill='#dfe9f7')
-rect(cx - CAV_L / 2, cy + OFF - CAV_W / 2, CAV_L, CAV_W, fill='white')
+rect(cx - CAV_L / 2, cy + OFF - CAV_W / 2, CAV_L, oy + SLV_W - (cy + OFF - CAV_W / 2) + .3, fill='white', c='white')
+ln(cx - CAV_L / 2, cy + OFF - CAV_W / 2, cx + CAV_L / 2, cy + OFF - CAV_W / 2)
+for s in (-1, 1): ln(cx + s * CAV_L / 2, cy + OFF - CAV_W / 2, cx + s * CAV_L / 2, oy + SLV_W)
 rect(cx - SL_L / 2, cy + OFF - SL_W / 2, SL_L, SL_W, fill='#e8e8e8', c='#777')
 ln(cx - 16.65, cy + OFF, cx + 16.65, cy + OFF, PIN, 2)
 for s in (-1, 1):
@@ -57,8 +59,8 @@ dimh(cx - HOLE_X, cx + HOLE_X, cy + OFF + BASE_W / 2 + 10, f(2 * HOLE_X) + ' Lö
 dimv(ox + SLV_L + 3, oy, oy + SLV_W, f(SLV_W), left=False)
 dimv(ox + SLV_L + 7, cy + OFF - BASE_W / 2, cy + OFF + BASE_W / 2, f(BASE_W), left=False)
 dimv(ox - 2.5, cy, cy + OFF, f(OFF), RED)
-txt(ox + 1, oy + 1.8, 'Seite A (9 mm)', 11, RED, 'start')
-txt(ox + 1, oy + SLV_W - .8, 'Seite B (6 mm)', 11, RED, 'start')
+txt(ox + 1, oy + 1.8, 'Seite A (9,2 mm)', 11, RED, 'start')
+txt(ox + 1, oy + SLV_W - .8, 'Seite B (4,8 mm) offen', 11, RED, 'start')
 
 # --- Schnitt quer (kurze Seite) ---
 sx, base = 18, 108
@@ -72,8 +74,7 @@ for s in (-1, 1):
 # Grundplatte
 rect(scx + OFF - BASE_W / 2, base - SHELL_Z, BASE_W, SHELL_Z, fill='#f4f4f4')
 # Huelse
-rect(scx - SLV_W / 2, base - SLOT_TOP, SLV_W, SLOT_TOP - SHELL_Z, fill='#dfe9f7')
-rect(scx + OFF - CAV_W / 2, base - SLOT_TOP, CAV_W, SLOT_TOP, fill='white')
+rect(scx - SLV_W / 2, base - SLOT_TOP, (scx + OFF - CAV_W / 2) - (scx - SLV_W / 2), SLOT_TOP - SHELL_Z, fill='#dfe9f7')
 # Slot + Leisten
 rect(scx + OFF - SL_W / 2, base - SLOT_TOP, SL_W, 10, fill='#e8e8e8', c='#777')
 rect(scx + OFF - 7.5 / 2, base - SLOT_TOP + 10, 7.5, 5.5, fill='#e8e8e8', c='#777')
@@ -85,8 +86,8 @@ dimv(sx - 9, base - SLOT_TOP, base, f(SLOT_TOP))
 dimv(sx - 5, base - SHELL_Z, base, f(SHELL_Z))
 dimh(scx - SHELL_IN_W / 2, scx + SHELL_IN_W / 2, base - SLOT_TOP - 13.5, f(SHELL_IN_W) + ' innen')
 dimh(scx - SHELL_OUT_W / 2, scx + SHELL_OUT_W / 2, base - SLOT_TOP - 16.5, f(SHELL_OUT_W) + ' außen')
-dimh(scx - SHELL_IN_W / 2, scx + OFF - PCB_T / 2, base - SLOT_TOP - 4, f(PCB_A), RED)
-dimh(scx + OFF + PCB_T / 2, scx + SHELL_IN_W / 2, base - SLOT_TOP - 4, f(PCB_B), RED)
+dimh(scx - SHELL_IN_W / 2, scx + OFF - PCB_T / 2, base - SLOT_TOP - 4, '9,2', RED)
+dimh(scx + OFF + PCB_T / 2, scx + SHELL_IN_W / 2, base - SLOT_TOP - 4, '4,8', RED)
 txt(scx + OFF + 7, base - SLOT_TOP + 5, 'Slot B', 10, '#777', 'start')
 txt(scx + OFF + 12, base - SLOT_TOP + 22, 'Stiftleisten', 10, '#777', 'start')
 
@@ -94,21 +95,22 @@ txt(scx + OFF + 12, base - SLOT_TOP + 22, 'Stiftleisten', 10, '#777', 'start')
 nx, ny = 46, 70
 notes = [('Prinzip:', '#222', True),
          ('Grundplatte 61 × 17 × 6,5 auf der Platine, an den M2,5-Löchern verschraubt.', '#222', False),
-         ('Darauf die Hülse 74,4 × 14,9: das Gehäuse rutscht darüber und sitzt', '#222', False),
+         ('Darauf die Führung 74,4 × 14,9: das Gehäuse rutscht darüber und sitzt', '#222', False),
          ('auf der Grundplatte auf (Unterkante 6,5 wie gemessen).', '#222', False),
-         ('Verpolschutz: Die Cartridge-Platine sitzt nicht mittig (9 / 6 mm),', '#222', False),
-         ('deshalb liegt der Slot 1,75 mm neben der Hülsenmitte.', '#222', False),
-         ('Verkehrt herum passt das Gehäuse nicht über die Hülse.', '#222', False),
-         ('Hülse ragt über die Grundplatte und bei Uno/Mega über die', '#222', False),
-         ('Platinenkante (ab 6,5 mm Höhe, dort ist nichts).', '#222', False),
+         ('Verpolschutz: Die Cartridge-Platine sitzt nicht mittig (9,2 / 4,8 mm),', '#222', False),
+         ('deshalb liegt der Slot 2,2 mm neben der Mitte. Seite A ist eine 4,6 mm', '#222', False),
+         ('dicke Wand, Seite B bleibt offen (dort wären nur 0,2 mm Wand).', '#222', False),
+         ('Verkehrt herum stößt das Gehäuse an die Wand von Seite A.', '#222', False),
+         ('Platinenlage aus ATARI_CARY_REV_2_holder.stl (Stefan, 14.11.2026):', '#222', False),
+         ('Halteplatte 76,4 × 15,7, Schlitz 2,5 breit, 5,6 / 10,0 von den Kanten.', '#222', False),
          ('Offen (rot):', RED, True),
-         ('Welche Seite (A = 9 mm) ist die Etikettseite?', RED, False),
-         ('Platinendicke 0,5 (Summe passt) oder 1,6 (Standard)?', RED, False),
+         ('Welche Seite (A) ist die Etikettseite?', RED, False),
+         ('Sitzt im Gehäuse etwas, das die Führung beim Einschieben blockiert?', RED, False),
          ('Für Slot A (16,1 hoch, Laschen) eigene, niedrigere Variante.', RED, False)]
 for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 100 * S, 118 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
-      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Cartridge-Führung für Slot B – Entwurf 1</text>' + \
-      f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Maße in mm, Cartridge von Stefan gemessen (14.11.2026). Rot = offen. Blau = Hülse, grau gestrichelt = Grundplatte.</text>' + ''.join(out) + '</svg>'
+      f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Cartridge-Führung für Slot B – Entwurf 2</text>' + \
+      f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Maße in mm, Cartridge von Stefan gemessen (14.11.2026). Rot = offen. Blau = Führung, grau gestrichelt = Grundplatte.</text>' + ''.join(out) + '</svg>'
 open(sys.argv[1], 'w').write(svg)
