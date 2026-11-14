@@ -84,6 +84,10 @@ MCP23017 variants instead of U1/U2 and C4: U1 MCP23017-E/SP (DIP-28) + DIP-28 so
 - Flange underside flush with the top of the lower part (6 mm above the board), flange top at 12.5 mm. That leaves 3.6 mm to the slot top (confirmed).
 - Card slot opening: 33.3 mm long, 2.2 mm wide; the spring contacts close to about 1.4 mm (estimated), which suits a 1.6 mm cartridge PCB. Slot depth 9 mm.
 
+### Slot B (without flanges)
+
+[`slot-drawing/slot-b-masse.png`](slot-drawing/slot-b-masse.png) (`zeichnung_b.py`) is a second slot type, measured by hand on 2026-11-14: no mounting flanges, upper part 37 × 9.5 mm and 10 mm high, lower part 7.5 mm wide, 15.5 mm high in total. Pins are the same (2×12, pitch 2.54 mm, rows 5.5 mm), so it fits the same footprint; the M2.5 holes on the board stay free and can hold the guide directly. Not measured yet (taken from slot A): card slot opening 33.3 × 2.2 mm, depth 9 mm, length of the lower part.
+
 The measured slot sat on round-pin socket strips for extra height. They are not needed and are left out; the guide sets the cartridge height instead.
 
 ## Rebuild
