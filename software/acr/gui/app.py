@@ -453,7 +453,7 @@ class MainWindow(QMainWindow):
         self._progress_text = MULTICART if choice == MULTICART else None
         def done(result) -> None:
             self.show_rom(*result)
-            data, _scheme, title = result[0], result[1], result[2]
+            data, title = result[0], result[2]
             if choice != MULTICART and not title and len(data) <= 0x1000 and download:
                 self._suggest_multicart()
 
