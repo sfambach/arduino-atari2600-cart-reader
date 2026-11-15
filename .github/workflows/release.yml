@@ -1,9 +1,15 @@
-# Builds the PC program (Windows, Linux) and the firmware for every board when a tag v* is pushed,
-# and attaches everything to the GitHub release; the program's update check reads that release.
+# Builds the PC program (Windows, Linux) and the firmware for every board when a tag v* is pushed or the
+# workflow is started by hand with a version, and attaches everything to the GitHub release (the tag is
+# created on the current main if it does not exist); the program's update check reads that release.
 name: release
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "release tag, e.g. v0.2.1"
+        required: true
 permissions:
   contents: write
 jobs:
@@ -64,4 +70,6 @@ jobs:
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ inputs.version || github.ref_name }}
+          target_commitish: ${{ github.sha }}
           files: out/*
