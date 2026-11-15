@@ -8,6 +8,8 @@
 #endif
 
 uint8_t errors = 0;
+bool manualOn = false;          // set by the manual switch (1 / 0)
+unsigned long lastPrint = 0;
 
 void addressLow() {  // keeps the ROM disabled in either orientation, as in the firmware
 #if defined(ADDR_DIRECT)
@@ -30,6 +32,7 @@ void addressRelease() {
 }
 
 void supplyOff() {
+  manualOn = false;
   digitalWrite(CART_PWR, HIGH);
   pinMode(DATA_D2_PIN, INPUT);
   addressRelease();
@@ -119,8 +122,22 @@ void holdOrientation() {
   Serial.println(F("stopped"));
 }
 
+// Manual switch: 1 = supply on (address lines low), 0 = off. While on, the sense reading is printed every second.
+void manualSupply(bool on) {
+  manualOn = on;
+  if (on) {
+    pinMode(DATA_D2_PIN, INPUT);
+    addressLow();
+    digitalWrite(CART_PWR, LOW);
+    Serial.println(F("supply ON (0 = off). Measure slot pin 23 / R6 against GND."));
+  } else {
+    supplyOff();
+    Serial.println(F("supply OFF"));
+  }
+}
+
 void help() {
-  Serial.println(F("Commands: t = test without cartridge, o = orientation reading (cartridge in), h = hold orientation check for measuring, p = power with cartridge (only if orientation OK)"));
+  Serial.println(F("Commands: t = test without cartridge, o = orientation reading (cartridge in), h = hold orientation check for measuring, 1 / 0 = supply on / off, p = power with cartridge (only if orientation OK)"));
 }
 
 void setup() {
@@ -141,6 +158,10 @@ void setup() {
 }
 
 void loop() {
+  if (manualOn && millis() - lastPrint >= 1000) {
+    lastPrint = millis();
+    Serial.print(F("  sense ")); printSense(analogRead(CART_SENSE)); Serial.println();
+  }
   if (!Serial.available()) return;
   String cmd = Serial.readStringUntil('\n');
   cmd.trim();
@@ -148,5 +169,7 @@ void loop() {
   else if (cmd == "o") orientationWithCartridge();
   else if (cmd == "p") powerWithCartridge();
   else if (cmd == "h") holdOrientation();
+  else if (cmd == "1") manualSupply(true);
+  else if (cmd == "0") manualSupply(false);
   else if (cmd.length()) help();
 }
