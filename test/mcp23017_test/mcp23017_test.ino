@@ -1,5 +1,5 @@
 // MCP23017 board test for the Uno / Nano MCP23017 boards. Run WITHOUT a cartridge in the slot.
-// Serial monitor: 115200 baud, line ending "Newline".
+// Serial monitor: baud rate from config.h (SERIAL_BAUD), line ending "Newline".
 #include <Wire.h>
 #include "config.h"
 

@@ -4,7 +4,7 @@ Run these before using a freshly built board with a cartridge. **Never insert a 
 
 ## mcp23017_test
 
-For the Uno / Nano MCP23017 boards. Open `mcp23017_test/mcp23017_test.ino` in the Arduino IDE (settings in `config.h`), upload, open the serial monitor (115200 baud, line ending "Newline").
+For the Uno / Nano MCP23017 boards. Open `mcp23017_test/mcp23017_test.ino` in the Arduino IDE (settings in `config.h`), upload, open the serial monitor (baud rate from `config.h`, default 115200, line ending "Newline").
 
 1. I2C scan: the MCP23017 must answer at 0x20.
 2. Register write / read back over I2C.

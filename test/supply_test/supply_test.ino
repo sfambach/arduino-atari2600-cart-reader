@@ -1,5 +1,5 @@
 // Switched cartridge supply and orientation check (Mega, Uno, Nano; 74HC595 or MCP23017).
-// Serial monitor: 115200 baud, line ending "Newline". Start WITHOUT a cartridge.
+// Serial monitor: baud rate from config.h (SERIAL_BAUD), line ending "Newline". Start WITHOUT a cartridge.
 #include "config.h"
 #if defined(__AVR_ATmega2560__)
 #elif defined(ADDR_MCP23017)

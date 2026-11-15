@@ -8,11 +8,13 @@ usage: dump.py <port> <scheme> <file> [kb]
 import sys
 import serial
 
+BAUD = 115200  # must match SERIAL_BAUD in firmware/AtariCartReader/config.h
+
 
 def main():
     if len(sys.argv) < 3:
         sys.exit(__doc__)
-    port = serial.Serial(sys.argv[1], 115200, timeout=10)
+    port = serial.Serial(sys.argv[1], BAUD, timeout=10)
     port.readline()  # READY (board resets on connect)
     if sys.argv[2].lower() == "list":
         port.write(b"L\n")

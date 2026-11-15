@@ -2,7 +2,7 @@
  Atari 2600 Cartridge Reader for Arduino Mega 2560 / Uno / Nano
  Based on ideas from retrocartdumper (SvOlli) and Cart Reader (sanni), GPLv3.
 
- Serial 115200 baud, commands terminated by newline:
+ Serial at SERIAL_BAUD (config.h), commands terminated by newline:
    L                list bankswitching schemes
    D <scheme> [kb]  dump ROM, answer "OK <bytes>\n" followed by raw data
    P <hexaddr>      read single byte (debug)
