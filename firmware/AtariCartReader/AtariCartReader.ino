@@ -39,10 +39,12 @@ void cartOff() {
 }
 
 bool cartOn() {
+#if !defined(SKIP_ORIENTATION_CHECK)
   if (senseOrientation() < SENSE_ORIENTATION) {
     Serial.println(F("ERR no cartridge or inserted the wrong way round"));
     return false;
   }
+#endif
   halDrive();
   digitalWrite(CART_PWR, LOW);
   delay(20);

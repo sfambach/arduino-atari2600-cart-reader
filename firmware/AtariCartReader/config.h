@@ -21,6 +21,10 @@ const unsigned long SERIAL_BAUD = 115200;
 const int SENSE_ORIENTATION = 40;  // ~0.2 V: D2 back-feeds the cartridge rail
 const int SENSE_POWERED = 900;     // ~4.4 V: supply is on and not overloaded
 
+// Orientation check before switching the cartridge on. Uncomment ONLY if you are sure the cartridge sits
+// the right way round (label towards pins 13-24): the supply is then switched on without the check.
+// #define SKIP_ORIENTATION_CHECK
+
 // Tests
 const unsigned long WALK_STEP_MS = 2000;    // bus test: time per address line in the walk command
 const unsigned long OFF_TIMEOUT_MS = 3000;  // supply test: rail must fall below SENSE_ORIENTATION within this time
