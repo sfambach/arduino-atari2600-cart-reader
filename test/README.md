@@ -46,4 +46,17 @@ Without cartridge (runs at start, `t` repeats):
 
 With a cartridge: `o` runs the orientation check as in the firmware (D2 low = reversed), `p` switches on only if the cartridge sits the right way round and checks the voltage under load, then switches off, `1` / `0` switch the supply on / off by hand (reading printed every second).
 
-Both tests: syntax-checked for all five boards against stub headers; not built with the Arduino toolchain or run on hardware yet.
+## read_test
+
+Third test: reads the first 4K bank of a cartridge (all five boards). Insert the cartridge the right way round before uploading; the test checks the orientation (D2) and the supply first.
+
+1. Orientation and supply as in the firmware.
+2. Hex dump of the first 64 bytes.
+3. Reset vector (0x1FFC/0x1FFD) points into the cartridge.
+4. Every data bit is 0 somewhere and 1 somewhere (stuck data line).
+5. Flipping each address line A0–A11 changes the data somewhere (open or stuck address line); A11 without effect is reported as a 2K cartridge.
+6. Two reads give the same checksum (contacts, timing).
+
+The bank-switching area 0x1FF0–0x1FFB is skipped in the checks. Commands afterwards: `t` runs again, `P1FFC` reads one byte, `h` prints a hex dump of 4K (may switch banks on bank-switched cartridges).
+
+All tests: syntax-checked for all five boards against stub headers; not built with the Arduino toolchain or run on hardware yet.
