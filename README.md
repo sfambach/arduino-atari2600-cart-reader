@@ -28,7 +28,7 @@ Boards (THT, KiCad) for Uno, Mega and Nano, plus MCP23017 variants for Uno and N
 | FE (Activision) | 8 KB | experimental |
 | 3F (Tigervision) | 8 KB+ (`D 3F <kb>`) | experimental |
 
-Untested on hardware so far.
+Untested on hardware so far. Board tests to run first: [`test/`](test/).
 
 ## Usage
 
