@@ -74,7 +74,11 @@ class Reader:
                 break
         self.port.reset_input_buffer()
         self._send("H")
-        self.hello = self._parse_hello(self._expect("HELLO"))
+        try:
+            self.hello = self._parse_hello(self._expect("HELLO"))
+        except ReaderError as e:
+            raise ReaderError(f"the reader does not answer HELLO ({e}): firmware older than 0.2.0? "
+                              "Upload the current firmware.") from e
         return self.hello
 
     @staticmethod

@@ -41,8 +41,8 @@ class Worker(QObject):
     def run(self) -> None:
         try:
             self.done.emit((self.callback, self.job(self)))
-        except (ReaderError, OSError, RuntimeError, ValueError) as e:
-            self.failed.emit(str(e))
+        except Exception as e:  # any error must reach the GUI, otherwise the thread never ends
+            self.failed.emit(str(e) or type(e).__name__)
 
 
 class Light(QLabel):
@@ -279,6 +279,7 @@ class MainWindow(QMainWindow):
 
     def _cleanup(self) -> None:
         thread = self.sender()
+        thread.wait()  # "finished" arrives before the thread has fully stopped; dropping it earlier aborts Qt
         self._threads = [(t, w) for t, w in self._threads if t is not thread]
 
     def _set_busy(self, busy: bool) -> None:
