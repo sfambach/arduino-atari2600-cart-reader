@@ -76,6 +76,7 @@ _DE = {
     "The game is not in the game list. If this is a multicart (e.g. 32 in 1), the reader only sees the game that is active right now. Read all games of the multicart?":
         "Das Spiel steht nicht in der Spieleliste. Ist das ein Multicart (z. B. 32 in 1), sieht der Reader nur das gerade aktive Spiel. Alle Spiele des Multicarts lesen?",
     "Read as multicart": "Als Multicart lesen",
+    "Multicart: in Stella, Ctrl+R starts the next game.": "Multicart: In Stella startet Strg+R das nächste Spiel.",
     "Demo mode: simulated reader with a demo cartridge": "Demo-Modus: simulierter Reader mit Demo-Cartridge",
     "Demo cartridge": "Demo-Cartridge",
 }

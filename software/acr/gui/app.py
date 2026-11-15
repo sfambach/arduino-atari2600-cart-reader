@@ -483,7 +483,9 @@ class MainWindow(QMainWindow):
         md5 = romlib.md5(data)
         self.facts.setText(
             f"{tr('Scheme')}: {scheme}<br>{tr('Size')}: {len(data)} bytes ({len(data) // 1024}K)<br>"
-            f"MD5: {md5}<br>Reset: ${romlib.reset_vector(data):04X}")
+            f"MD5: {md5}<br>Reset: ${romlib.reset_vector(data):04X}"
+            + (f"<br><br><b>{tr('Multicart: in Stella, Ctrl+R starts the next game.')}</b>"
+               if scheme.endswith("IN1") else ""))
         pixmap = QPixmap(str(cover)) if cover else QPixmap()
         if pixmap.isNull():
             self.cover_label.setPixmap(QPixmap())
@@ -561,6 +563,8 @@ class MainWindow(QMainWindow):
             return
         try:
             emulator.launch(data, scheme, title, stella)
+            if scheme.endswith("IN1"):
+                self.statusBar().showMessage(tr("Multicart: in Stella, Ctrl+R starts the next game."))
         except (OSError, RuntimeError) as e:
             self._on_error(str(e))
 

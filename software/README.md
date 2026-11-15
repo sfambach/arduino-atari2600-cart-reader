@@ -36,7 +36,7 @@ Ready-made programs (Windows `.exe`, Linux binary) and the firmware for every bo
 | Connect | picks the serial port, the firmware answers with version and board (protocol 1); a reader that the system renames after a reset (ttyUSB0 → ttyUSB1) is found again by its USB id and reconnected |
 | Check | orientation (D2) and supply of the inserted cartridge |
 | Read | **Auto** reads once with the F4 hotspots and derives 2K, 4K, F8, F6 or F4 from the repeating banks; other schemes (SC, E0, E7, FA, FE, 3F) are chosen by hand; every dump is checked with CRC-32 |
-| Multicart | for cartridges that switch to the next game at every power-on (e.g. 32 in 1): reads game after game, switching the supply off for 0.5 s in between, until the first game comes back; joins them in Stella's `<n>IN1` format and rotates the order until the image matches the game list |
+| Multicart | for cartridges that switch to the next game at every power-on (e.g. 32 in 1): reads game after game, switching the supply off for 0.5 s in between, until the first game comes back; joins them in Stella's `<n>IN1` format and rotates the order until the image matches the game list; in Stella, Ctrl+R starts the next game (confirmed with the 32 in 1, 2026-11-15) |
 | Title and cover | MD5 looked up in the No-Intro list of [libretro-database](https://github.com/libretro/libretro-database), box art from [libretro-thumbnails](https://github.com/libretro-thumbnails/Atari_-_2600); both downloaded on first use and cached, nothing is shipped |
 | Hex | read-only, one block per 4K bank, go to address, find bytes, compare with a file |
 | Save / collection | the collection keeps every saved ROM with title, scheme and cover; double-click plays it |
