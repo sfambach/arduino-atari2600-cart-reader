@@ -90,6 +90,20 @@ void orientationWithCartridge() {
                                         : F(" -> none or reversed, supply stays off"));
 }
 
+// Alternative check: a reversed cartridge puts its GND (cartridge pin 12) on slot pin 13 = D3.
+// Supply off, pull-ups on all data lines: D3 low = reversed; all high = correct or no cartridge.
+void groundCheck() {
+  supplyOff();
+  addressRelease();
+  for (uint8_t i = 0; i < DATA_LINES; i++) pinMode(DATA_ARDUINO_PIN[i], INPUT_PULLUP);
+  delay(5);
+  Serial.print(F("data lines with pull-ups (D7..D0): "));
+  for (int8_t i = DATA_LINES - 1; i >= 0; i--) Serial.print(digitalRead(DATA_ARDUINO_PIN[i]));
+  bool reversed = digitalRead(DATA_ARDUINO_PIN[3]) == LOW;
+  for (uint8_t i = 0; i < DATA_LINES; i++) pinMode(DATA_ARDUINO_PIN[i], INPUT);
+  Serial.println(reversed ? F(" -> D3 low: cartridge REVERSED") : F(" -> D3 high: correct or no cartridge"));
+}
+
 void powerWithCartridge() {
   supplyOff();
   addressLow();
@@ -137,7 +151,7 @@ void manualSupply(bool on) {
 }
 
 void help() {
-  Serial.println(F("Commands: t = test without cartridge, o = orientation reading (cartridge in), h = hold orientation check for measuring, 1 / 0 = supply on / off, p = power with cartridge (only if orientation OK)"));
+  Serial.println(F("Commands: t = test without cartridge, o = orientation reading (cartridge in), g = ground check (D3 low = reversed), h = hold orientation check for measuring, 1 / 0 = supply on / off, p = power with cartridge (only if orientation OK)"));
 }
 
 void setup() {
@@ -167,6 +181,7 @@ void loop() {
   cmd.trim();
   if (cmd == "t") testWithoutCartridge();
   else if (cmd == "o") orientationWithCartridge();
+  else if (cmd == "g") groundCheck();
   else if (cmd == "p") powerWithCartridge();
   else if (cmd == "h") holdOrientation();
   else if (cmd == "1") manualSupply(true);
