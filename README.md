@@ -66,6 +66,8 @@ Serial protocol 1, 115200 baud (`SERIAL_BAUD` in `config.h`), one command per li
 
 Errors are `ERR <text>`. The read button (A1) repeats the last `D` command (4K until one was given); `dump.py <port> listen <prefix>` saves those dumps. The cartridge is powered only during `D`, `P`, `S` and a button read, and only after the orientation check passed (a reversed cartridge pulls D2 low, see [`hardware/`](hardware/)).
 
+A 4K game detected as F6/F4, or an unknown MD5, usually means a bad contact: re-seat the cartridge and read again (see [`software/`](software/#troubleshooting)).
+
 ```
 pip install pyserial
 python3 tools/dump.py /dev/ttyACM0 F8 game.bin

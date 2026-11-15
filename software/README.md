@@ -58,6 +58,13 @@ covers, temporary ROMs); Windows `%APPDATA%\AtariCartReader` and `%LOCALAPPDATA%
 - Confirmed on hardware (Uno MCP23017, 2026-11-15): firmware upload, Stella start, auto detection and title lookup
   with RealSports Tennis (F8, MD5 matches the No-Intro reference).
 
+## Troubleshooting
+
+- **A 4K game is detected as F6 or F4, or the game is unknown:** usually a bad contact. Pull the cartridge out,
+  plug it back in firmly and read again (Bobby Is Going Home, 4K, read as F4 until it was re-seated). With a dirty
+  contact, single bytes differ from read to read; the detection then takes the copies as different banks. Check:
+  set the scheme to 4K, read twice and compare the MD5. Clean the contacts if it keeps changing.
+
 ## Tests
 
 ```
