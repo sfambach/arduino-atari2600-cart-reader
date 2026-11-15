@@ -8,3 +8,4 @@ Collected from Stefan on 2026-11-15. Not implemented yet; applies to all Atari c
 - [ ] Decoupling capacitor close to each IC (two ICs, two capacitors); place them vertically to the left/right of the IC, not horizontally.
 - [ ] Fuse at the board edge.
 - [ ] Move slot B further down (towards the board edge): with the cartridge guide fitted, the space between push button and module is only just enough (Stefan, 2026-11-15).
+- [ ] Option for MCP23018 instead of MCP23017 (Stefan, 2026-11-15): same I2C registers, but open-drain outputs (need pull-ups on A0-A12, e.g. 2 x 10 kOhm SIP resistor networks, or the internal GPPU pull-ups if slow edges are acceptable), different DIP-28 pinout and an analog ADDR pin (to GND = 0x20). Needs its own footprint or a second footprint variant; firmware: enable GPPU, otherwise unchanged. Verify against the MCP23018 datasheet before layout.
