@@ -10,7 +10,7 @@ Reads a cartridge through the reader, shows it in hex, saves it to a game collec
 Linux (Debian/Ubuntu refuse a system-wide pip install), once in this folder:
 
 ```
-sudo apt install python3-venv
+sudo apt install python3-venv libxcb-cursor0   # libxcb-cursor0: needed by Qt 6.5+ on X11
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 ```
