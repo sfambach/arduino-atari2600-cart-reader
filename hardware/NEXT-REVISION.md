@@ -7,3 +7,4 @@ Collected from Stefan on 2026-11-15. Not implemented yet; applies to all Atari c
 - [ ] Mounting holes for M3.
 - [ ] Decoupling capacitor close to each IC (two ICs, two capacitors); place them vertically to the left/right of the IC, not horizontally.
 - [ ] Fuse at the board edge.
+- [ ] Move slot B further down (towards the board edge): with the cartridge guide fitted, the space between push button and module is only just enough (Stefan, 2026-11-15).
