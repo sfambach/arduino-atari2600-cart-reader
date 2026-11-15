@@ -26,7 +26,7 @@ Cartridge slot: pin 23 = switched +5 V (BC327, LOW on D10 for Uno/Nano, D8 for M
 
 Boards (THT, KiCad) for Uno, Mega and Nano, plus MCP23017 variants for Uno and Nano: [`hardware/`](hardware/).
 
-Firmware: select the board at the top of `firmware/AtariCartReader/config.h` (one `#define BOARD_...`).
+Firmware: select the board at the top of `firmware/AtariCartReader/config.h` (one `#define BOARD_...`); the same file is copied into the test sketches with `tools/sync_config.py`.
 
 ## Bankswitching
 

@@ -1,19 +1,17 @@
 // Switched cartridge supply and orientation check (Mega, Uno, Nano; 74HC595 or MCP23017).
 // Serial monitor: baud rate from config.h (SERIAL_BAUD), line ending "Newline". Start WITHOUT a cartridge.
 #include "config.h"
-#if defined(__AVR_ATmega2560__)
-#elif defined(ADDR_MCP23017)
+#if defined(ADDR_MCP23017)
 #include <Wire.h>
-#else
+#elif defined(ADDR_74HC595)
 #include <SPI.h>
 #endif
 
 uint8_t errors = 0;
 
 void addressLow() {  // keeps the ROM disabled in either orientation, as in the firmware
-#if defined(__AVR_ATmega2560__)
-  PORTA = 0x00; DDRA = 0xFF;
-  PORTC &= 0xE0; DDRC |= 0x1F;
+#if defined(ADDR_DIRECT)
+  for (uint8_t i = 0; i < ADDR_LINES; i++) { pinMode(ADDR_ARDUINO_PIN[i], OUTPUT); digitalWrite(ADDR_ARDUINO_PIN[i], LOW); }
 #elif defined(ADDR_MCP23017)
   Wire.beginTransmission(MCP_ADDR); Wire.write(0x12); Wire.write(0); Wire.write(0); Wire.endTransmission();
   Wire.beginTransmission(MCP_ADDR); Wire.write(0x00); Wire.write(0); Wire.write(0); Wire.endTransmission();
@@ -24,9 +22,8 @@ void addressLow() {  // keeps the ROM disabled in either orientation, as in the 
 }
 
 void addressRelease() {
-#if defined(__AVR_ATmega2560__)
-  DDRA = 0x00; PORTA = 0x00;
-  DDRC &= 0xE0; PORTC &= 0xE0;
+#if defined(ADDR_DIRECT)
+  for (uint8_t i = 0; i < ADDR_LINES; i++) pinMode(ADDR_ARDUINO_PIN[i], INPUT);
 #elif defined(ADDR_MCP23017)
   Wire.beginTransmission(MCP_ADDR); Wire.write(0x00); Wire.write(0xFF); Wire.write(0xFF); Wire.endTransmission();
 #endif  // 74HC595 outputs cannot float; they stay low
@@ -115,14 +112,14 @@ void setup() {
   pinMode(CART_PWR, OUTPUT);
   pinMode(DATA_D2_PIN, INPUT);
   Serial.begin(SERIAL_BAUD);
-#if defined(__AVR_ATmega2560__)
-#elif defined(ADDR_MCP23017)
+#if defined(ADDR_MCP23017)
   Wire.begin();
-#else
+  Wire.setClock(I2C_CLOCK);
+#elif defined(ADDR_74HC595)
   pinMode(SR_LATCH, OUTPUT);
   digitalWrite(SR_LATCH, LOW);
   SPI.begin();
-  SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE0));
+  SPI.beginTransaction(SPISettings(SPI_CLOCK, MSBFIRST, SPI_MODE0));
 #endif
   testWithoutCartridge();
 }
