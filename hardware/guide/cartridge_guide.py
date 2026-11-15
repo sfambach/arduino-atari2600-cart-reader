@@ -4,10 +4,13 @@ import numpy as np
 import manifold3d as m3d
 import trimesh
 
-slot_top, plate, gap = 27.0, 2.0, 2.0
+STRAIGHT = '--straight' in sys.argv   # variant 2 (Stefan 15.11.2026): ends straight down to the PCB, no step, no gap
+args = [a for a in sys.argv[1:] if not a.startswith('--')]
+slot_top, plate = 27.0, 2.0
+gap = 0.0 if STRAIGHT else 2.0
 top = slot_top + plate
 cap_l, cap_w, off = 74.2, 15.2, 2.1
-full_z, foot_x, band = 17.0, 25.5, 8.5
+full_z, foot_x, band = (gap, cap_l / 2, 99.0) if STRAIGHT else (17.0, 25.5, 8.5)
 step_z = slot_top + plate - 18.5
 cav_l, cav_w = 37.6, 10.1
 slit_l, slit_w = 35.1, 2.5
@@ -23,7 +26,7 @@ body = m3d.Manifold.extrude(prof, cap_w).translate([0, 0, -cap_w / 2]).rotate([9
 for s in (-1, 1):
     x0, x1 = (opn_x0, opn_x1) if s > 0 else (-opn_x1, -opn_x0)
     body = body + box(x0, off - opn_t / 2, top - 0.01, x1, off + opn_t / 2, top + opn_h)
-cut = box(-50, -cap_w / 2 - 1, -1, 50, off - band, step_z)
+cut = m3d.Manifold() if STRAIGHT else box(-50, -cap_w / 2 - 1, -1, 50, off - band, step_z)
 cut = cut + box(-cav_l / 2, off - cav_w / 2, -1, cav_l / 2, off - cav_w / 2 + cap_w, slot_top)
 cut = cut + box(-slit_l / 2, off - slit_w / 2, slot_top - 1, slit_l / 2, off + slit_w / 2, top + 1)
 for s in (-1, 1):
@@ -34,5 +37,5 @@ part = body - cut
 mesh = part.to_mesh()
 tm = trimesh.Trimesh(np.array(mesh.vert_properties)[:, :3], np.array(mesh.tri_verts))
 tm.apply_translation([0, 0, -gap])     # feet on z = 0 for printing
-tm.export(sys.argv[1] if len(sys.argv) > 1 else 'cartridge_guide.stl')
+tm.export(args[0] if args else 'cartridge_guide.stl')
 print('watertight', tm.is_watertight, 'volume', round(tm.volume, 1), 'bounds', tm.bounds.round(2).tolist())
