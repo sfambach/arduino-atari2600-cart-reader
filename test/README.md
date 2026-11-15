@@ -22,4 +22,17 @@ Commands after the run:
 | `a1FFF` | put a fixed address (hex) on A0-A12 |
 | `r` | release all lines |
 
-Not compiled or run on hardware yet.
+## supply_test
+
+Second test: switched cartridge supply and orientation check (all boards). Settings in `supply_test/config.h`; for the MCP23017 boards uncomment `#define ADDR_MCP23017`.
+
+Without cartridge (runs at start, `t` repeats):
+
+1. Supply off: A0 below the orientation threshold.
+2. Orientation check on an empty slot: stays low, so the firmware would not switch on.
+3. Supply on: A0 above the powered threshold (BC327 and fuse work).
+4. Supply off again: the rail falls back, time is printed.
+
+With a cartridge: `o` prints the orientation reading (right way round or not), `p` switches on only if the orientation is right and checks the voltage under load, then switches off.
+
+Both sketches: not compiled or run on hardware yet.
