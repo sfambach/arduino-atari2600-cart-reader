@@ -39,7 +39,7 @@ Ready-made programs (Windows `.exe`, Linux binary) and the firmware for every bo
 | Title and cover | MD5 looked up in the No-Intro list of [libretro-database](https://github.com/libretro/libretro-database), box art from [libretro-thumbnails](https://github.com/libretro-thumbnails/Atari_-_2600); both downloaded on first use and cached, nothing is shipped |
 | Hex | read-only, one block per 4K bank, go to address, find bytes, compare with a file |
 | Save / collection | the collection keeps every saved ROM with title, scheme and cover; double-click plays it |
-| Play | writes the ROM to a temporary file and starts Stella with `-bs <scheme>`; Stella is found on the PATH, in the default Windows folder, or at the path set in the settings |
+| Play | writes the ROM to a temporary file and starts Stella with `-bs <scheme>`; Stella is found on the PATH, in `/usr/games`, as snap or flatpak, in the default Windows folder, or at the path set in the settings; if Stella stops at once, its output is shown |
 | Updates | at start (can be switched off) the latest GitHub release is compared with the program and the firmware |
 | Firmware update | uploads a `.hex` with `avrdude` through the Arduino bootloader (Reader menu) |
 | Language | English and German (Settings) |

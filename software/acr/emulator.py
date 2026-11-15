@@ -12,6 +12,9 @@ from typing import Optional
 from .paths import cache_dir
 
 WINDOWS_PATHS = [r"C:\Program Files\Stella\Stella.exe", r"C:\Program Files (x86)\Stella\Stella.exe"]
+LINUX_PATHS = ["/usr/games/stella", "/usr/local/games/stella", "/snap/bin/stella"]
+FLATPAK_ID = "io.github.stella_emu.Stella"
+FLATPAK = "flatpak:" + FLATPAK_ID
 
 
 def find_stella(configured: str = "") -> Optional[str]:
@@ -20,10 +23,12 @@ def find_stella(configured: str = "") -> Optional[str]:
     found = shutil.which("stella") or shutil.which("Stella")
     if found:
         return found
-    if sys.platform == "win32":
-        for path in WINDOWS_PATHS:
-            if os.path.isfile(path):
-                return path
+    for path in WINDOWS_PATHS if sys.platform == "win32" else LINUX_PATHS:
+        if os.path.isfile(path):
+            return path
+    flatpak = shutil.which("flatpak")
+    if flatpak and subprocess.run([flatpak, "info", FLATPAK_ID], capture_output=True).returncode == 0:
+        return FLATPAK
     return None
 
 
@@ -33,4 +38,14 @@ def launch(rom: bytes, scheme: str, title: str, stella: str) -> subprocess.Popen
     name = re.sub(r"[^\w\- ()!.,']", "_", title).strip() or "cartridge"
     path: pathlib.Path = folder / f"{name}.a26"
     path.write_bytes(rom)
-    return subprocess.Popen([stella, "-bs", scheme, str(path)])
+    command = ["flatpak", "run", f"--filesystem={folder}", FLATPAK_ID] if stella == FLATPAK else [stella]
+    log = folder / "stella.log"
+    with open(log, "wb") as out:
+        process = subprocess.Popen(command + ["-bs", scheme, str(path)], stdout=out, stderr=subprocess.STDOUT)
+    try:
+        code = process.wait(timeout=2)
+    except subprocess.TimeoutExpired:
+        return process  # still running: Stella is up
+    if code != 0:
+        raise RuntimeError(f"Stella ended with code {code}:\n" + log.read_text(errors="replace")[-1500:])
+    return process

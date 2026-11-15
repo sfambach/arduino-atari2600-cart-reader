@@ -483,7 +483,7 @@ class MainWindow(QMainWindow):
             return
         try:
             emulator.launch(data, scheme, title, stella)
-        except OSError as e:
+        except (OSError, RuntimeError) as e:
             self._on_error(str(e))
 
     # ------------------------------------------------------------------ settings, updates
