@@ -41,7 +41,7 @@ Ready-made programs (Windows `.exe`, Linux binary) and the firmware for every bo
 | Save / collection | the collection keeps every saved ROM with title, scheme and cover; double-click plays it |
 | Play | writes the ROM to a temporary file and starts Stella with `-bs <scheme>`; Stella is found on the PATH, in `/usr/games`, as snap or flatpak, in the default Windows folder, or at the path set in the settings; if Stella stops at once, its output is shown |
 | Updates | at start (can be switched off) the latest GitHub release is compared with the program and the firmware |
-| Firmware update | uploads a `.hex` with `avrdude` through the Arduino bootloader (Reader menu) |
+| Firmware update | after connecting, a newer firmware in the latest release is offered ("Update firmware now"); Reader menu: the latest release or a local `.hex`; uploaded with `avrdude` (Linux: `sudo apt install avrdude`) through the Arduino bootloader |
 | Language | English and German (Settings) |
 
 Data folders: Linux `~/.local/share/AtariCartReader` (collection) and `~/.cache/AtariCartReader` (titles,

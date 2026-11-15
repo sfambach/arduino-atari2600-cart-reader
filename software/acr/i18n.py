@@ -69,6 +69,9 @@ _DE = {
     "Board": "Board",
     "Uploading firmware...": "Firmware wird übertragen...",
     "Firmware uploaded.": "Firmware übertragen.",
+    "empty = latest firmware from GitHub": "leer = neueste Firmware von GitHub",
+    "No firmware for {board} in the latest GitHub release.": "Keine Firmware für {board} im neuesten GitHub-Release.",
+    "Update firmware now": "Firmware jetzt aktualisieren",
     "Demo mode: simulated reader with a demo cartridge": "Demo-Modus: simulierter Reader mit Demo-Cartridge",
     "Demo cartridge": "Demo-Cartridge",
 }

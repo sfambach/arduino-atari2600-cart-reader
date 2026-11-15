@@ -397,6 +397,8 @@ class MainWindow(QMainWindow):
                 self.statusBar().showMessage(tr("Demo mode: simulated reader with a demo cartridge"))
             self._update_buttons()
             self.check_cartridge()
+            if port != DEMO_PORT and self.settings.value("check_updates", True, type=bool):
+                self.check_updates(quiet=True, firmware_only=True)  # now the firmware version is known
 
         self._run(job, done)
 
@@ -526,9 +528,10 @@ class MainWindow(QMainWindow):
     def edit_settings(self) -> None:
         SettingsDialog(self.settings, self).exec()
 
-    def check_updates(self, quiet: bool) -> None:
+    def check_updates(self, quiet: bool, firmware_only: bool = False) -> None:
         board = self.reader.hello.board if self.reader else None
         firmware = self.reader.hello.version if self.reader else None
+        port = self.settings.value("port", "")
 
         def done(release) -> None:
             if release is None:
@@ -536,7 +539,7 @@ class MainWindow(QMainWindow):
                     QMessageBox.information(self, tr("Check for updates"), tr("No release found on GitHub."))
                 return
             notes = []
-            if updates.newer(release.version, __version__):
+            if not firmware_only and updates.newer(release.version, __version__):
                 notes.append(tr("Version {version} is available.", version=release.version))
             if board and firmware and updates.firmware_asset(release, board) and \
                     updates.newer(release.version, firmware):
@@ -546,10 +549,17 @@ class MainWindow(QMainWindow):
                     QMessageBox.information(self, tr("Check for updates"), tr("Everything is up to date."))
                 return
             box = QMessageBox(QMessageBox.Information, tr("Check for updates"), "\n".join(notes), parent=self)
+            flash_now = None
+            avrdude = updates.find_avrdude()
+            if len(notes) and board and updates.firmware_asset(release, board) and firmware and \
+                    updates.newer(release.version, firmware) and avrdude:
+                flash_now = box.addButton(tr("Update firmware now"), QMessageBox.AcceptRole)
             open_page = box.addButton(tr("Open download page"), QMessageBox.AcceptRole)
             box.addButton(QMessageBox.Close)
             box.exec()
-            if box.clickedButton() is open_page:
+            if flash_now is not None and box.clickedButton() is flash_now:
+                self._flash(port, board, "", avrdude)
+            elif box.clickedButton() is open_page:
                 QDesktopServices.openUrl(QUrl(release.url))
 
         self._run(lambda w: updates.latest_release(), done, busy=False)
@@ -571,7 +581,7 @@ class MainWindow(QMainWindow):
         board_box.addItems(boards)
         if board in boards:
             board_box.setCurrentText(board)
-        hex_path = QLineEdit()
+        hex_path = QLineEdit(placeholderText=tr("empty = latest firmware from GitHub"))
         browse = QPushButton("...")
         browse.clicked.connect(lambda: hex_path.setText(
             QFileDialog.getOpenFileName(dialog, tr("Firmware file (.hex)"), "", "HEX (*.hex)")[0] or hex_path.text()))
@@ -584,14 +594,30 @@ class MainWindow(QMainWindow):
         buttons.accepted.connect(dialog.accept)
         buttons.rejected.connect(dialog.reject)
         form.addRow(buttons)
-        if dialog.exec() != QDialog.Accepted or not hex_path.text():
+        if dialog.exec() != QDialog.Accepted:
             return
+        self._flash(port, board_box.currentText(), hex_path.text(), avrdude)
+
+    def _flash(self, port: str, board: str, hex_file: str, avrdude: str) -> None:
         if self.reader:
-            self.toggle_connection()
-        chosen, path = board_box.currentText(), pathlib.Path(hex_path.text())
+            self.toggle_connection()  # avrdude needs the port; the board resets into its bootloader
+
+        def job(_w: Worker) -> str:
+            path = pathlib.Path(hex_file) if hex_file else None
+            if path is None:
+                release = updates.latest_release()
+                url = updates.firmware_asset(release, board) if release else None
+                if not url:
+                    raise RuntimeError(tr("No firmware for {board} in the latest GitHub release.", board=board))
+                path = updates.download(url)
+            return updates.flash(path, port, board, avrdude)
+
+        def done(_log: str) -> None:
+            self.statusBar().showMessage(tr("Firmware uploaded."))
+            self.connect_reader()
+
         self.statusBar().showMessage(tr("Uploading firmware..."))
-        self._run(lambda w: updates.flash(path, port, chosen, avrdude),
-                  lambda log: (self.statusBar().showMessage(tr("Firmware uploaded.")), self.connect_reader()))
+        self._run(job, done)
 
     def about(self) -> None:
         QMessageBox.about(self, tr("About"),
