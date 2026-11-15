@@ -28,5 +28,5 @@ Checked by Stefan on the test print (2026-11-15): side A (closed) sits over pins
 
 - Slope-to-side corner on both ends rounded (r = 6 mm), so the overhang fades out instead of ending in a sharp edge; feet and top stay square.
 - Opener tips chamfered by 0.5 mm.
-- The openers are small (6.6 × 1.9 mm): set a minimum layer time of about 10 s in the slicer (or print two caps at once) so they can cool.
+- The openers are small (6.6 × 1.9 mm): set a minimum layer time of 15 s in the slicer so they can cool (10 s was not enough on the first print, Stefan 2026-11-15).
 - `cartridge_guide.scad` does not have these changes yet; the STL comes from `cartridge_guide.py`.
