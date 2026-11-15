@@ -30,7 +30,7 @@ Boards (THT, KiCad) for Uno, Mega and Nano, plus MCP23017 variants for Uno and N
 | Board | Status |
 |---|---|
 | Uno shield MCP23017, revision 1.2 | **tested** (2026-11-15): bus, supply, orientation check, reading 2K/4K/F8 and a 32-in-1 multicart, firmware upload from the PC program |
-| Uno shield (74HC595), Mega shield, Nano boards | not built yet |
+| Uno shield (74HC595), Mega shield, Nano boards | not tested yet |
 
 Firmware: select the board at the top of `firmware/AtariCartReader/config.h` (one `#define BOARD_...`); the same file is copied into the test sketches with `tools/sync_config.py`.
 
