@@ -21,7 +21,7 @@ SLIT_L, SLIT_W = 35.1, 2.5               # Schlitz fuer die Cartridge-Platine (v
 HOLE_X, SCREW_D, SCREW_DEPTH = 22.75, 2.2, 10.0   # M2,5 von unten durch die Platine
 FOOT_X = HOLE_X + 2.7 / 2 + 1.4          # Fuss endet knapp hinter der Lochaussenkante
 FULL_Z = 17.0                            # darueber volle Laenge (Fuehrung in der Cartridge)
-NUB_DEPTH = 16.0                         # Tiefe der Nasen-Loecher (7800cartguide ca. 16-18)
+NUB_DEPTH = 12.0                         # Tiefe der Nasen-Loecher, unten geschlossen (Stefan 15.11.2026)
 BAND = 8.5                               # unten max. 8,5 neben der Slotmitte (freie Flaeche 61 x 17)
 STEP_Z = SLOT_TOP + PLATE - 18.5         # Unterkante Cartridge (Slot ragt 18,5 ins Gehaeuse, gemessen 14.11.)
 S = 9
@@ -107,7 +107,7 @@ qsy = qcx + OFF
 txt(qcx + 14, qb - TOP - 15, 'Schnitt quer', 15, bold=True)
 ln(qx - 12, qb, qx + CAP_W + 12, qb, '#2e7d32', 2.2)
 # Seite A massiv, Deckflaeche, Seite B offen
-poly([(qsy - BAND, qb - GAP), (qsy - BAND, qb - STEP_Z), (qcx - CAP_W / 2, qb - STEP_Z), (qcx - CAP_W / 2, qb - TOP),
+poly([(qcx - CAP_W / 2, qb - GAP), (qcx - CAP_W / 2, qb - TOP),
       (qsy - SLIT_W / 2, qb - TOP), (qsy - SLIT_W / 2, qb - SLOT_TOP), (qsy - CAV_W / 2, qb - SLOT_TOP), (qsy - CAV_W / 2, qb - GAP)])
 poly([(qsy + SLIT_W / 2, qb - TOP), (qcx + CAP_W / 2, qb - TOP), (qcx + CAP_W / 2, qb - SLOT_TOP), (qsy + SLIT_W / 2, qb - SLOT_TOP)])
 rect(qsy - SL_W / 2, qb - SLOT_TOP, SL_W, SL_UP, fill='#e8e8e8', c='#777')
@@ -115,8 +115,8 @@ rect(qsy - SL_LOW_W / 2, qb - SLOT_TOP + SL_UP, SL_LOW_W, SL_H - SL_UP, fill='#e
 rect(qsy - 2.5 - 1.27, qb - (SLOT_TOP - SL_H), 7.62 - 1.27, SLOT_TOP - SL_H, fill='#555', c='#333')
 rect(qcx - SHELL_IN_W / 2, qb - TOP - 10, SHELL_IN_W, TOP + 10 - STEP_Z, fill='none', c='#aaa', dash='4,3')
 dimh(qcx - CAP_W / 2, qcx + CAP_W / 2, qb - TOP - 3, f(CAP_W))
-dimv(qx - 8, qb - STEP_Z, qb, f(STEP_Z))
-dimv(qx - 8, qb - TOP, qb - STEP_Z, f(TOP - STEP_Z))
+dimv(qx - 8, qb - STEP_Z, qb, f(STEP_Z) + ' Cartridge-Unterkante')
+dimv(qx - 12, qb - TOP, qb, f(TOP))
 txt(qcx + CAP_W / 2 + 1.5, qb - 18, 'Seite B neben dem', 10, RED, 'start')
 txt(qcx + CAP_W / 2 + 1.5, qb - 16, 'Slot offen (0,4 Wand)', 10, RED, 'start')
 txt(qcx - SHELL_IN_W / 2, qb - TOP - 11, 'Cartridge innen', 10, '#888', 'start')
@@ -135,8 +135,8 @@ notes = [('Prinzip (Stefan 15.11.2026):', '#222', True),
          ('Druck von unten nach oben, Öffner mitgedruckt.', '#222', False),
          ('Schrägen 38° zur Senkrechten, ohne Stützen.', '#222', False),
          ('Offen (rot):', RED, True),
-         ('Tiefe der Nasen-Löcher 16 (aus 7800cartguide),', RED, False),
-         ('unten an der Schräge offen, stört nicht.', RED, False)]
+         ('Nasen-Löcher 12 tief, unten geschlossen.', RED, False),
+         ('Seite A ohne Absatz bis zum Fuß.', '#222', False)]
 for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 112 * S, 166 * S

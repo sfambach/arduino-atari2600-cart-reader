@@ -19,7 +19,7 @@ cav_l      = 37.0 + 0.6;
 cav_w      = 9.5 + 0.6;
 slit_l     = 35.1;
 slit_w     = 2.5;
-nub_x0     = 28.3;  nub_x1 = 36.1;  nub_w = 2.7;  nub_depth = 16;
+nub_x0     = 28.3;  nub_x1 = 36.1;  nub_w = 2.7;  nub_depth = 12;   // closed at the bottom
 opn_x0     = 21.4;  opn_x1 = 28.0;  opn_t = 1.9;  opn_h = 6.0;
 hole_x     = 22.75; screw_d = 2.2;  screw_depth = 10;
 
@@ -37,8 +37,6 @@ difference() {
             translate([s > 0 ? opn_x0 : -opn_x1, off - opn_t / 2, top - 0.01])
                 cube([opn_x1 - opn_x0, opn_t, opn_h + 0.01]);
     }
-    // side A narrower below the cartridge shell
-    translate([-50, -cap_w / 2 - 1, -1]) cube([100, (off - band) + cap_w / 2 + 1, step_z + 1]);
     // slot cavity, open towards side B
     translate([-cav_l / 2, off - cav_w / 2, -1]) cube([cav_l, cap_w, slot_top + 1]);
     // slit for the cartridge PCB

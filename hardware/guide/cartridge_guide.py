@@ -14,7 +14,7 @@ full_z, foot_x, band = (gap, cap_l / 2, 99.0) if STRAIGHT else (17.0, 25.5, 8.5)
 step_z = slot_top + plate - 18.5
 cav_l, cav_w = 37.6, 10.1
 slit_l, slit_w = 35.1, 2.5
-nub_x0, nub_x1, nub_w, nub_depth = 28.3, 36.1, 2.7, 16.0
+nub_x0, nub_x1, nub_w, nub_depth = 28.3, 36.1, 2.7, 12.0   # closed at the bottom (Stefan 15.11.2026)
 opn_x0, opn_x1, opn_t, opn_h = 21.4, 28.0, 1.9, 6.0
 hole_x, screw_d, screw_depth = 22.75, 2.2, 10.0
 
@@ -26,7 +26,7 @@ body = m3d.Manifold.extrude(prof, cap_w).translate([0, 0, -cap_w / 2]).rotate([9
 for s in (-1, 1):
     x0, x1 = (opn_x0, opn_x1) if s > 0 else (-opn_x1, -opn_x0)
     body = body + box(x0, off - opn_t / 2, top - 0.01, x1, off + opn_t / 2, top + opn_h)
-cut = m3d.Manifold() if STRAIGHT else box(-50, -cap_w / 2 - 1, -1, 50, off - band, step_z)
+cut = m3d.Manifold()   # no step on side A (Stefan 15.11.2026)
 cut = cut + box(-cav_l / 2, off - cav_w / 2, -1, cav_l / 2, off - cav_w / 2 + cap_w, slot_top)
 cut = cut + box(-slit_l / 2, off - slit_w / 2, slot_top - 1, slit_l / 2, off + slit_w / 2, top + 1)
 for s in (-1, 1):
