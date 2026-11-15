@@ -44,6 +44,6 @@ Without cartridge (runs at start, `t` repeats):
 3. Supply on: A0 above the powered threshold (BC327 and fuse work).
 4. Supply off again: the rail falls back, time is printed.
 
-With a cartridge: `o` runs the orientation check as in the firmware (any data line low = reversed), `p` switches on only if the cartridge sits the right way round and checks the voltage under load, then switches off, `1` / `0` switch the supply on / off by hand (reading printed every second).
+With a cartridge: `o` runs the orientation check as in the firmware (D2 low = reversed), `p` switches on only if the cartridge sits the right way round and checks the voltage under load, then switches off, `1` / `0` switch the supply on / off by hand (reading printed every second).
 
 Both tests: syntax-checked for all five boards against stub headers; not built with the Arduino toolchain or run on hardware yet.

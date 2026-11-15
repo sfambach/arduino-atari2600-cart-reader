@@ -49,8 +49,8 @@ void check(bool ok, const __FlashStringHelper *what, int v) {
   if (!ok) errors++;
 }
 
-// Orientation check as in the firmware: supply off, pull-ups on D0-D7. A reversed cartridge pulls a data line
-// to its own GND pin (measured 2026-11-15: D2), so 0xFF = right way round or empty slot.
+// Orientation check as in the firmware: supply off, pull-ups on D0-D7. A reversed cartridge puts its own +5V pin
+// on slot pin 11 (D2), which reads low. Other low lines can occur on correct cartridges (32-in-1: D4) and are ignored.
 uint8_t readOrientation() {
   supplyOff();
   for (uint8_t i = 0; i < DATA_LINES; i++) pinMode(DATA_ARDUINO_PIN[i], INPUT_PULLUP);
@@ -101,11 +101,11 @@ void testWithoutCartridge() {
 void orientationCheck() {
   uint8_t v = readOrientation();
   printData(v);
-  Serial.println(v == 0xFF ? F(" -> right way round or empty slot") : F(" -> REVERSED, supply stays off"));
+  Serial.println((v & 0x04) ? F(" -> D2 high: right way round or empty slot") : F(" -> D2 low: REVERSED, supply stays off"));
 }
 
 void powerWithCartridge() {
-  if (readOrientation() != 0xFF) { Serial.println(F("reversed: supply NOT switched on")); return; }
+  if (!(readOrientation() & 0x04)) { Serial.println(F("reversed (D2 low): supply NOT switched on")); return; }
   addressLow();
   digitalWrite(CART_PWR, LOW);
   delay(20);

@@ -9,10 +9,10 @@
    S                show the orientation and supply readings
 
  The cartridge is only powered while a command runs. Before switching on, the
- firmware checks the orientation with the supply off: with pull-ups on D0-D7, a
- reversed cartridge pulls a data line to its own GND pin (measured: D2), so any
- low data line keeps the supply off. An empty slot reads all high and may be
- powered, which is harmless.
+ firmware checks the orientation with the supply off: a reversed cartridge puts
+ its own +5V pin on slot pin 11 (D2), and its unpowered circuit pulls that pin
+ low against the pull-up. D2 low keeps the supply off. Other data lines may be
+ low on a correct cartridge (measured on a 32-in-1 multicart: D4) and are ignored.
 */
 #include "config.h"
 #include "hal.h"
@@ -21,7 +21,7 @@ struct Scheme { const char *name; uint8_t kb; };  // before any function: Arduin
 
 const uint16_t ROM = 0x1000;
 
-// Data bus with pull-ups, supply off: 0xFF = right way round or empty slot.
+// Data bus with pull-ups, supply off. Bit 2 (D2) low = reversed cartridge.
 uint8_t readOrientation() {
   digitalWrite(CART_PWR, HIGH);
   halRelease();
@@ -39,7 +39,7 @@ void cartOff() {
 
 bool cartOn() {
 #if !defined(SKIP_ORIENTATION_CHECK)
-  if (readOrientation() != 0xFF) {
+  if (!(readOrientation() & 0x04)) {
     Serial.println(F("ERR cartridge inserted the wrong way round"));
     return false;
   }
@@ -224,8 +224,8 @@ void loop() {
   } else if (cmd == 'S') {
     uint8_t o = readOrientation();
     Serial.print(F("orientation data ")); Serial.print(o, BIN);
-    Serial.println(o == 0xFF ? F(" ok") : F(" reversed"));
-    if (o == 0xFF) {
+    Serial.println((o & 0x04) ? F(" ok") : F(" reversed (D2 low)"));
+    if (o & 0x04) {
       digitalWrite(CART_PWR, LOW);
       delay(20);
       Serial.print(F("supply ")); Serial.println(analogRead(CART_SENSE));

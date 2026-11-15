@@ -44,7 +44,7 @@ Untested on hardware so far. Board tests to run first: [`test/`](test/).
 
 ## Usage
 
-Serial 115200 baud: `L` lists schemes, `D <scheme> [kb]` dumps, `P <hexaddr>` reads one byte, `S` prints the orientation and supply readings. The read button (A1) repeats the last `D` command (4K until one was given); `dump.py <port> listen <prefix>` saves those dumps. The cartridge is powered only during `D`, `P`, `S` and a button read, and only after the orientation check passed (a reversed cartridge pulls a data line low, see [`hardware/`](hardware/)).
+Serial 115200 baud: `L` lists schemes, `D <scheme> [kb]` dumps, `P <hexaddr>` reads one byte, `S` prints the orientation and supply readings. The read button (A1) repeats the last `D` command (4K until one was given); `dump.py <port> listen <prefix>` saves those dumps. The cartridge is powered only during `D`, `P`, `S` and a button read, and only after the orientation check passed (a reversed cartridge pulls D2 low, see [`hardware/`](hardware/)).
 
 ```
 pip install pyserial
