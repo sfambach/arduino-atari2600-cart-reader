@@ -33,7 +33,7 @@ Ready-made programs (Windows `.exe`, Linux binary) and the firmware for every bo
 
 | Function | How |
 |---|---|
-| Connect | picks the serial port, the firmware answers with version and board (protocol 1) |
+| Connect | picks the serial port, the firmware answers with version and board (protocol 1); a reader that the system renames after a reset (ttyUSB0 → ttyUSB1) is found again by its USB id and reconnected |
 | Check | orientation (D2) and supply of the inserted cartridge |
 | Read | **Auto** reads once with the F4 hotspots and derives 2K, 4K, F8, F6 or F4 from the repeating banks; other schemes (SC, E0, E7, FA, FE, 3F) are chosen by hand; every dump is checked with CRC-32 |
 | Title and cover | MD5 looked up in the No-Intro list of [libretro-database](https://github.com/libretro/libretro-database), box art from [libretro-thumbnails](https://github.com/libretro-thumbnails/Atari_-_2600); both downloaded on first use and cached, nothing is shipped |

@@ -54,3 +54,18 @@ def test_demo_read(app, tmp_path, monkeypatch):
     window.save_to_library()
     assert window.games.count() == 1
     window.close()
+
+
+def test_renamed_port_is_found_again(app, tmp_path, monkeypatch):
+    from acr.gui import app as app_module
+    from acr.reader import Port
+    monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path))
+    monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path))
+    settings = QSettings(str(tmp_path / "p.ini"), QSettings.IniFormat)
+    settings.setValue("check_updates", False)
+    settings.setValue("port", "/dev/ttyUSB0")
+    settings.setValue("port_key", "1A86:7523:")
+    monkeypatch.setattr(app_module, "list_ports", lambda: [Port("/dev/ttyUSB1", "USB Serial", "1A86:7523:")])
+    window = MainWindow(settings)
+    assert window.ports.currentData() == "/dev/ttyUSB1"
+    window.close()

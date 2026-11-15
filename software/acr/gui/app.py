@@ -6,7 +6,7 @@ import pathlib
 import sys
 from typing import Callable, Optional
 
-from PySide6.QtCore import QObject, QSettings, QSize, Qt, QThread, QUrl, Signal
+from PySide6.QtCore import QObject, QSettings, QSize, Qt, QThread, QTimer, QUrl, Signal
 from PySide6.QtGui import QAction, QDesktopServices, QIcon, QPixmap
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog, QDialogButtonBox, QFileDialog,
                                QFormLayout, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QLineEdit,
@@ -131,7 +131,10 @@ class MainWindow(QMainWindow):
         self.progress.hide()
         self.statusBar().addPermanentWidget(self.progress)
 
+        self._auto_reconnect = False
         self.refresh_ports(select=DEMO_PORT if demo else self.settings.value("port", ""))
+        self._port_timer = QTimer(self, interval=2000, timeout=self._watch_ports)
+        self._port_timer.start()
         self.refresh_library()
         self._update_buttons()
         if demo:
@@ -314,19 +317,48 @@ class MainWindow(QMainWindow):
 
     # ------------------------------------------------------------------ reader
     def refresh_ports(self, select: str = "") -> None:
-        self.ports.clear()
         try:
             ports = list_ports()
         except Exception:  # serial.tools may fail on exotic systems; the demo port still works
             ports = []
-        for device, description in ports:
-            self.ports.addItem(f"{device} – {description}" if description != device else device, device)
+        self._port_list = ports
+        self.ports.clear()
+        for port in ports:
+            label = port.device if port.description == port.device else f"{port.device} – {port.description}"
+            self.ports.addItem(label, port.device)
         self.ports.addItem(tr("Demo cartridge"), DEMO_PORT)
         index = self.ports.findData(select)
-        self.ports.setCurrentIndex(index if index >= 0 else 0)
+        if index < 0:  # renamed after a reset (ttyUSB0 -> ttyUSB1): find the same reader by its USB id
+            key = self.settings.value("port_key", "")
+            same = [p.device for p in ports if key and p.key == key]
+            index = self.ports.findData(same[0]) if same else 0
+        self.ports.setCurrentIndex(index)
+
+    def _watch_ports(self) -> None:
+        """Every 2 s: notice a reader that vanished or came back under another name."""
+        if getattr(self, "busy", False):
+            return
+        try:
+            ports = list_ports()
+        except Exception:
+            return
+        if [p.device for p in ports] == [p.device for p in getattr(self, "_port_list", [])]:
+            return
+        connected = self.reader is not None and self.settings.value("port", "") != DEMO_PORT
+        current = self.settings.value("port", "")
+        if connected and current not in [p.device for p in ports]:
+            self.reader.close()
+            self.reader = None
+            self.reader_light.set("off", tr("not connected"))
+        self.refresh_ports(current if self.reader else self.ports.currentData())
+        key = self.settings.value("port_key", "")
+        if self.reader is None and key and any(p.key == key for p in ports) and self._auto_reconnect:
+            self.connect_reader()
+        self._update_buttons()
 
     def toggle_connection(self) -> None:
         if self.reader:
+            self._auto_reconnect = False
             self.reader.close()
             self.reader = None
             self.reader_light.set("off", tr("not connected"))
@@ -346,7 +378,11 @@ class MainWindow(QMainWindow):
 
         def done(reader: Reader) -> None:
             self.reader = reader
+            self._auto_reconnect = port != DEMO_PORT
             self.settings.setValue("port", port)
+            key = [p.key for p in getattr(self, "_port_list", []) if p.device == port]
+            if key and key[0]:
+                self.settings.setValue("port_key", key[0])
             h = reader.hello
             self.reader_light.set("ok", tr("connected: firmware {version}, board {board}", version=h.version,
                                            board=h.board))

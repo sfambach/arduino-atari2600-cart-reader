@@ -45,9 +45,20 @@ class Scheme:
     kb: int
 
 
-def list_ports() -> list[tuple[str, str]]:
+@dataclass
+class Port:
+    device: str
+    description: str
+    key: str  # USB id + serial number: finds the same reader again when the system renames its port
+
+
+def list_ports() -> list[Port]:
     from serial.tools import list_ports as lp
-    return [(p.device, p.description or p.device) for p in lp.comports()]
+    result = []
+    for p in lp.comports():
+        key = f"{p.vid:04X}:{p.pid:04X}:{p.serial_number or ''}" if p.vid is not None else ""
+        result.append(Port(p.device, p.description or p.device, key))
+    return result
 
 
 class Reader:
