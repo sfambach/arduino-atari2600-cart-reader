@@ -451,7 +451,26 @@ class MainWindow(QMainWindow):
             return data, scheme, title, cover
 
         self._progress_text = MULTICART if choice == MULTICART else None
-        self._run(job, lambda result: self.show_rom(*result))
+        def done(result) -> None:
+            self.show_rom(*result)
+            data, _scheme, title = result[0], result[1], result[2]
+            if choice != MULTICART and not title and len(data) <= 0x1000 and download:
+                self._suggest_multicart()
+
+        self._run(job, done)
+
+    def _suggest_multicart(self) -> None:
+        """An unknown 2K/4K game is often one game of a multicart that switches games at every power-on."""
+        box = QMessageBox(QMessageBox.Question, tr("unknown game"),
+                          tr("The game is not in the game list. If this is a multicart (e.g. 32 in 1), the reader "
+                             "only sees the game that is active right now. Read all games of the multicart?"),
+                          parent=self)
+        read_all = box.addButton(tr("Read as multicart"), QMessageBox.AcceptRole)
+        box.addButton(QMessageBox.Close)
+        box.exec()
+        if box.clickedButton() is read_all:
+            self.schemes.setCurrentIndex(self.schemes.findData(MULTICART))
+            self.read_cartridge()
 
     def show_rom(self, data: bytes, scheme: str, title: Optional[str], cover: Optional[pathlib.Path]) -> None:
         self.rom, self.scheme, self.cover = data, scheme, cover

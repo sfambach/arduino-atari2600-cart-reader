@@ -73,6 +73,9 @@ _DE = {
     "Update firmware now": "Firmware jetzt aktualisieren",
     "Multicart (next game at power-on)": "Multicart (nächstes Spiel beim Einschalten)",
     "Reading game {n}...": "Lese Spiel {n}...",
+    "The game is not in the game list. If this is a multicart (e.g. 32 in 1), the reader only sees the game that is active right now. Read all games of the multicart?":
+        "Das Spiel steht nicht in der Spieleliste. Ist das ein Multicart (z. B. 32 in 1), sieht der Reader nur das gerade aktive Spiel. Alle Spiele des Multicarts lesen?",
+    "Read as multicart": "Als Multicart lesen",
     "Demo mode: simulated reader with a demo cartridge": "Demo-Modus: simulierter Reader mit Demo-Cartridge",
     "Demo cartridge": "Demo-Cartridge",
 }
