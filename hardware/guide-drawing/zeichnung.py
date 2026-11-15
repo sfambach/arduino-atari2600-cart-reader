@@ -1,7 +1,7 @@
 # 2D-Massskizze der Cartridge-Fuehrung (3D-Druck), Entwurf 5: Kappe ueber Slot B (Stefan 15.11.2026)
 import sys
 # --- gemessen (Stefan 14.11.2026) ---
-SLOT_TOP = 25.0                          # Oberkante Slot B ueber Platine (auf Stiftleisten)
+SLOT_TOP = 27.0                          # Oberkante Slot B ueber Platine (Stefan 15.11.2026, vorher 25)
 SHELL_IN_L, SHELL_IN_W = 75.0, 15.5      # Cartridge innen
 SL_L, SL_W, SL_UP = 37.0, 9.5, 10.0      # Slot B, Oberteil 10 hoch
 SL_LOW_W, SL_H = 7.5, 15.5
@@ -12,17 +12,18 @@ OPN_X0, OPN_X1, OPN_T, PIN_H = 21.4, 28.0, 1.9, 6.0   # Klappen-Oeffner (Laschen
 NUB_X0, NUB_X1, NUB_W = 28.3, 36.1, 2.7  # Loecher fuer die Nasen der Cartridge, in der Platinenebene
 PIN_X = (OPN_X0 + OPN_X1) / 2
 # --- Entwurf ---
-PLATE = 1.2                              # geschlossene Deckflaeche ueber dem Slot
+PLATE = 2.0                              # geschlossene Deckflaeche, liegt auf dem Slot auf (Stefan 15.11.2026)
+GAP = 2.0                                # Spalt unter dem Fuss: Schrauben ziehen die Kappe auf den Slot
 TOP = SLOT_TOP + PLATE
 CLR = 0.3                                # Luft um den Slot
 CAV_L, CAV_W = SL_L + 2 * CLR, SL_W + 2 * CLR
 SLIT_L, SLIT_W = 35.1, 2.5               # Schlitz fuer die Cartridge-Platine (vcsslot)
 HOLE_X, SCREW_D, SCREW_DEPTH = 22.75, 2.2, 10.0   # M2,5 von unten durch die Platine
 FOOT_X = HOLE_X + 2.7 / 2 + 1.4          # Fuss endet knapp hinter der Lochaussenkante
-FULL_Z = 15.0                            # darueber volle Laenge (Fuehrung in der Cartridge)
+FULL_Z = 17.0                            # darueber volle Laenge (Fuehrung in der Cartridge)
 NUB_DEPTH = 16.0                         # Tiefe der Nasen-Loecher (7800cartguide ca. 16-18)
 BAND = 8.5                               # unten max. 8,5 neben der Slotmitte (freie Flaeche 61 x 17)
-STEP_Z = 7.7                             # Unterkante Cartridge mit Kappe (6,5 + 1,2)
+STEP_Z = SLOT_TOP + PLATE - 18.5         # Unterkante Cartridge (Slot ragt 18,5 ins Gehaeuse, gemessen 14.11.)
 S = 9
 RED, DIM, PIN, ADPC = '#c0392b', '#1f5fbf', '#c47a00', '#d9c7a0'
 out = []
@@ -76,40 +77,38 @@ lx, base = 16, 100
 lcx = lx + CAP_L / 2
 txt(lcx, base - TOP - PIN_H - 6, 'Ansicht von Seite A (verdeckte Kanten gestrichelt)', 15, bold=True)
 ln(lx - 4, base, lx + CAP_L + 4, base, '#2e7d32', 2.2)
-poly([(lcx - FOOT_X, base), (lcx - CAP_L / 2, base - FULL_Z), (lcx - CAP_L / 2, base - TOP),
-      (lcx + CAP_L / 2, base - TOP), (lcx + CAP_L / 2, base - FULL_Z), (lcx + FOOT_X, base)])
+poly([(lcx - FOOT_X, base - GAP), (lcx - CAP_L / 2, base - FULL_Z), (lcx - CAP_L / 2, base - TOP),
+      (lcx + CAP_L / 2, base - TOP), (lcx + CAP_L / 2, base - FULL_Z), (lcx + FOOT_X, base - GAP)])
 # Ansicht: Seite A ist eine durchgehende Wand, verdeckte Kanten gestrichelt
-rect(lcx - CAV_L / 2, base - SLOT_TOP, CAV_L, SLOT_TOP, fill='none', c='#777', dash='4,3')
+rect(lcx - CAV_L / 2, base - SLOT_TOP, CAV_L, SLOT_TOP - GAP, fill='none', c='#777', dash='4,3')
 rect(lcx - SLIT_L / 2, base - TOP, SLIT_L, PLATE, fill='none', c='#777', dash='2,2')
 rect(lcx - SL_L / 2 + .4, base - SLOT_TOP + .4, SL_L - .8, SL_H - .8, fill='none', c='#aaa', dash='2,3')
 for s in (-1, 1):
     rect(lcx + OPN_X0 if s > 0 else lcx - OPN_X1, base - TOP - PIN_H, OPN_X1 - OPN_X0, PIN_H, fill='#7aa0d8')
     rect(lcx + s * NUB_X0 if s > 0 else lcx - NUB_X1, base - TOP, NUB_X1 - NUB_X0, NUB_DEPTH, fill='none', c='#777', dash='4,3')
-    rect(lcx + s * HOLE_X - SCREW_D / 2, base - SCREW_DEPTH, SCREW_D, SCREW_DEPTH, fill='white', c='#999', dash='3,2')
+    rect(lcx + s * HOLE_X - SCREW_D / 2, base - GAP - SCREW_DEPTH, SCREW_D, SCREW_DEPTH, fill='white', c='#999', dash='3,2')
     ln(lcx + s * HOLE_X, base + 4, lcx + s * HOLE_X, base - SCREW_DEPTH + 1, '#555', 1.2, '2,2')
 txt(lcx, base - SLOT_TOP + 7, 'Slot B (verdeckt)', 11, '#777')
 dimv(lx - 9, base - TOP, base, f(TOP))
+dimv(lx - 13, base - SLOT_TOP, base, f(SLOT_TOP) + ' Slot')
 dimv(lx - 5, base - FULL_Z, base, f(FULL_Z))
 dimv(lx + CAP_L + 4, base - TOP - PIN_H, base - TOP, f(PIN_H), left=False)
 dimv(lx + CAP_L + 4, base - TOP, base - SLOT_TOP, f(PLATE), RED, left=False)
 dimh(lcx - FOOT_X, lcx + FOOT_X, base + 6, f(2 * FOOT_X) + ' Fuß')
+dimv(lcx + FOOT_X + 1, base - GAP, base, f(GAP) + ' Spalt', RED, left=False)
 txt(lcx + OPN_X1 + .5, base - TOP - 3, 'Öffner', 10, '#555', 'start')
 dimv(lx + CAP_L + 9, base - TOP, base - TOP + NUB_DEPTH, f(NUB_DEPTH), RED, left=False)
 txt(lcx + HOLE_X + 2.5, base + 3.5, 'Schraube', 10, '#555', 'start')
 
 # --- Schnitt quer ---
-qx, qb = 26, 150
+qx, qb = 26, 160
 qcx = qx + CAP_W / 2
 qsy = qcx + OFF
 txt(qcx + 14, qb - TOP - 15, 'Schnitt quer', 15, bold=True)
 ln(qx - 12, qb, qx + CAP_W + 12, qb, '#2e7d32', 2.2)
-poly([(qsy - BAND, qb), (qsy - BAND, qb - STEP_Z), (qcx - CAP_W / 2, qb - STEP_Z), (qcx - CAP_W / 2, qb - TOP),
-      (qcx + CAP_W / 2, qb - TOP), (qcx + CAP_W / 2, qb - SLOT_TOP), (qsy + CAV_W / 2, qb - SLOT_TOP), (qsy + CAV_W / 2, qb),
-      (qsy - CAV_W / 2, qb), (qsy - CAV_W / 2, qb - SLOT_TOP), (qsy - SLIT_W / 2, qb - SLOT_TOP), (qsy - SLIT_W / 2, qb - TOP),
-      (qsy + SLIT_W / 2, qb - TOP), (qsy + SLIT_W / 2, qb - SLOT_TOP)], fill='none', c='none')
 # Seite A massiv, Deckflaeche, Seite B offen
-poly([(qsy - BAND, qb), (qsy - BAND, qb - STEP_Z), (qcx - CAP_W / 2, qb - STEP_Z), (qcx - CAP_W / 2, qb - TOP),
-      (qsy - SLIT_W / 2, qb - TOP), (qsy - SLIT_W / 2, qb - SLOT_TOP), (qsy - CAV_W / 2, qb - SLOT_TOP), (qsy - CAV_W / 2, qb)])
+poly([(qsy - BAND, qb - GAP), (qsy - BAND, qb - STEP_Z), (qcx - CAP_W / 2, qb - STEP_Z), (qcx - CAP_W / 2, qb - TOP),
+      (qsy - SLIT_W / 2, qb - TOP), (qsy - SLIT_W / 2, qb - SLOT_TOP), (qsy - CAV_W / 2, qb - SLOT_TOP), (qsy - CAV_W / 2, qb - GAP)])
 poly([(qsy + SLIT_W / 2, qb - TOP), (qcx + CAP_W / 2, qb - TOP), (qcx + CAP_W / 2, qb - SLOT_TOP), (qsy + SLIT_W / 2, qb - SLOT_TOP)])
 rect(qsy - SL_W / 2, qb - SLOT_TOP, SL_W, SL_UP, fill='#e8e8e8', c='#777')
 rect(qsy - SL_LOW_W / 2, qb - SLOT_TOP + SL_UP, SL_LOW_W, SL_H - SL_UP, fill='#e8e8e8', c='#777')
@@ -123,23 +122,24 @@ txt(qcx + CAP_W / 2 + 1.5, qb - 16, 'Slot offen (0,4 Wand)', 10, RED, 'start')
 txt(qcx - SHELL_IN_W / 2, qb - TOP - 11, 'Cartridge innen', 10, '#888', 'start')
 
 # --- Hinweise ---
-nx, ny = 62, 116
+nx, ny = 62, 124
 notes = [('Prinzip (Stefan 15.11.2026):', '#222', True),
          ('Kappe wird über Slot B gesteckt, oben geschlossen.', '#222', False),
-         ('Deckfläche 1,2 über dem Slot (Kontakte lang genug).', '#222', False),
+         ('Deckfläche 2 liegt auf dem Slot auf (27 über Platine).', '#222', False),
+         ('Unten 2 Spalt: Schrauben ziehen die Kappe auf den Slot.', '#222', False),
          ('Volle Länge 74,2 nur oben, seitlich schräg zum Fuß 51.', '#222', False),
          ('2 Schrauben M2,5 von unten durch die Platine.', '#222', False),
          ('Aus vcsslot.stl übernommen:', '#222', True),
          ('Schlitz 35,1 × 2,5, Versatz 2,1 zu Seite B.', '#222', False),
          ('Öffner 6,6 × 1,9, 6 hoch; Nasen-Löcher 7,8 × 2,7.', '#222', False),
-         ('Druck: stehend auf dem Fuß, Öffner mitgedruckt.', '#222', False),
+         ('Druck von unten nach oben, Öffner mitgedruckt.', '#222', False),
          ('Schrägen 38° zur Senkrechten, ohne Stützen.', '#222', False),
          ('Offen (rot):', RED, True),
          ('Tiefe der Nasen-Löcher 16 (aus 7800cartguide),', RED, False),
          ('unten an der Schräge offen, stört nicht.', RED, False)]
 for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
-w, h = 112 * S, 160 * S
+w, h = 112 * S, 166 * S
 svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}"><rect width="100%" height="100%" fill="white"/>' + \
       f'<text x="{w/2}" y="30" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Cartridge-Führung für Slot B – Entwurf 5 (Kappe)</text>' + \
       f'<text x="{w/2}" y="54" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555" text-anchor="middle">Maße in mm. Idee Stefan 15.11.2026, Hülse nach vcsslot.stl (Thingiverse 618065). Rot = Annahme/offen.</text>' + ''.join(out) + '</svg>'
