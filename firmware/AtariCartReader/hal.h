@@ -13,27 +13,26 @@ void halWriteData(uint8_t data);   // drives the data bus
 void halReleaseData();             // data bus back to input
 
 #if defined(__AVR_ATmega2560__)
-// Arduino Mega 2560, 40-pin connector:
-// A0-A7 = PA0-PA7, A8-A12 = PC0-PC4, D0-D7 = PL0-PL7
+// Arduino Mega 2560, 40-pin connector; ports in config.h.
 inline void halRelease() {
-  DDRA = 0x00; PORTA = 0x00;
-  DDRC &= 0xE0; PORTC &= 0xE0;
-  DDRL = 0x00; PORTL = 0x00;
+  ADDR_LO_DDR = 0x00; ADDR_LO_PORT = 0x00;
+  ADDR_HI_DDR &= 0xE0; ADDR_HI_PORT &= 0xE0;
+  DATA_DDR = 0x00; DATA_PORT = 0x00;
 }
 inline void halDrive() {
-  PORTA = 0x00; DDRA = 0xFF;
-  PORTC &= 0xE0; DDRC |= 0x1F;
+  ADDR_LO_PORT = 0x00; ADDR_LO_DDR = 0xFF;
+  ADDR_HI_PORT &= 0xE0; ADDR_HI_DDR |= 0x1F;
 }
-inline void halPullupD2(bool on) { if (on) PORTL |= 0x04; else PORTL &= ~0x04; }
+inline void halPullupD2(bool on) { if (on) DATA_PORT |= 0x04; else DATA_PORT &= ~0x04; }
 inline void halInit() { halRelease(); }
 inline void halSetAddr(uint16_t addr) {
-  PORTA = addr & 0xFF;
-  PORTC = (PORTC & 0xE0) | ((addr >> 8) & 0x1F);
+  ADDR_LO_PORT = addr & 0xFF;
+  ADDR_HI_PORT = (ADDR_HI_PORT & 0xE0) | ((addr >> 8) & 0x1F);
   delayMicroseconds(2);
 }
-inline uint8_t halReadData() { return PINL; }  // PINx, not PORTx!
-inline void halWriteData(uint8_t data) { PORTL = data; DDRL = 0xFF; }
-inline void halReleaseData() { DDRL = 0x00; PORTL = 0x00; }
+inline uint8_t halReadData() { return DATA_PIN; }  // PINx, not PORTx!
+inline void halWriteData(uint8_t data) { DATA_PORT = data; DATA_DDR = 0xFF; }
+inline void halReleaseData() { DATA_DDR = 0x00; DATA_PORT = 0x00; }
 
 #elif defined(__AVR_ATmega328P__)
 // Arduino Uno / Nano: data bus D0-D7 = D2-D9 (PD2-PD7, PB0-PB1).
