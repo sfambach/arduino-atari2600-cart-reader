@@ -54,7 +54,7 @@ covers, temporary ROMs); Windows `%APPDATA%\AtariCartReader` and `%LOCALAPPDATA%
 - Bankswitched cartridges: reading a hotspot switches the bank, so the hotspot bytes of the other banks show
   the bank they select (as a real 2600 sees them). Such a dump can differ in those few bytes from a reference
   dump read straight from the EPROM, and then the title lookup by MD5 finds nothing.
-- Untested on hardware so far: auto detection with firmware 0.2.1 or newer, and the firmware upload.
+- Untested on hardware so far: auto detection with firmware 0.2.1 or newer. The firmware upload works (Uno MCP23017, 2026-11-15).
 
 ## Tests
 
