@@ -7,8 +7,18 @@ Reads a cartridge through the reader, shows it in hex, saves it to a game collec
 
 ## Start
 
+Linux (Debian/Ubuntu refuse a system-wide pip install), once in this folder:
+
 ```
-pip install -r requirements.txt
+sudo apt install python3-venv
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+Windows: `py -m venv .venv` and `.venv\Scripts\pip install -r requirements.txt`. Then start with the
+Python of the venv (`.venv/bin/python` or `.venv\Scripts\python`):
+
+```
 python -m acr            # GUI
 python -m acr --demo     # GUI with a simulated reader and a demo cartridge (no hardware needed)
 python -m acr.cli /dev/ttyACM0 read game.a26          # command line, scheme detected automatically
