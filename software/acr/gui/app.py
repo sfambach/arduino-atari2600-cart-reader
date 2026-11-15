@@ -199,6 +199,8 @@ class MainWindow(QMainWindow):
         self.schemes = QComboBox()
         self.schemes.addItem(tr("Auto (2K/4K/F8/F6/F4)"), AUTO)
         self.schemes.addItem(tr("Multicart (next game at power-on)"), MULTICART)
+        for name in romlib.SCHEMES:
+            self.schemes.addItem(name, name)
         self.read_button = QPushButton(tr("READ"), objectName="primary")
         self.read_button.setMinimumHeight(48)
         self.read_button.clicked.connect(self.read_cartridge)

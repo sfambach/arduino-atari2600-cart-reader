@@ -8,6 +8,8 @@ BANK = 0x1000
 PROBE_SCHEME = "F4"  # 8 hotspots $1FF4-$1FFB: a read with them reveals 4K, F8, F6 and F4 cartridges
 COMPARED = 0xFF0
 AUTO_SCHEMES = ("2K", "4K", "F8", "F6", "F4")
+# schemes of firmware protocol 1; the connected reader's own list replaces this one
+SCHEMES = ("2K", "4K", "F8", "F8SC", "F6", "F6SC", "F4", "F4SC", "E0", "E7", "FA", "FE", "3F")
 
 
 @dataclass
