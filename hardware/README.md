@@ -20,9 +20,9 @@ Changes in 1.1: switched cartridge supply with polyfuse and orientation check, m
 
 [`switch/schalter.png`](switch/schalter.png): the cartridge is only powered while the firmware reads it. A BC327 (PNP) switches pin 23, a 200 mA polyfuse limits a short, and A0 measures the switched rail.
 
-- Before switching on, the firmware checks the orientation with the supply off: a weak pull-up on data line D2 back-feeds the cartridge's VCC through the ROM's protection diode only if the cartridge sits the right way round. A reversed cartridge (or none) leaves A0 low and the supply stays off.
-- All address lines are held low during the check, so a reversed cartridge's A12 (on slot pin 7 = A1) keeps the ROM disabled.
-- The ADC thresholds are not confirmed on hardware yet; the `S` command prints both readings for calibration.
+- Before switching on, the firmware checks the orientation with the supply off: pull-ups on D0–D7; a reversed cartridge pulls a data line to its own GND pin (measured 2026-11-15 on the Uno MCP23017 board: D2 low), so any low data line keeps the supply off. An empty slot reads all high and may be powered, which is harmless.
+- The first approach (pull-up on D2 back-feeding the ROM's VCC through its protection diode) did not work: the tested cartridge's ROM has no such diode path (D2 stayed at 5 V, A0 at 0).
+- `SKIP_ORIENTATION_CHECK` in `config.h` switches the check off. The printed cartridge guide also prevents reversed insertion mechanically.
 
 | Signal | Uno / Nano | Mega |
 |---|---|---|

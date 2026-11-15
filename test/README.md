@@ -39,11 +39,11 @@ Switched cartridge supply and orientation check (all five boards).
 
 Without cartridge (runs at start, `t` repeats):
 
-1. Supply off: A0 below the orientation threshold.
-2. Orientation check on an empty slot: stays low, so the firmware would not switch on.
+1. Supply off: A0 below `SENSE_OFF`.
+2. Orientation check on an empty slot: all data lines high with pull-ups.
 3. Supply on: A0 above the powered threshold (BC327 and fuse work).
 4. Supply off again: the rail falls back, time is printed.
 
-With a cartridge: `o` prints the orientation reading (right way round or not), `h` holds the orientation check so slot pins 11 (D2) and 23 (+5 V) can be measured, `g` checks for a reversed cartridge via its GND pin (slot pin 13 = D3 low), `1` / `0` switch the supply on / off by hand (reading printed every second), `p` switches on only if the orientation is right and checks the voltage under load, then switches off.
+With a cartridge: `o` runs the orientation check as in the firmware (any data line low = reversed), `p` switches on only if the cartridge sits the right way round and checks the voltage under load, then switches off, `1` / `0` switch the supply on / off by hand (reading printed every second).
 
 Both tests: syntax-checked for all five boards against stub headers; not built with the Arduino toolchain or run on hardware yet.

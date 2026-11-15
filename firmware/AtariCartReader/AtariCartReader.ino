@@ -6,14 +6,13 @@
    L                list bankswitching schemes
    D <scheme> [kb]  dump ROM, answer "OK <bytes>\n" followed by raw data
    P <hexaddr>      read single byte (debug)
-   S                show the orientation and supply readings (calibration)
+   S                show the orientation and supply readings
 
  The cartridge is only powered while a command runs. Before switching on, the
- firmware checks the orientation with the supply off: a weak pull-up on data
- line D2 back-feeds the cartridge's VCC rail through the ROM's input protection
- diode only if pin 11 really is D2. A reversed cartridge (or none) leaves the
- sense input low, and the supply stays off. Experimental: thresholds still need
- to be confirmed on real hardware.
+ firmware checks the orientation with the supply off: with pull-ups on D0-D7, a
+ reversed cartridge pulls a data line to its own GND pin (measured: D2), so any
+ low data line keeps the supply off. An empty slot reads all high and may be
+ powered, which is harmless.
 */
 #include "config.h"
 #include "hal.h"
@@ -22,14 +21,14 @@ struct Scheme { const char *name; uint8_t kb; };  // before any function: Arduin
 
 const uint16_t ROM = 0x1000;
 
-int senseOrientation() {
+// Data bus with pull-ups, supply off: 0xFF = right way round or empty slot.
+uint8_t readOrientation() {
   digitalWrite(CART_PWR, HIGH);
   halRelease();
-  halDrive();  // all address lines low: keeps the ROM disabled in either orientation (slot A1 meets a reversed cart's A12)
-  halPullupD2(true);
+  halPullupData(true);
   delay(5);
-  int v = analogRead(CART_SENSE);
-  halPullupD2(false);
+  uint8_t v = halReadData();
+  halPullupData(false);
   return v;
 }
 
@@ -40,8 +39,8 @@ void cartOff() {
 
 bool cartOn() {
 #if !defined(SKIP_ORIENTATION_CHECK)
-  if (senseOrientation() < SENSE_ORIENTATION) {
-    Serial.println(F("ERR no cartridge or inserted the wrong way round"));
+  if (readOrientation() != 0xFF) {
+    Serial.println(F("ERR cartridge inserted the wrong way round"));
     return false;
   }
 #endif
@@ -223,9 +222,10 @@ void loop() {
     Serial.println(peek(a), HEX);
     cartOff();
   } else if (cmd == 'S') {
-    int o = senseOrientation();
-    Serial.print(F("orientation ")); Serial.println(o);
-    if (o >= SENSE_ORIENTATION) {
+    uint8_t o = readOrientation();
+    Serial.print(F("orientation data ")); Serial.print(o, BIN);
+    Serial.println(o == 0xFF ? F(" ok") : F(" reversed"));
+    if (o == 0xFF) {
       digitalWrite(CART_PWR, LOW);
       delay(20);
       Serial.print(F("supply ")); Serial.println(analogRead(CART_SENSE));

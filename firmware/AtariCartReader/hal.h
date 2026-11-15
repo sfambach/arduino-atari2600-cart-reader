@@ -6,7 +6,7 @@
 void halInit();                    // bus released, cartridge supply off
 void halRelease();                 // all cartridge lines to input without pull-ups
 void halDrive();                   // address bus to output
-void halPullupD2(bool on);         // weak pull-up on data line D2 for the orientation check
+void halPullupData(bool on);       // weak pull-ups on D0-D7 for the orientation check
 void halSetAddr(uint16_t addr);
 uint8_t halReadData();
 void halWriteData(uint8_t data);   // drives the data bus
@@ -23,7 +23,7 @@ inline void halDrive() {
   ADDR_LO_PORT = 0x00; ADDR_LO_DDR = 0xFF;
   ADDR_HI_PORT &= 0xE0; ADDR_HI_DDR |= 0x1F;
 }
-inline void halPullupD2(bool on) { if (on) DATA_PORT |= 0x04; else DATA_PORT &= ~0x04; }
+inline void halPullupData(bool on) { DATA_PORT = on ? 0xFF : 0x00; }
 inline void halInit() { halRelease(); }
 inline void halSetAddr(uint16_t addr) {
   ADDR_LO_PORT = addr & 0xFF;
@@ -87,7 +87,9 @@ inline void halInit() {
   halRelease();
 }
 #endif
-inline void halPullupD2(bool on) { if (on) PORTD |= 0x10; else PORTD &= ~0x10; }  // D2 = PD4
+inline void halPullupData(bool on) {
+  if (on) { PORTD |= 0xFC; PORTB |= 0x03; } else { PORTD &= 0x03; PORTB &= 0xFC; }
+}
 inline uint8_t halReadData() { return (PIND >> 2) | ((PINB & 0x03) << 6); }
 inline void halWriteData(uint8_t data) {
   PORTD = (PORTD & 0x03) | (data << 2);
