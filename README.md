@@ -27,6 +27,11 @@ Cartridge slot: pin 23 = switched +5 V (BC327, LOW on D10 for Uno/Nano, D8 for M
 
 Boards (THT, KiCad) for Uno, Mega and Nano, plus MCP23017 variants for Uno and Nano: [`hardware/`](hardware/).
 
+| Board | Status |
+|---|---|
+| Uno shield MCP23017, revision 1.2 | **tested** (2026-11-15): bus, supply, orientation check, reading 2K/4K/F8 and a 32-in-1 multicart, firmware upload from the PC program |
+| Uno shield (74HC595), Mega shield, Nano boards | not built yet |
+
 Firmware: select the board at the top of `firmware/AtariCartReader/config.h` (one `#define BOARD_...`); the same file is copied into the test sketches with `tools/sync_config.py`.
 
 ## Bankswitching
@@ -41,7 +46,7 @@ Firmware: select the board at the top of `firmware/AtariCartReader/config.h` (on
 | FE (Activision) | 8 KB | experimental |
 | 3F (Tigervision) | 8 KB+ (`D 3F <kb>`) | experimental |
 
-Untested on hardware so far. Board tests to run first: [`test/`](test/).
+Tested on hardware: 2K, 4K, F8 and the 32-in-1 multicart (Uno shield MCP23017). The other schemes are untested. Board tests to run first: [`test/`](test/).
 
 ## Usage
 
