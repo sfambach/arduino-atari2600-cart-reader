@@ -19,3 +19,7 @@ and guides the cartridge onto the slot. Drawing and assumptions: [`../guide-draw
 - The STL was generated with `python3 cartridge_guide.py`; the `.scad` file has not been
   rendered in OpenSCAD yet.
 - Variant 2 covers the full 74.2 × 15.2 mm on the PCB. Only 61 × 17 mm around the slot was checked to be free of parts.
+
+## Mounting direction
+
+Checked by Stefan on the test print (2026-11-15): side A (closed) sits over pins 13–24, the cartridge label side. Side B (open) sits over pins 1–12.

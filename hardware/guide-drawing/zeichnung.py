@@ -68,8 +68,8 @@ dimh(cx - NUB_X1, cx + NUB_X1, oy - 6.5, f(2 * NUB_X1) + ' Löcher für die Nase
 dimh(cx - HOLE_X, cx + HOLE_X, oy + CAP_W + 10.5, f(2 * HOLE_X) + ' Schrauben M2,5 (von unten)')
 dimv(ox + CAP_L + 3, oy, oy + CAP_W, f(CAP_W), left=False)
 dimv(ox - 2.5, cy, sy, f(OFF), RED)
-txt(ox + 1, oy + 1.8, 'Seite A', 11, '#555', 'start')
-txt(ox + 1, oy + CAP_W - .8, 'Seite B', 11, '#555', 'start')
+txt(ox + 1, oy + 1.8, 'Seite A = Pins 13–24 (Etikett)', 11, '#555', 'start')
+txt(ox + 1, oy + CAP_W - .8, 'Seite B = Pins 1–12', 11, '#555', 'start')
 txt(cx, sy - 3.2, 'Slot B darunter (gestrichelt)', 10, '#888')
 
 # --- Ansicht laengs ---
