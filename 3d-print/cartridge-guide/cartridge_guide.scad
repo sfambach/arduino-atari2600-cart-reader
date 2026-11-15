@@ -1,4 +1,5 @@
 // Cartridge guide (cap) for slot B on pin headers, draft 5 (see drawing/).
+// NOTE: the rounded slope corners and chamfered opener tips of cartridge_guide.py (2026-11-15) are not ported here yet; the STL is built from cartridge_guide.py.
 // Sleeve, slit, key holes and door openers taken from vcsslot.stl
 // (RabbitEngineering, Thingiverse 618065, CC BY-NC).
 // x = along the slot, y = across (side A negative, side B positive), z = up from the PCB.

@@ -23,3 +23,10 @@ and guides the cartridge onto the slot. Drawing and assumptions: [`drawing/`](dr
 ## Mounting direction
 
 Checked by Stefan on the test print (2026-11-15): side A (closed) sits over pins 13–24, the cartridge label side. Side B (open) sits over pins 1–12.
+
+## Changes after the first test print (2026-11-15)
+
+- Slope-to-side corner on both ends rounded (r = 6 mm), so the overhang fades out instead of ending in a sharp edge; feet and top stay square.
+- Opener tips chamfered by 0.5 mm.
+- The openers are small (6.6 × 1.9 mm): set a minimum layer time of about 10 s in the slicer (or print two caps at once) so they can cool.
+- `cartridge_guide.scad` does not have these changes yet; the STL comes from `cartridge_guide.py`.
