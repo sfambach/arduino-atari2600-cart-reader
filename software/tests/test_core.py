@@ -108,3 +108,22 @@ def test_cover_names():
     names = cover_names("RealSports Tennis (USA, Europe) (En,Fr,De,Es,It)")
     assert names[0] == "RealSports Tennis (USA, Europe) (En,Fr,De,Es,It)"
     assert "RealSports Tennis (USA)" in names and names[-1] == "RealSports Tennis"
+
+
+def test_multicart_read_and_order():
+    from acr import multicart
+    from acr.simulator import SimulatedMulticart
+    games = [bytes([i]) * 2048 for i in range(32)]
+    reader = Reader(SimulatedSerial(SimulatedMulticart(games, start=5)))
+    reader.connect()
+    read = multicart.read_all(reader, pause=0)
+    assert len(read) == 32 and multicart.scheme(read) == "32IN1"
+    reference = b"".join(games)
+    image, title = multicart.assemble(read, {rom.md5(reference): "32 in 1"})
+    assert image == reference and title == "32 in 1"
+
+
+def test_single_game_is_not_a_multicart():
+    from acr import multicart
+    with pytest.raises(ReaderError, match="not a power-on multicart"):
+        multicart.read_all(reader_with(rom_of(4)), pause=0)

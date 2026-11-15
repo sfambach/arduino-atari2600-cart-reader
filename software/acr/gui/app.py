@@ -13,7 +13,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog, QDia
                                QListWidget, QListWidgetItem, QMainWindow, QMessageBox, QProgressBar,
                                QPushButton, QTabWidget, QVBoxLayout, QWidget)
 
-from .. import __version__, bootloader, emulator, rom as romlib, updates
+from .. import __version__, bootloader, emulator, multicart, rom as romlib, updates
 from ..demo_rom import build as build_demo_rom
 from ..gamedb import GameDatabase
 from ..i18n import LANGUAGES, set_language, tr
@@ -25,6 +25,7 @@ from .style import QSS, Banner, load_fonts
 
 DEMO_PORT = "demo"
 AUTO = "auto"
+MULTICART = "multicart"
 
 
 class Worker(QObject):
@@ -197,6 +198,7 @@ class MainWindow(QMainWindow):
         self.check_button.clicked.connect(self.check_cartridge)
         self.schemes = QComboBox()
         self.schemes.addItem(tr("Auto (2K/4K/F8/F6/F4)"), AUTO)
+        self.schemes.addItem(tr("Multicart (next game at power-on)"), MULTICART)
         self.read_button = QPushButton(tr("READ"), objectName="primary")
         self.read_button.setMinimumHeight(48)
         self.read_button.clicked.connect(self.read_cartridge)
@@ -300,6 +302,8 @@ class MainWindow(QMainWindow):
         self.progress.setMaximum(total)
         self.progress.setValue(done)
         text = getattr(self, "_progress_text", None)
+        if text == MULTICART:
+            text = tr("Reading game {n}...", n=done)
         self.statusBar().showMessage(text or tr("Reading {done} of {total} bytes", done=done, total=total))
 
     def _on_error(self, message: str) -> None:
@@ -392,6 +396,7 @@ class MainWindow(QMainWindow):
             current = self.schemes.currentData()
             self.schemes.clear()
             self.schemes.addItem(tr("Auto (2K/4K/F8/F6/F4)"), AUTO)
+            self.schemes.addItem(tr("Multicart (next game at power-on)"), MULTICART)
             for n in names:
                 self.schemes.addItem(n, n)
             self.schemes.setCurrentIndex(max(0, self.schemes.findData(current)))
@@ -426,6 +431,16 @@ class MainWindow(QMainWindow):
 
         def job(w: Worker):
             progress = lambda d, t: w.progress.emit(d, t)
+            if choice == MULTICART:
+                games = multicart.read_all(reader, progress=lambda n, t: w.progress.emit(n, t))
+                try:
+                    known = self.gamedb.titles(download)
+                except OSError:
+                    known = {}
+                data, title = multicart.assemble(games, known)
+                scheme = multicart.scheme(games)
+                cover = self.gamedb.cover(title, download) if title else None
+                return data, scheme, title, cover
             if choice == AUTO:
                 found = romlib.detect(reader.dump(romlib.PROBE_SCHEME, progress=progress))
                 scheme, data = found.scheme, found.rom
@@ -435,6 +450,7 @@ class MainWindow(QMainWindow):
             cover = self.gamedb.cover(title, download) if title else None
             return data, scheme, title, cover
 
+        self._progress_text = MULTICART if choice == MULTICART else None
         self._run(job, lambda result: self.show_rom(*result))
 
     def show_rom(self, data: bytes, scheme: str, title: Optional[str], cover: Optional[pathlib.Path]) -> None:

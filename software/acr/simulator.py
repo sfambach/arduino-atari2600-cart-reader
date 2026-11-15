@@ -84,6 +84,8 @@ class SimulatedSerial:
             self._answer("ERR cartridge inserted the wrong way round")
             return
         data = bytearray()
+        if hasattr(self.cart, "power_on"):
+            self.cart.power_on()
         if scheme in ("2K", "4K"):
             data += bytes(self.cart.peek(0x1000 + a) for a in range(sizes[scheme] * 1024))
         elif scheme[:2] in HOTSPOT:
@@ -114,3 +116,15 @@ class SimulatedSerial:
 
     def close(self) -> None:
         pass
+
+
+class SimulatedMulticart(SimulatedCartridge):
+    """Power-on multicart: every read (the reader powers the cartridge per command) shows the next 2K game."""
+
+    def __init__(self, games: list[bytes], start: int = 0):
+        super().__init__(games[start])
+        self.games, self.index = games, start
+
+    def power_on(self) -> None:
+        self.index = (self.index + 1) % len(self.games)
+        self.rom = self.games[self.index]
