@@ -487,7 +487,8 @@ class MainWindow(QMainWindow):
     def refresh_library(self) -> None:
         self.games.clear()
         for game in self.library.games():
-            pixmap = QPixmap(game.cover) if game.cover else QPixmap()
+            cover = game.cover or self.gamedb.cover(game.title, download=False)  # found after saving
+            pixmap = QPixmap(str(cover)) if cover else QPixmap()
             item = QListWidgetItem(QIcon(pixmap) if not pixmap.isNull() else QIcon(), game.title)
             item.setData(Qt.UserRole, game)
             item.setToolTip(f"{game.title}\n{game.scheme}, {game.saved}")

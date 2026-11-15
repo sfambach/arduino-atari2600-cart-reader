@@ -32,6 +32,30 @@ def _download(url: str, target: pathlib.Path) -> pathlib.Path:
     return target
 
 
+def cover_names(title: str) -> list[str]:
+    """Names to try for the box art, best first.
+
+    The game list and the thumbnail collection do not always use the same tags: "RealSports Tennis (USA, Europe)
+    (En,Fr,De,Es,It)" has its cover as "RealSports Tennis (USA)". So language tags are dropped and each region is
+    tried on its own.
+    """
+    names = [title]
+    base = re.sub(r"\s*\((?:[A-Z][a-z](?:,[A-Z][a-z])*)\)", "", title).strip()  # (En,Fr,De)
+    names.append(base)
+    m = re.match(r"^(.*?)\s*\(([^)]*)\)(.*)$", base)
+    if m:
+        name, regions, rest = m.groups()
+        for region in [r.strip() for r in regions.split(",")] + ["USA", "Europe", "World"]:
+            names.append(f"{name} ({region}){rest}".strip())
+            names.append(f"{name} ({region})")
+        names.append(name)
+    unique = []
+    for n in names:
+        if n not in unique:
+            unique.append(n)
+    return unique
+
+
 class GameDatabase:
     def __init__(self, folder: Optional[pathlib.Path] = None):
         self.folder = folder or cache_dir()
@@ -54,16 +78,19 @@ class GameDatabase:
             return None
 
     def cover(self, title: str, download: bool = True) -> Optional[pathlib.Path]:
-        # libretro replaces these characters in thumbnail file names
-        name = re.sub(r'[&*/:`<>?\\|"]', "_", title)
         covers = self.folder / "covers"
         covers.mkdir(exist_ok=True)
-        path = covers / f"{name}.png"
+        # cached under the full title, whichever name the collection used
+        path = covers / (re.sub(r'[&*/:`<>?\\|"]', "_", title) + ".png")
         if path.exists():
             return path
         if not download:
             return None
-        try:
-            return _download(COVER_URL.format(urllib.parse.quote(name)), path)
-        except OSError:
-            return None
+        for name in cover_names(title):
+            # libretro replaces these characters in thumbnail file names
+            name = re.sub(r'[&*/:`<>?\\|"]', "_", name)
+            try:
+                return _download(COVER_URL.format(urllib.parse.quote(name)), path)
+            except OSError:
+                continue
+        return None

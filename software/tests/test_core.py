@@ -101,3 +101,10 @@ def test_library_roundtrip(tmp_path):
 def test_versions():
     assert updates.newer("v0.2.1", "0.2.0")
     assert not updates.newer("0.2.0", "0.2.0")
+
+
+def test_cover_names():
+    from acr.gamedb import cover_names
+    names = cover_names("RealSports Tennis (USA, Europe) (En,Fr,De,Es,It)")
+    assert names[0] == "RealSports Tennis (USA, Europe) (En,Fr,De,Es,It)"
+    assert "RealSports Tennis (USA)" in names and names[-1] == "RealSports Tennis"
