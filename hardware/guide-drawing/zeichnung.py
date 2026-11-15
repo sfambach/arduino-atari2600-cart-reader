@@ -70,22 +70,19 @@ txt(cx, sy - 3.2, 'Slot B darunter (gestrichelt)', 10, '#888')
 # --- Ansicht laengs ---
 lx, base = 16, 100
 lcx = lx + CAP_L / 2
-txt(lcx, base - TOP - PIN_H - 6, 'Ansicht von Seite A (Schnitt durch Slotmitte)', 15, bold=True)
+txt(lcx, base - TOP - PIN_H - 6, 'Ansicht von Seite A (verdeckte Kanten gestrichelt)', 15, bold=True)
 ln(lx - 4, base, lx + CAP_L + 4, base, '#2e7d32', 2.2)
 poly([(lcx - FOOT_X, base), (lcx - CAP_L / 2, base - FULL_Z), (lcx - CAP_L / 2, base - TOP),
       (lcx + CAP_L / 2, base - TOP), (lcx + CAP_L / 2, base - FULL_Z), (lcx + FOOT_X, base)])
-rect(lcx - CAV_L / 2, base - SLOT_TOP, CAV_L, SLOT_TOP, fill='white')
-rect(lcx - SL_L / 2, base - SLOT_TOP, SL_L, SL_UP, fill='#e8e8e8', c='#777')
-rect(lcx - SL_L / 2, base - SLOT_TOP + SL_UP, SL_L, SL_H - SL_UP, fill='#e8e8e8', c='#777')
-rect(lcx - 15.24, base - (SLOT_TOP - SL_H), 30.48, SLOT_TOP - SL_H, fill='#555', c='#333')
-rect(lcx - SLIT_L / 2, base - TOP - .05, SLIT_L, PLATE + .1, fill='white', c='white')
-ln(lcx - SLIT_L / 2, base - TOP, lcx - SLIT_L / 2, base - SLOT_TOP); ln(lcx + SLIT_L / 2, base - TOP, lcx + SLIT_L / 2, base - SLOT_TOP)
+# Ansicht: Seite A ist eine durchgehende Wand, verdeckte Kanten gestrichelt
+rect(lcx - CAV_L / 2, base - SLOT_TOP, CAV_L, SLOT_TOP, fill='none', c='#777', dash='4,3')
+rect(lcx - SLIT_L / 2, base - TOP, SLIT_L, PLATE, fill='none', c='#777', dash='2,2')
+rect(lcx - SL_L / 2 + .4, base - SLOT_TOP + .4, SL_L - .8, SL_H - .8, fill='none', c='#aaa', dash='2,3')
 for s in (-1, 1):
     rect(lcx + s * PIN_X - PIN_D / 2, base - TOP - PIN_H, PIN_D, PIN_H + PIN_DEPTH, fill='#7aa0d8')
     rect(lcx + s * HOLE_X - SCREW_D / 2, base - SCREW_DEPTH, SCREW_D, SCREW_DEPTH, fill='white', c='#999', dash='3,2')
     ln(lcx + s * HOLE_X, base + 4, lcx + s * HOLE_X, base - SCREW_DEPTH + 1, '#555', 1.2, '2,2')
-txt(lcx, base - SLOT_TOP + 5.5, 'Slot B', 11, '#555')
-txt(lcx, base - (SLOT_TOP - SL_H) / 2 + .5, 'Stiftleisten', 10, 'white')
+txt(lcx, base - SLOT_TOP + 7, 'Slot B (verdeckt)', 11, '#777')
 dimv(lx - 9, base - TOP, base, f(TOP))
 dimv(lx - 5, base - FULL_Z, base, f(FULL_Z))
 dimv(lx + CAP_L + 4, base - TOP - PIN_H, base - TOP, f(PIN_H), left=False)
@@ -98,7 +95,7 @@ txt(lcx + HOLE_X + 2.5, base + 3.5, 'Schraube', 10, '#555', 'start')
 qx, qb = 26, 150
 qcx = qx + CAP_W / 2
 qsy = qcx + OFF
-txt(qcx + 30, qb - TOP - 9, 'Schnitt quer', 15, bold=True)
+txt(qcx + 14, qb - TOP - 15, 'Schnitt quer', 15, bold=True)
 ln(qx - 12, qb, qx + CAP_W + 12, qb, '#2e7d32', 2.2)
 poly([(qsy - BAND, qb), (qsy - BAND, qb - STEP_Z), (qcx - CAP_W / 2, qb - STEP_Z), (qcx - CAP_W / 2, qb - TOP),
       (qcx + CAP_W / 2, qb - TOP), (qcx + CAP_W / 2, qb - SLOT_TOP), (qsy + CAV_W / 2, qb - SLOT_TOP), (qsy + CAV_W / 2, qb),
@@ -127,7 +124,7 @@ notes = [('Prinzip (Stefan 15.11.2026):', '#222', True),
          ('Deckfläche 1,2 über dem Slot: die Kontakte', '#222', False),
          ('sind lang genug (Toleranz laut Standard).', '#222', False),
          ('Volle Länge 74,2 nur oben (Führung in der', '#222', False),
-         ('Cartridge), seitlich schräg zum Fuß 51,6.', '#222', False),
+         ('Cartridge), seitlich schräg zum Fuß 51.', '#222', False),
          ('2 Schrauben M2,5 von unten durch die Platine.', '#222', False),
          ('Stifte Ø3 separat, nach dem Druck eingepresst', '#222', False),
          ('(Druck kopfüber auf der Deckfläche).', '#222', False),
