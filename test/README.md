@@ -44,6 +44,6 @@ Without cartridge (runs at start, `t` repeats):
 3. Supply on: A0 above the powered threshold (BC327 and fuse work).
 4. Supply off again: the rail falls back, time is printed.
 
-With a cartridge: `o` prints the orientation reading (right way round or not), `p` switches on only if the orientation is right and checks the voltage under load, then switches off.
+With a cartridge: `o` prints the orientation reading (right way round or not), `h` holds the orientation check so slot pins 11 (D2) and 23 (+5 V) can be measured, `p` switches on only if the orientation is right and checks the voltage under load, then switches off.
 
 Both tests: syntax-checked for all five boards against stub headers; not built with the Arduino toolchain or run on hardware yet.

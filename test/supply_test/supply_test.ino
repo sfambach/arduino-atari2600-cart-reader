@@ -54,7 +54,7 @@ void testWithoutCartridge() {
 
   addressLow();
   pinMode(DATA_D2_PIN, INPUT_PULLUP);
-  delay(5);
+  delay(50);
   v = analogRead(CART_SENSE);
   pinMode(DATA_D2_PIN, INPUT);
   check(v < SENSE_ORIENTATION, F("2. orientation check, empty slot (supply must stay off)"), v);
@@ -78,7 +78,7 @@ void orientationWithCartridge() {
   supplyOff();
   addressLow();
   pinMode(DATA_D2_PIN, INPUT_PULLUP);
-  delay(5);
+  delay(50);
   int v = analogRead(CART_SENSE);
   pinMode(DATA_D2_PIN, INPUT);
   addressRelease();
@@ -91,7 +91,7 @@ void powerWithCartridge() {
   supplyOff();
   addressLow();
   pinMode(DATA_D2_PIN, INPUT_PULLUP);
-  delay(5);
+  delay(50);
   int v = analogRead(CART_SENSE);
   pinMode(DATA_D2_PIN, INPUT);
   if (v < SENSE_ORIENTATION) { Serial.println(F("none or reversed: supply NOT switched on")); supplyOff(); return; }
@@ -103,8 +103,24 @@ void powerWithCartridge() {
   Serial.println(v >= SENSE_POWERED ? F(" -> OK") : F(" -> too low (short or overload?)"));
 }
 
+// Holds the orientation check (supply off, address low, pull-up on D2) so slot pins 11 (D2) and 23 (+5V) can be measured.
+void holdOrientation() {
+  supplyOff();
+  addressLow();
+  pinMode(DATA_D2_PIN, INPUT_PULLUP);
+  Serial.println(F("holding: supply off, A0-A12 low, pull-up on D2. Measure slot pin 11 and 23 against GND. Any key stops."));
+  while (!Serial.available()) {
+    Serial.print(F("  sense ")); printSense(analogRead(CART_SENSE));
+    Serial.print(F(", D2 reads ")); Serial.println(digitalRead(DATA_D2_PIN));
+    delay(500);
+  }
+  while (Serial.available()) Serial.read();
+  supplyOff();
+  Serial.println(F("stopped"));
+}
+
 void help() {
-  Serial.println(F("Commands: t = test without cartridge, o = orientation reading (cartridge in), p = power with cartridge (only if orientation OK)"));
+  Serial.println(F("Commands: t = test without cartridge, o = orientation reading (cartridge in), h = hold orientation check for measuring, p = power with cartridge (only if orientation OK)"));
 }
 
 void setup() {
@@ -131,5 +147,6 @@ void loop() {
   if (cmd == "t") testWithoutCartridge();
   else if (cmd == "o") orientationWithCartridge();
   else if (cmd == "p") powerWithCartridge();
+  else if (cmd == "h") holdOrientation();
   else if (cmd.length()) help();
 }
