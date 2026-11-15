@@ -19,7 +19,7 @@ CLR = 0.3                                # Luft um den Slot
 CAV_L, CAV_W = SL_L + 2 * CLR, SL_W + 2 * CLR
 SLIT_L, SLIT_W = 35.1, 2.5               # Schlitz fuer die Cartridge-Platine (vcsslot)
 HOLE_X, SCREW_D, SCREW_DEPTH = 22.75, 2.2, 10.0   # M2,5 von unten durch die Platine
-FOOT_X = HOLE_X + 2.7 / 2 + 1.4          # Fuss endet knapp hinter der Lochaussenkante
+FOOT_X = 30.0                            # Fuss 60 breit: Schraegen 25 Grad statt 38 (Stefan 15.11.2026, Kanten druckten unsauber)
 FULL_Z = 17.0                            # darueber volle Laenge (Fuehrung in der Cartridge)
 NUB_DEPTH = 12.0                         # Tiefe der Nasen-Loecher, unten geschlossen (Stefan 15.11.2026)
 BAND = 8.5                               # unten max. 8,5 neben der Slotmitte (freie Flaeche 61 x 17)
@@ -127,13 +127,13 @@ notes = [('Prinzip (Stefan 15.11.2026):', '#222', True),
          ('Kappe wird über Slot B gesteckt, oben geschlossen.', '#222', False),
          ('Deckfläche 2 liegt auf dem Slot auf (27 über Platine).', '#222', False),
          ('Unten 2 Spalt: Schrauben ziehen die Kappe auf den Slot.', '#222', False),
-         ('Volle Länge 74,2 nur oben, seitlich schräg zum Fuß 51.', '#222', False),
+         ('Volle Länge 74,2 nur oben, seitlich schräg zum Fuß 60.', '#222', False),
          ('2 Schrauben M2,5 von unten durch die Platine.', '#222', False),
          ('Aus vcsslot.stl übernommen:', '#222', True),
          ('Schlitz 35,1 × 2,5, Versatz 2,1 zu Seite B.', '#222', False),
          ('Öffner 6,6 × 1,9, 6 hoch; Nasen-Löcher 7,8 × 2,7.', '#222', False),
          ('Druck von unten nach oben, Öffner mitgedruckt.', '#222', False),
-         ('Schrägen 38° zur Senkrechten, ohne Stützen.', '#222', False),
+         ('Schrägen 25° zur Senkrechten, ohne Stützen.', '#222', False),
          ('Offen (rot):', RED, True),
          ('Nasen-Löcher 12 tief, unten geschlossen.', RED, False),
          ('Seite A ohne Absatz bis zum Fuß.', '#222', False)]

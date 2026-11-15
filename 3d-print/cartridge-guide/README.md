@@ -12,7 +12,7 @@ and guides the cartridge onto the slot. Drawing and assumptions: [`drawing/`](dr
 
 - Sleeve, PCB slit (2.1 mm off centre), key holes and door openers are taken from
   `vcsslot.stl` by RabbitEngineering (Thingiverse 618065, CC BY-NC).
-- Print upright, feet on the bed, no supports (slopes 38° from vertical). The top over the
+- Print upright, feet on the bed, no supports (slopes 25° from vertical, feet 60 mm). The top over the
   slot is a 37.6 mm bridge on side B.
 - Fixed with two M2.5 screws from below through the PCB. The feet stay 2 mm above the PCB,
   so the screws pull the cap down onto the slot.
@@ -29,4 +29,5 @@ Checked by Stefan on the test print (2026-11-15): side A (closed) sits over pins
 - Slope-to-side corner on both ends rounded (r = 6 mm), so the overhang fades out instead of ending in a sharp edge; feet and top stay square.
 - Opener tips chamfered by 0.5 mm.
 - The openers are small (6.6 × 1.9 mm): set a minimum layer time of 15 s in the slicer so they can cool (10 s was not enough on the first print, Stefan 2026-11-15).
-- `cartridge_guide.scad` does not have these changes yet; the STL comes from `cartridge_guide.py`.
+- Second print: the lower slope edges looked sunken (2026-11-15). Feet widened from 51 to 60 mm, so the slopes are 25° instead of 38° from vertical; the feet stay inside the 61 mm checked free around the slot.
+- `cartridge_guide.scad` has the new foot width, but not the rounding and chamfer yet; the STL comes from `cartridge_guide.py`.
