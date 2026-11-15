@@ -1,7 +1,7 @@
 # Cartridge guide (3D print)
 
 A cap that sits on cartridge slot B (on pin headers, slot top 27 mm above the PCB)
-and guides the cartridge onto the slot. Drawing and assumptions: [`../guide-drawing/`](../guide-drawing/).
+and guides the cartridge onto the slot. Drawing and assumptions: [`drawing/`](drawing/).
 
 | File | What |
 |---|---|

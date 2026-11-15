@@ -4,6 +4,16 @@ Arduino firmware for dumping Atari 2600 cartridges, including bankswitched games
 
 Project page: https://www.fambach.net/ (Retro Projekt – Atari 2600 ROM einlesen)
 
+## Repository layout
+
+| Folder | Content |
+|---|---|
+| [`firmware/`](firmware/) | Arduino firmware (`AtariCartReader`) |
+| [`fab/`](fab/) | boards (KiCad, Gerber, BOM), drawings, generator, wish list for the next revision |
+| [`3d-print/`](3d-print/) | 3D-printed parts (cartridge guide) |
+| [`test/`](test/) | test sketches for a freshly built board |
+| [`tools/`](tools/) | PC tools (`dump.py`) |
+
 ## Boards
 
 | Board | Address bus | Data bus |
@@ -14,7 +24,7 @@ Project page: https://www.fambach.net/ (Retro Projekt – Atari 2600 ROM einlese
 
 Cartridge slot: pin 23 = switched +5 V (BC327, LOW on D10 for Uno/Nano, D8 for Mega; sense on A0), pins 12 and 24 = GND. Read button on A1; reset button on the Arduino RESET line (Uno and Mega shields).
 
-Boards (THT, KiCad) for Uno, Mega and Nano, plus MCP23017 variants for Uno and Nano: [`hardware/`](hardware/).
+Boards (THT, KiCad) for Uno, Mega and Nano, plus MCP23017 variants for Uno and Nano: [`fab/`](fab/).
 
 ## Bankswitching
 
@@ -32,7 +42,7 @@ Untested on hardware so far. Board tests to run first: [`test/`](test/).
 
 ## Usage
 
-Serial 115200 baud: `L` lists schemes, `D <scheme> [kb]` dumps, `P <hexaddr>` reads one byte, `S` prints the orientation and supply readings. The read button (A1) repeats the last `D` command (4K until one was given); `dump.py <port> listen <prefix>` saves those dumps. The cartridge is powered only during `D`, `P`, `S` and a button read, and only after the orientation check passed (experimental, see [`hardware/`](hardware/)).
+Serial 115200 baud: `L` lists schemes, `D <scheme> [kb]` dumps, `P <hexaddr>` reads one byte, `S` prints the orientation and supply readings. The read button (A1) repeats the last `D` command (4K until one was given); `dump.py <port> listen <prefix>` saves those dumps. The cartridge is powered only during `D`, `P`, `S` and a button read, and only after the orientation check passed (experimental, see [`fab/`](fab/)).
 
 ```
 pip install pyserial

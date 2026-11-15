@@ -1,6 +1,6 @@
 # Boards
 
-Through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout matches `AtariCartReader/hal.h`. Version 1.2.
+Through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout matches `firmware/AtariCartReader/hal.h`. Version 1.2.
 
 | Variant | Board | Size | Notes |
 |---|---|---|---|

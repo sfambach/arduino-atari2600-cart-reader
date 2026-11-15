@@ -1,4 +1,4 @@
-// Cartridge guide (cap) for slot B on pin headers, draft 5 (see ../guide-drawing/).
+// Cartridge guide (cap) for slot B on pin headers, draft 5 (see drawing/).
 // Sleeve, slit, key holes and door openers taken from vcsslot.stl
 // (RabbitEngineering, Thingiverse 618065, CC BY-NC).
 // x = along the slot, y = across (side A negative, side B positive), z = up from the PCB.
