@@ -20,7 +20,7 @@
 #include "config.h"
 #include "hal.h"
 
-const char FW_VERSION[] = "0.2.0";
+const char FW_VERSION[] = "0.2.1";
 const uint8_t PROTOCOL = 1;
 
 struct Scheme { const char *name; uint8_t kb; };  // before any function: Arduino inserts prototypes there
@@ -95,7 +95,7 @@ void dumpFx(uint16_t hot, uint8_t banks, bool superchip) {
   for (uint8_t b = 0; b < banks; b++) {
     for (uint16_t a = ROM; a < ROM + 0x1000; a++) {
       if (superchip && a < ROM + 0x100) { out(0xFF); continue; }  // RAM
-      peek(hot + b);
+      if (a == ROM || a - 1 >= 0x1FF4) peek(hot + b);  // select the bank; again after reading a hotspot
       out(peek(a));
     }
   }

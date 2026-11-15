@@ -3,6 +3,11 @@
 #include "config.h"
 
 // Hardware abstraction: address bus A0-A12, data bus D0-D7, switched cartridge supply.
+//
+// Address changes must not pass through a third address with A12 high: on the Mega and the MCP23017 boards
+// the low and the high byte change one after the other, and the brief mix (new A0-A7, old A8-A12) can hit a
+// bankswitch hotspot ($1FF4-$1FFB, E0/E7 at $1FE0-$1FEB) and switch the bank by accident (seen 2026-11-15:
+// RealSports Tennis, an F8 cartridge, read as F6). So when the high byte changes, A12 goes low first.
 void halInit();                    // bus released, cartridge supply off
 void halRelease();                 // all cartridge lines to input without pull-ups
 void halDrive();                   // address bus to output
@@ -26,8 +31,10 @@ inline void halDrive() {
 inline void halPullupData(bool on) { DATA_PORT = on ? 0xFF : 0x00; }
 inline void halInit() { halRelease(); }
 inline void halSetAddr(uint16_t addr) {
+  uint8_t hi = (addr >> 8) & 0x1F;
+  if ((ADDR_HI_PORT & 0x1F) != hi) ADDR_HI_PORT = (ADDR_HI_PORT & 0xE0) | (hi & 0x0F);  // A12 low first
   ADDR_LO_PORT = addr & 0xFF;
-  ADDR_HI_PORT = (ADDR_HI_PORT & 0xE0) | ((addr >> 8) & 0x1F);
+  ADDR_HI_PORT = (ADDR_HI_PORT & 0xE0) | hi;
   delayMicroseconds(2);
 }
 inline uint8_t halReadData() { return DATA_PIN; }  // PINx, not PORTx!
@@ -53,9 +60,11 @@ inline void halRelease() {
   mcpWrite(0x00, 0xFF, 0xFF);  // IODIRA/IODIRB: all inputs
   halReleaseDataPins();
 }
+uint8_t mcpHi = 0;  // last value written to GPIOB (A8-A12)
 inline void halDrive() {
   mcpWrite(0x12, 0x00, 0x00);  // GPIOA/GPIOB low before switching to output
   mcpWrite(0x00, 0x00, 0x00);
+  mcpHi = 0;
 }
 inline void halInit() {
   Wire.begin();
@@ -63,7 +72,18 @@ inline void halInit() {
   halRelease();
 }
 inline void halSetAddr(uint16_t addr) {
-  mcpWrite(0x12, addr & 0xFF, (addr >> 8) & 0x1F);  // GPIOA/GPIOB
+  uint8_t hi = (addr >> 8) & 0x1F;
+  if (hi != mcpHi) {  // A12 low first, then GPIOA and GPIOB in one transfer (GPIOA changes first)
+    Wire.beginTransmission(MCP_ADDR);
+    Wire.write(0x13); Wire.write(hi & 0x0F);
+    Wire.endTransmission();
+    mcpWrite(0x12, addr & 0xFF, hi);
+    mcpHi = hi;
+  } else {
+    Wire.beginTransmission(MCP_ADDR);
+    Wire.write(0x12); Wire.write(addr & 0xFF);
+    Wire.endTransmission();
+  }
 }
 #else
 #include <SPI.h>

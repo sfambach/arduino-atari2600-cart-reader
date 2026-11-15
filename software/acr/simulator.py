@@ -39,7 +39,7 @@ class SimulatedCartridge:
 
 
 class SimulatedSerial:
-    def __init__(self, cartridge: SimulatedCartridge, board: str = "UNO_MCP23017", version: str = "0.2.0"):
+    def __init__(self, cartridge: SimulatedCartridge, board: str = "UNO_MCP23017", version: str = "0.2.1"):
         self.cart = cartridge
         self.timeout: Optional[float] = 1
         self.out = bytearray(f"READY Atari 2600 Cart Reader\r\nHELLO AtariCartReader {version} {board} 1\r\n".encode())
