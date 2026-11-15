@@ -24,7 +24,7 @@ Commands after the run:
 
 ## supply_test
 
-Second test: switched cartridge supply and orientation check (all boards). Settings in `supply_test/config.h`; for the MCP23017 boards uncomment `#define ADDR_MCP23017`.
+Second test: switched cartridge supply and orientation check (all boards). Settings in `supply_test/config.h`; enable your board at the top (`BOARD_MEGA`, `BOARD_UNO`, `BOARD_UNO_MCP23017`, `BOARD_NANO`, `BOARD_NANO_MCP23017`).
 
 Without cartridge (runs at start, `t` repeats):
 

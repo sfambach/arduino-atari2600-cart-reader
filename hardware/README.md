@@ -7,8 +7,8 @@ Through-hole (THT) boards that carry the 24-pin cartridge slot. Pinout matches `
 | [`uno/`](uno/) | Arduino Uno R3 shield | 68.6 × 53.3 mm | address bus via 2 × 74HC595 (SPI) |
 | [`mega/`](mega/) | Arduino Mega 2560 shield | 101.6 × 53.3 mm | direct port wiring (PA, PC, PL) |
 | [`nano/`](nano/) | carrier for a plugged-in Arduino Nano | 80 × 62 mm | same circuit and firmware as the Uno, 2 × M3 holes |
-| [`uno-mcp23017/`](uno-mcp23017/) | Uno shield, alternative | 68.6 × 53.3 mm | address bus via MCP23017 (I²C), firmware with `#define ADDR_MCP23017` in `config.h` |
-| [`nano-mcp23017/`](nano-mcp23017/) | Nano carrier, alternative | 80 × 62 mm | address bus via MCP23017 (I²C), firmware with `#define ADDR_MCP23017` in `config.h` |
+| [`uno-mcp23017/`](uno-mcp23017/) | Uno shield, alternative | 68.6 × 53.3 mm | address bus via MCP23017 (I²C), firmware with `#define BOARD_UNO_MCP23017` in `config.h` |
+| [`nano-mcp23017/`](nano-mcp23017/) | Nano carrier, alternative | 80 × 62 mm | address bus via MCP23017 (I²C), firmware with `#define BOARD_NANO_MCP23017` in `config.h` |
 
 Each folder: KiCad 7 project, schematic PDF, Gerber + drill ZIP, render, DRC report (0 errors, 0 unconnected; remaining warnings are silkscreen near the board edge and, on the shields, the modified shield footprint).
 

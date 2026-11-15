@@ -1,7 +1,10 @@
 #pragma once
 #include <Arduino.h>
 
-// Settings of the MCP23017 board test.
+// Settings of the MCP23017 board test (Uno shield or Nano carrier with MCP23017, same circuit).
+#if !defined(__AVR_ATmega328P__)
+#error "This test is for the Uno / Nano MCP23017 boards"
+#endif
 const unsigned long SERIAL_BAUD = 115200;
 const uint8_t MCP_ADDR = 0x20;            // A0-A2 to GND
 const uint32_t I2C_CLOCK = 100000;
