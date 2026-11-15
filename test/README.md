@@ -1,6 +1,6 @@
 # Board tests
 
-Run these before using a freshly built board with a cartridge. **Never insert a cartridge while a test runs.**
+Run these in order (01, 02, 03) before using a freshly built board. **01 and the first part of 02 run without a cartridge.**
 
 ## Settings
 
@@ -12,7 +12,7 @@ python3 tools/sync_config.py
 
 to copy it into every test sketch; `--check` only reports copies that differ. The Arduino IDE cannot include files from outside a sketch folder, hence the copies.
 
-## bus_test
+## 01_bus_test
 
 Address and data bus of all five boards. Upload, open the serial monitor (baud rate from `config.h`, line ending "Newline").
 
@@ -33,7 +33,7 @@ Commands after the run:
 | `a1FFF` | put a fixed address (hex) on A0-A12 |
 | `r` | release all lines |
 
-## supply_test
+## 02_supply_test
 
 Switched cartridge supply and orientation check (all five boards).
 
@@ -46,9 +46,9 @@ Without cartridge (runs at start, `t` repeats):
 
 With a cartridge: `o` runs the orientation check as in the firmware (D2 low = reversed), `p` switches on only if the cartridge sits the right way round and checks the voltage under load, then switches off, `1` / `0` switch the supply on / off by hand (reading printed every second).
 
-## read_test
+## 03_read_test
 
-Third test: reads the first 4K bank of a cartridge (all five boards). Insert the cartridge the right way round before uploading; the test checks the orientation (D2) and the supply first.
+Third test (run after 02): reads the first 4K bank of a cartridge (all five boards). Insert the cartridge the right way round before uploading; the test checks the orientation (D2) and the supply first.
 
 1. Orientation and supply as in the firmware.
 2. Hex dump of the first 64 bytes.
