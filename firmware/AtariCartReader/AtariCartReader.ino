@@ -20,7 +20,7 @@
 #include "config.h"
 #include "hal.h"
 
-const char FW_VERSION[] = "0.2.1";
+const char FW_VERSION[] = "0.2.2";
 const uint8_t PROTOCOL = 1;
 
 struct Scheme { const char *name; uint8_t kb; };  // before any function: Arduino inserts prototypes there

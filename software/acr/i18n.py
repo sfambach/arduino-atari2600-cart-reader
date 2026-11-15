@@ -64,7 +64,6 @@ _DE = {
     "Everything is up to date.": "Alles ist aktuell.",
     "No release found on GitHub.": "Kein Release auf GitHub gefunden.",
     "Open download page": "Download-Seite öffnen",
-    "avrdude not found: install it or add it to the PATH.": "avrdude nicht gefunden: installieren oder in den PATH aufnehmen.",
     "Firmware file (.hex)": "Firmware-Datei (.hex)",
     "Board": "Board",
     "Uploading firmware...": "Firmware wird übertragen...",

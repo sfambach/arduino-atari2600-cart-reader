@@ -41,7 +41,7 @@ Ready-made programs (Windows `.exe`, Linux binary) and the firmware for every bo
 | Save / collection | the collection keeps every saved ROM with title, scheme and cover; double-click plays it |
 | Play | writes the ROM to a temporary file and starts Stella with `-bs <scheme>`; Stella is found on the PATH, in `/usr/games`, as snap or flatpak, in the default Windows folder, or at the path set in the settings; if Stella stops at once, its output is shown |
 | Updates | at start (can be switched off) the latest GitHub release is compared with the program and the firmware |
-| Firmware update | after connecting, a newer firmware in the latest release is offered ("Update firmware now"); Reader menu: the latest release or a local `.hex`; uploaded with `avrdude` (Linux: `sudo apt install avrdude`) through the Arduino bootloader |
+| Firmware update | after connecting, a newer firmware in the latest release is offered ("Update firmware now"); Reader menu: the latest release or a local `.hex`; uploaded by the program itself through the Arduino bootloader (STK500 v1 for Uno/Nano, v2 for the Mega), with verify; no avrdude needed |
 | Language | English and German (Settings) |
 
 Data folders: Linux `~/.local/share/AtariCartReader` (collection) and `~/.cache/AtariCartReader` (titles,
@@ -54,8 +54,7 @@ covers, temporary ROMs); Windows `%APPDATA%\AtariCartReader` and `%LOCALAPPDATA%
 - Bankswitched cartridges: reading a hotspot switches the bank, so the hotspot bytes of the other banks show
   the bank they select (as a real 2600 sees them). Such a dump can differ in those few bytes from a reference
   dump read straight from the EPROM, and then the title lookup by MD5 finds nothing.
-- Untested on hardware so far: auto detection, the CRC check with the real firmware, the Stella start and the
-  firmware upload.
+- Untested on hardware so far: auto detection with firmware 0.2.1 or newer, and the firmware upload.
 
 ## Tests
 

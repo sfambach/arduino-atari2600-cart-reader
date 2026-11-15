@@ -13,12 +13,12 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog, QDia
                                QListWidget, QListWidgetItem, QMainWindow, QMessageBox, QProgressBar,
                                QPushButton, QTabWidget, QVBoxLayout, QWidget)
 
-from .. import __version__, emulator, rom as romlib, updates
+from .. import __version__, bootloader, emulator, rom as romlib, updates
 from ..demo_rom import build as build_demo_rom
 from ..gamedb import GameDatabase
 from ..i18n import LANGUAGES, set_language, tr
 from ..library import Game, Library
-from ..reader import Reader, ReaderError, list_ports
+from ..reader import Reader, list_ports
 from ..simulator import SimulatedCartridge, SimulatedSerial
 from .hexview import HexView
 from .style import QSS, Banner, load_fonts
@@ -292,13 +292,15 @@ class MainWindow(QMainWindow):
         self._update_buttons()
 
     def _end_busy(self, *_):
+        self._progress_text = None
         self._set_busy(False)
 
     def _on_progress(self, done: int, total: int) -> None:
         self.progress.show()
         self.progress.setMaximum(total)
         self.progress.setValue(done)
-        self.statusBar().showMessage(tr("Reading {done} of {total} bytes", done=done, total=total))
+        text = getattr(self, "_progress_text", None)
+        self.statusBar().showMessage(text or tr("Reading {done} of {total} bytes", done=done, total=total))
 
     def _on_error(self, message: str) -> None:
         self.statusBar().showMessage(message)
@@ -550,30 +552,25 @@ class MainWindow(QMainWindow):
                 return
             box = QMessageBox(QMessageBox.Information, tr("Check for updates"), "\n".join(notes), parent=self)
             flash_now = None
-            avrdude = updates.find_avrdude()
-            if len(notes) and board and updates.firmware_asset(release, board) and firmware and \
-                    updates.newer(release.version, firmware) and avrdude:
+            if board and firmware and updates.firmware_asset(release, board) and \
+                    updates.newer(release.version, firmware):
                 flash_now = box.addButton(tr("Update firmware now"), QMessageBox.AcceptRole)
             open_page = box.addButton(tr("Open download page"), QMessageBox.AcceptRole)
             box.addButton(QMessageBox.Close)
             box.exec()
             if flash_now is not None and box.clickedButton() is flash_now:
-                self._flash(port, board, "", avrdude)
+                self._flash(port, board, "")
             elif box.clickedButton() is open_page:
                 QDesktopServices.openUrl(QUrl(release.url))
 
         self._run(lambda w: updates.latest_release(), done, busy=False)
 
     def update_firmware(self) -> None:
-        avrdude = updates.find_avrdude()
-        if not avrdude:
-            self._on_error(tr("avrdude not found: install it or add it to the PATH."))
-            return
         port = self.ports.currentData()
         if port == DEMO_PORT:
             return
         board = self.reader.hello.board if self.reader else None
-        boards = list(updates.AVRDUDE)
+        boards = list(bootloader.TARGETS)
         dialog = QDialog(self)
         dialog.setWindowTitle(tr("Update firmware..."))
         form = QFormLayout(dialog)
@@ -596,13 +593,13 @@ class MainWindow(QMainWindow):
         form.addRow(buttons)
         if dialog.exec() != QDialog.Accepted:
             return
-        self._flash(port, board_box.currentText(), hex_path.text(), avrdude)
+        self._flash(port, board_box.currentText(), hex_path.text())
 
-    def _flash(self, port: str, board: str, hex_file: str, avrdude: str) -> None:
+    def _flash(self, port: str, board: str, hex_file: str) -> None:
         if self.reader:
-            self.toggle_connection()  # avrdude needs the port; the board resets into its bootloader
+            self.toggle_connection()  # the upload needs the port; it resets the board into its bootloader
 
-        def job(_w: Worker) -> str:
+        def job(w: Worker) -> str:
             path = pathlib.Path(hex_file) if hex_file else None
             if path is None:
                 release = updates.latest_release()
@@ -610,13 +607,15 @@ class MainWindow(QMainWindow):
                 if not url:
                     raise RuntimeError(tr("No firmware for {board} in the latest GitHub release.", board=board))
                 path = updates.download(url)
-            return updates.flash(path, port, board, avrdude)
+            bootloader.flash(path.read_text(), port, board,
+                             lambda phase, done, total: w.progress.emit(done, total))
+            return ""
 
         def done(_log: str) -> None:
             self.statusBar().showMessage(tr("Firmware uploaded."))
             self.connect_reader()
 
-        self.statusBar().showMessage(tr("Uploading firmware..."))
+        self._progress_text = tr("Uploading firmware...")
         self._run(job, done)
 
     def about(self) -> None:

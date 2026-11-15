@@ -1,2 +1,2 @@
 """Atari 2600 Cart Reader - PC program (reader protocol, ROM handling, GUI)."""
-__version__ = "0.2.1"  # same as FW_VERSION in the firmware: one release carries both
+__version__ = "0.2.2"  # same as FW_VERSION in the firmware: one release carries both

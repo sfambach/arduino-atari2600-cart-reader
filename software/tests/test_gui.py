@@ -8,7 +8,7 @@ pytest.importorskip("PySide6")
 from PySide6.QtCore import QSettings
 from PySide6.QtWidgets import QApplication
 
-from acr.gui.app import DEMO_PORT, MainWindow
+from acr.gui.app import MainWindow
 from acr.gui.hexview import HexView, line_of, render
 
 
