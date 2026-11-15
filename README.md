@@ -20,7 +20,7 @@ Project page: https://www.fambach.net/ (Retro Projekt – Atari 2600 ROM einlese
 |---|---|---|
 | Arduino Mega 2560 | A0-A7 = PA0-PA7, A8-A12 = PC0-PC4 | D0-D7 = PL0-PL7 |
 | Arduino Uno / Nano | 2 × 74HC595 on SPI (MOSI D11, SCK D13, latch A2): U1 = A0-A7, U2 = A8-A12 | D0-D7 = D2-D9 |
-| Uno / Nano, MCP23017 boards | MCP23017 (I2C 0x20): GPA0-7 = A0-A7, GPB0-4 = A8-A12; `#define ADDR_MCP23017` in `hal.h` | D0-D7 = D2-D9 |
+| Uno / Nano, MCP23017 boards | MCP23017 (I2C 0x20): GPA0-7 = A0-A7, GPB0-4 = A8-A12; `#define ADDR_MCP23017` in `config.h` | D0-D7 = D2-D9 |
 
 Cartridge slot: pin 23 = switched +5 V (BC327, LOW on D10 for Uno/Nano, D8 for Mega; sense on A0), pins 12 and 24 = GND. Read button on A1; reset button on the Arduino RESET line (Uno and Mega shields).
 

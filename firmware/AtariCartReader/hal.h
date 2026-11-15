@@ -1,5 +1,6 @@
 #pragma once
 #include <Arduino.h>
+#include "config.h"
 
 // Hardware abstraction: address bus A0-A12, data bus D0-D7, switched cartridge supply.
 void halInit();                    // bus released, cartridge supply off
@@ -14,8 +15,6 @@ void halReleaseData();             // data bus back to input
 #if defined(__AVR_ATmega2560__)
 // Arduino Mega 2560, 40-pin connector:
 // A0-A7 = PA0-PA7, A8-A12 = PC0-PC4, D0-D7 = PL0-PL7
-const uint8_t CART_PWR = 8;        // PH5, LOW = cartridge on (BC327)
-const uint8_t CART_SENSE = A0;
 inline void halRelease() {
   DDRA = 0x00; PORTA = 0x00;
   DDRC &= 0xE0; PORTC &= 0xE0;
@@ -39,17 +38,13 @@ inline void halReleaseData() { DDRL = 0x00; PORTL = 0x00; }
 #elif defined(__AVR_ATmega328P__)
 // Arduino Uno / Nano: data bus D0-D7 = D2-D9 (PD2-PD7, PB0-PB1).
 // Address bus: two 74HC595 on SPI (MOSI D11, SCK D13, latch A2; U1 = A0-A7, U2 = A8-A12),
-// or with ADDR_MCP23017 defined the MCP23017 boards (I2C 0x20, GPA0-7 = A0-A7, GPB0-4 = A8-A12).
-// #define ADDR_MCP23017
-const uint8_t CART_PWR = 10;       // PB2, LOW = cartridge on (BC327)
-const uint8_t CART_SENSE = A0;
+// or with ADDR_MCP23017 defined in config.h the MCP23017 boards (I2C 0x20, GPA0-7 = A0-A7, GPB0-4 = A8-A12).
 inline void halReleaseDataPins() {
   DDRD &= 0x03; PORTD &= 0x03;
   DDRB &= 0xFC; PORTB &= 0xFC;
 }
 #if defined(ADDR_MCP23017)
 #include <Wire.h>
-const uint8_t MCP_ADDR = 0x20;
 inline void mcpWrite(uint8_t reg, uint8_t a, uint8_t b) {
   Wire.beginTransmission(MCP_ADDR);
   Wire.write(reg); Wire.write(a); Wire.write(b);
@@ -65,7 +60,7 @@ inline void halDrive() {
 }
 inline void halInit() {
   Wire.begin();
-  Wire.setClock(400000);
+  Wire.setClock(I2C_CLOCK);
   halRelease();
 }
 inline void halSetAddr(uint16_t addr) {
@@ -73,7 +68,6 @@ inline void halSetAddr(uint16_t addr) {
 }
 #else
 #include <SPI.h>
-const uint8_t SR_LATCH = A2;
 inline void halSetAddr(uint16_t addr) {
   SPI.transfer((addr >> 8) & 0x1F);  // shifted on into U2 (A8-A12)
   SPI.transfer(addr & 0xFF);         // stays in U1 (A0-A7)
@@ -90,7 +84,7 @@ inline void halInit() {
   pinMode(SR_LATCH, OUTPUT);
   digitalWrite(SR_LATCH, LOW);
   SPI.begin();
-  SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE0));
+  SPI.beginTransaction(SPISettings(SPI_CLOCK, MSBFIRST, SPI_MODE0));
   halRelease();
 }
 #endif

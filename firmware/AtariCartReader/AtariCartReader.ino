@@ -15,14 +15,12 @@
  sense input low, and the supply stays off. Experimental: thresholds still need
  to be confirmed on real hardware.
 */
+#include "config.h"
 #include "hal.h"
 
 struct Scheme { const char *name; uint8_t kb; };  // before any function: Arduino inserts prototypes there
 
 const uint16_t ROM = 0x1000;
-// ADC thresholds, to be calibrated on hardware with the S command.
-const int SENSE_ORIENTATION = 40;  // ~0.2 V: D2 back-feeds the cartridge rail
-const int SENSE_POWERED = 900;     // ~4.4 V: supply is on and not overloaded
 
 int senseOrientation() {
   digitalWrite(CART_PWR, HIGH);
@@ -165,7 +163,6 @@ void dump(const Scheme *s, uint8_t kb) {
   else if (n == "3F") dump3F(kb);
 }
 
-const uint8_t READ_BUTTON = A1;  // LOW = pressed (button to GND, internal pull-up)
 String lastScheme = "4K";
 uint8_t lastKb = 4;
 
@@ -183,7 +180,7 @@ void readButton() {
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(SERIAL_BAUD);
   pinMode(READ_BUTTON, INPUT_PULLUP);
   digitalWrite(CART_PWR, HIGH);
   pinMode(CART_PWR, OUTPUT);

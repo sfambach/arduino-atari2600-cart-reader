@@ -1,9 +1,8 @@
 // MCP23017 board test for the Uno / Nano MCP23017 boards. Run WITHOUT a cartridge in the slot.
 // Serial monitor: 115200 baud, line ending "Newline".
 #include <Wire.h>
+#include "config.h"
 
-const uint8_t MCP_ADDR = 0x20;
-const uint8_t CART_PWR = 10;  // LOW = cartridge supply on; kept HIGH (off) the whole time
 const uint8_t REG_IODIRA = 0x00, REG_GPPUA = 0x0C, REG_GPIOA = 0x12, REG_OLATA = 0x14;
 const uint8_t ADDR_LINES = 13, DATA_LINES = 8;
 const uint8_t ADDR_SLOT_PIN[ADDR_LINES] = {8, 7, 6, 5, 4, 3, 2, 1, 22, 21, 19, 20, 18};
@@ -148,7 +147,7 @@ void runTests() {
 }
 
 void walk() {
-  Serial.println(F("Walking one: each address line HIGH for 2 s, measure against slot pin 12/24 (GND). Any key stops."));
+  Serial.println(F("Walking one: each address line HIGH in turn, measure against slot pin 12/24 (GND). Any key stops."));
   mcpWrite(REG_GPPUA, 0x00, 0x00);
   mcpWrite(REG_OLATA, 0x00, 0x00);
   mcpWrite(REG_IODIRA, 0x00, 0xE0);
@@ -157,7 +156,7 @@ void walk() {
       uint16_t v = 1 << i;
       mcpWrite(REG_OLATA, v & 0xFF, v >> 8);
       Serial.print(F("  HIGH: ")); printAddr(i); Serial.println();
-      for (uint8_t t = 0; t < 20; t++) {
+      for (unsigned long t = 0; t < WALK_STEP_MS / 100; t++) {
         delay(100);
         if (Serial.available()) { while (Serial.available()) Serial.read(); releaseAll(); Serial.println(F("stopped, lines released")); return; }
       }
@@ -176,9 +175,9 @@ void setAddress(uint16_t value) {
 void setup() {
   pinMode(CART_PWR, OUTPUT);
   digitalWrite(CART_PWR, HIGH);
-  Serial.begin(115200);
+  Serial.begin(SERIAL_BAUD);
   Wire.begin();
-  Wire.setClock(100000);
+  Wire.setClock(I2C_CLOCK);
   releaseAll();
   runTests();
 }
