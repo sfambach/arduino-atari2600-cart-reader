@@ -1,7 +1,11 @@
 #pragma once
 #include <Arduino.h>
 
-// All user settings of the firmware. Pin wiring of the buses is fixed by the boards (hal.h).
+// All user settings of the firmware.
+// Bus wiring is fixed by the boards and read through whole port registers (one access per byte) in hal.h,
+// so it is listed here for reference only; changing it needs a change in hal.h:
+//   Mega:       A0-A7 = PA0-PA7 (D22-D29), A8-A12 = PC0-PC4 (D37-D33), D0-D7 = PL0-PL7 (D49-D42)
+//   Uno / Nano: D0-D7 = D2-D9 (PD2-PD7, PB0-PB1); address bus via 74HC595 (SPI) or MCP23017 (I2C, GPA0-7, GPB0-4)
 
 // Uno / Nano address bus: comment out for the 74HC595 boards, keep for the MCP23017 boards.
 // #define ADDR_MCP23017

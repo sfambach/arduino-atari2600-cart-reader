@@ -4,10 +4,6 @@
 #include "config.h"
 
 const uint8_t REG_IODIRA = 0x00, REG_GPPUA = 0x0C, REG_GPIOA = 0x12, REG_OLATA = 0x14;
-const uint8_t ADDR_LINES = 13, DATA_LINES = 8;
-const uint8_t ADDR_SLOT_PIN[ADDR_LINES] = {8, 7, 6, 5, 4, 3, 2, 1, 22, 21, 19, 20, 18};
-const uint8_t DATA_SLOT_PIN[DATA_LINES] = {9, 10, 11, 13, 14, 15, 16, 17};
-const uint8_t DATA_ARDUINO_PIN[DATA_LINES] = {2, 3, 4, 5, 6, 7, 8, 9};
 
 uint8_t errors = 0;
 
