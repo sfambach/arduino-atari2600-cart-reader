@@ -1,6 +1,6 @@
 # Atari 2600 Cartridge Reader
 
-Arduino firmware for dumping Atari 2600 cartridges, including bankswitched games.
+Arduino firmware and a PC program (Windows, Linux) for dumping Atari 2600 cartridges, including bankswitched games, and playing them in Stella.
 
 Project page: https://www.fambach.net/ (Retro Projekt – Atari 2600 ROM einlesen)
 
@@ -12,7 +12,8 @@ Project page: https://www.fambach.net/ (Retro Projekt – Atari 2600 ROM einlese
 | [`hardware/`](hardware/) | boards (KiCad, Gerber, BOM), drawings, generator, wish list for the next revision |
 | [`3d-print/`](3d-print/) | 3D-printed parts (cartridge guide) |
 | [`test/`](test/) | test sketches for a freshly built board |
-| [`tools/`](tools/) | PC tools (`dump.py`) |
+| [`software/`](software/) | PC program with GUI: read, save, hex view, game collection, Stella start, updates |
+| [`tools/`](tools/) | small PC tools (`dump.py`, `sync_config.py`) |
 
 ## Boards
 
@@ -44,16 +45,32 @@ Untested on hardware so far. Board tests to run first: [`test/`](test/).
 
 ## Usage
 
-Serial 115200 baud: `L` lists schemes, `D <scheme> [kb]` dumps, `P <hexaddr>` reads one byte, `S` prints the orientation and supply readings. The read button (A1) repeats the last `D` command (4K until one was given); `dump.py <port> listen <prefix>` saves those dumps. The cartridge is powered only during `D`, `P`, `S` and a button read, and only after the orientation check passed (a reversed cartridge pulls D2 low, see [`hardware/`](hardware/)).
+PC program: see [`software/`](software/) (`python -m acr`, or the ready-made program from the releases).
+
+![PC program](docs/software.png)
+
+Serial protocol 1, 115200 baud (`SERIAL_BAUD` in `config.h`), one command per line:
+
+| Command | Answer |
+|---|---|
+| `H` | `HELLO AtariCartReader <version> <board> 1` (also sent after reset) |
+| `L` | one `<scheme> <kb>K` per line, then `END` |
+| `D <scheme> [kb]` | `OK <bytes>`, the raw bytes, `CRC <crc32 hex>` |
+| `S` | `STATUS <data bits hex> <ok\|reversed> <supply ADC or -1>` |
+| `P <hexaddr>` | one byte (debug) |
+
+Errors are `ERR <text>`. The read button (A1) repeats the last `D` command (4K until one was given); `dump.py <port> listen <prefix>` saves those dumps. The cartridge is powered only during `D`, `P`, `S` and a button read, and only after the orientation check passed (a reversed cartridge pulls D2 low, see [`hardware/`](hardware/)).
 
 ```
 pip install pyserial
 python3 tools/dump.py /dev/ttyACM0 F8 game.bin
 ```
 
-Test the dump with the emulator [Stella](https://stella-emu.github.io/).
-
 ## Credits
+
+- [Stella](https://stella-emu.github.io/) (GPL-2), started as an external program
+- game titles and covers: [libretro-database](https://github.com/libretro/libretro-database), [libretro-thumbnails](https://github.com/libretro-thumbnails/Atari_-_2600), downloaded on demand
+- font [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) (SIL OFL 1.1)
 
 - [retrocartdumper](https://github.com/SvOlli/retrocartdumper) by Sven Oliver Moll (GPLv3)
 - [Cart Reader](https://github.com/sanni/cartreader) by sanni (GPLv3)
@@ -66,7 +83,7 @@ Test the dump with the emulator [Stella](https://stella-emu.github.io/).
 
 ## AI disclosure
 
-This project is built with AI assistance. Stefan Fambach had the idea, wrote the concept and reviews and tests every change; the implementation (schematics, PCB design files, firmware and documentation) is written largely by Claude (Anthropic) via Claude Code.
+This project is built with AI assistance. Stefan Fambach had the idea, wrote the concept and reviews and tests every change; the implementation (schematics, PCB design files, firmware, PC program and documentation) is written largely by Claude (Anthropic) via Claude Code.
 
 ## License
 

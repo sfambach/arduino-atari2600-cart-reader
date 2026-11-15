@@ -41,6 +41,7 @@ const uint8_t DATA_SLOT_PIN[DATA_LINES] = {9, 10, 11, 13, 14, 15, 16, 17};      
 #error "BOARD_MEGA selected, but the Arduino IDE board is not a Mega 2560"
 #endif
 #define ADDR_DIRECT                // address lines are Arduino pins
+#define BOARD_NAME "MEGA"
 const uint8_t CART_PWR = 8;        // PH5, LOW = cartridge on (BC327)
 const uint8_t CART_SENSE = A0;     // switched cartridge rail via 10 kOhm
 const uint8_t READ_BUTTON = A1;    // LOW = pressed (button to GND, internal pull-up)
@@ -66,10 +67,20 @@ const uint8_t READ_BUTTON = A1;    // LOW = pressed (button to GND, internal pul
 const uint8_t DATA_ARDUINO_PIN[DATA_LINES] = {2, 3, 4, 5, 6, 7, 8, 9};  // PD2-PD7, PB0-PB1 (firmware: fixed split in hal.h)
 #if defined(BOARD_UNO_MCP23017) || defined(BOARD_NANO_MCP23017)
 #define ADDR_MCP23017              // GPA0-7 = A0-A7, GPB0-4 = A8-A12
+#if defined(BOARD_UNO_MCP23017)
+#define BOARD_NAME "UNO_MCP23017"
+#else
+#define BOARD_NAME "NANO_MCP23017"
+#endif
 const uint8_t MCP_ADDR = 0x20;     // A0-A2 to GND
 const uint32_t I2C_CLOCK = 400000; // SDA = A4, SCL = A5
 #else
 #define ADDR_74HC595               // U1 = A0-A7, U2 = A8-A12; outputs cannot be read back
+#if defined(BOARD_UNO)
+#define BOARD_NAME "UNO"
+#else
+#define BOARD_NAME "NANO"
+#endif
 const uint8_t SR_LATCH = A2;       // RCLK of both 74HC595; MOSI D11, SCK D13
 const uint32_t SPI_CLOCK = 4000000;
 #endif

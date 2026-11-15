@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Dump an Atari 2600 cartridge via AtariCartReader.
+"""Dump an Atari 2600 cartridge via AtariCartReader (command line; the PC program is in software/).
 
 usage: dump.py <port> <scheme> <file> [kb]
        dump.py <port> list
        dump.py <port> listen <prefix>   saves every dump started with the read button as <prefix>-<n>.bin
 """
 import sys
+import zlib
+
 import serial
 
 BAUD = 115200  # must match SERIAL_BAUD in firmware/AtariCartReader/config.h
@@ -16,6 +18,7 @@ def main():
         sys.exit(__doc__)
     port = serial.Serial(sys.argv[1], BAUD, timeout=10)
     port.readline()  # READY (board resets on connect)
+    port.readline()  # HELLO
     if sys.argv[2].lower() == "list":
         port.write(b"L\n")
         for line in iter(port.readline, b"END\r\n"):
@@ -38,6 +41,9 @@ def save(port, answer, filename):
     data = port.read(size)
     if len(data) != size:
         sys.exit(f"only {len(data)} of {size} bytes received")
+    crc = port.readline().decode().split()
+    if len(crc) != 2 or int(crc[1], 16) != zlib.crc32(data):
+        sys.exit("checksum wrong, please read again")
     with open(filename, "wb") as f:
         f.write(data)
     print(f"{filename}: {size} bytes")

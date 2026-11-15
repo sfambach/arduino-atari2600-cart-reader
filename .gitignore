@@ -1,3 +1,8 @@
-build/
 *.bin
+*.pyc
+*.spec
+.pytest_cache/
 __pycache__/
+build/
+software/build/
+software/dist/

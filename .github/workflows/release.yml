@@ -1,0 +1,67 @@
+# Builds the PC program (Windows, Linux) and the firmware for every board when a tag v* is pushed,
+# and attaches everything to the GitHub release; the program's update check reads that release.
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  firmware:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - { board: MEGA, fqbn: "arduino:avr:mega" }
+          - { board: UNO, fqbn: "arduino:avr:uno" }
+          - { board: UNO_MCP23017, fqbn: "arduino:avr:uno" }
+          - { board: NANO, fqbn: "arduino:avr:nano" }
+          - { board: NANO_MCP23017, fqbn: "arduino:avr:nano" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-arduino-cli@v2
+      - run: arduino-cli core install arduino:avr
+      - name: select board in config.h
+        run: |
+          cd firmware/AtariCartReader
+          sed -i -E '/BOARD_NAME/!s|^#define (BOARD_[A-Z0-9_]+)( .*)?$|// #define \1\2|' config.h
+          sed -i -E 's|^// #define BOARD_${{ matrix.board }}( .*)?$|#define BOARD_${{ matrix.board }}\1|' config.h
+          test "$(grep -v BOARD_NAME config.h | grep -c '^#define BOARD_')" = 1
+      - run: arduino-cli compile --fqbn ${{ matrix.fqbn }} --output-dir build firmware/AtariCartReader
+      - run: cp build/AtariCartReader.ino.hex AtariCartReader-${{ matrix.board }}.hex
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ matrix.board }}
+          path: AtariCartReader-${{ matrix.board }}.hex
+
+  program:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r software/requirements.txt pyinstaller
+      - run: >
+          pyinstaller --onefile --windowed --name AtariCartReader-${{ runner.os }}
+          --add-data "acr/gui/assets${{ runner.os == 'Windows' && ';' || ':' }}acr/gui/assets" run.py
+        working-directory: software
+      - uses: actions/upload-artifact@v4
+        with:
+          name: program-${{ runner.os }}
+          path: software/dist/*
+
+  release:
+    needs: [firmware, program]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: out/*
