@@ -7,18 +7,20 @@ SL_L, SL_W, SL_UP = 37.0, 9.5, 10.0      # Slot B, Oberteil 10 hoch
 SL_LOW_W, SL_H = 7.5, 15.5
 # --- aus vcsslot.stl (Thingiverse 618065) ---
 CAP_L, CAP_W = 74.2, 15.2                # Huelse
-OFF = 2.1                                # Slotmitte neben der Huelsenmitte (Seite B)
-PIN_X, PIN_H = 24.75, 6.75               # Klappen-Oeffner
+OFF = 2.1                                # Platinenschlitz neben der Huelsenmitte (Seite B), gemessen 2,06
+OPN_X0, OPN_X1, OPN_T, PIN_H = 21.4, 28.0, 1.9, 6.0   # Klappen-Oeffner (Laschen), in der Platinenebene
+NUB_X0, NUB_X1, NUB_W = 28.3, 36.1, 2.7  # Loecher fuer die Nasen der Cartridge, in der Platinenebene
+PIN_X = (OPN_X0 + OPN_X1) / 2
 # --- Entwurf ---
 PLATE = 1.2                              # geschlossene Deckflaeche ueber dem Slot
 TOP = SLOT_TOP + PLATE
 CLR = 0.3                                # Luft um den Slot
 CAV_L, CAV_W = SL_L + 2 * CLR, SL_W + 2 * CLR
-SLIT_L, SLIT_W = 34.0, 2.6               # Schlitz fuer die Cartridge-Platine
+SLIT_L, SLIT_W = 35.1, 2.5               # Schlitz fuer die Cartridge-Platine (vcsslot)
 HOLE_X, SCREW_D, SCREW_DEPTH = 22.75, 2.2, 10.0   # M2,5 von unten durch die Platine
 FOOT_X = HOLE_X + 2.7 / 2 + 1.4          # Fuss endet knapp hinter der Lochaussenkante
 FULL_Z = 15.0                            # darueber volle Laenge (Fuehrung in der Cartridge)
-PIN_D, PIN_DEPTH = 3.0, 8.0              # Stift 3 x 15, 8 tief eingepresst
+NUB_DEPTH = 16.0                         # Tiefe der Nasen-Loecher (7800cartguide ca. 16-18)
 BAND = 8.5                               # unten max. 8,5 neben der Slotmitte (freie Flaeche 61 x 17)
 STEP_Z = 7.7                             # Unterkante Cartridge mit Kappe (6,5 + 1,2)
 S = 9
@@ -54,12 +56,14 @@ rect(ox, oy, CAP_L, CAP_W, fill='#dfe9f7')
 rect(cx - CAV_L / 2, sy - CAV_W / 2, CAV_L, CAV_W, fill='none', c='#888', dash='4,3')
 rect(cx - SLIT_L / 2, sy - SLIT_W / 2, SLIT_L, SLIT_W, fill='white')
 for s in (-1, 1):
-    circ(cx + s * PIN_X, sy, PIN_D, '#7aa0d8')
+    rect(cx + s * (OPN_X0 + OPN_X1) / 2 - (OPN_X1 - OPN_X0) / 2, sy - OPN_T / 2, OPN_X1 - OPN_X0, OPN_T, fill='#7aa0d8')
+    rect(cx + s * (NUB_X0 + NUB_X1) / 2 - (NUB_X1 - NUB_X0) / 2, sy - NUB_W / 2, NUB_X1 - NUB_X0, NUB_W, fill='white')
     circ(cx + s * HOLE_X, sy, SCREW_D, 'none', '#999')
 hline(cy, ox - 2, ox + CAP_L + 2)
 dimh(ox, ox + CAP_L, oy - 3, f(CAP_L))
 dimh(cx - SLIT_L / 2, cx + SLIT_L / 2, oy + CAP_W + 3.5, f(SLIT_L) + ' × ' + f(SLIT_W) + ' Schlitz')
-dimh(cx - PIN_X, cx + PIN_X, oy + CAP_W + 7, f(2 * PIN_X) + ' Stifte Ø3')
+dimh(cx - OPN_X1, cx + OPN_X1, oy + CAP_W + 7, f(2 * OPN_X1) + ' Öffner (6,6 × 1,9)')
+dimh(cx - NUB_X1, cx + NUB_X1, oy - 6.5, f(2 * NUB_X1) + ' Löcher für die Nasen (7,8 × 2,7)')
 dimh(cx - HOLE_X, cx + HOLE_X, oy + CAP_W + 10.5, f(2 * HOLE_X) + ' Schrauben M2,5 (von unten)')
 dimv(ox + CAP_L + 3, oy, oy + CAP_W, f(CAP_W), left=False)
 dimv(ox - 2.5, cy, sy, f(OFF), RED)
@@ -79,7 +83,8 @@ rect(lcx - CAV_L / 2, base - SLOT_TOP, CAV_L, SLOT_TOP, fill='none', c='#777', d
 rect(lcx - SLIT_L / 2, base - TOP, SLIT_L, PLATE, fill='none', c='#777', dash='2,2')
 rect(lcx - SL_L / 2 + .4, base - SLOT_TOP + .4, SL_L - .8, SL_H - .8, fill='none', c='#aaa', dash='2,3')
 for s in (-1, 1):
-    rect(lcx + s * PIN_X - PIN_D / 2, base - TOP - PIN_H, PIN_D, PIN_H + PIN_DEPTH, fill='#7aa0d8')
+    rect(lcx + OPN_X0 if s > 0 else lcx - OPN_X1, base - TOP - PIN_H, OPN_X1 - OPN_X0, PIN_H, fill='#7aa0d8')
+    rect(lcx + s * NUB_X0 if s > 0 else lcx - NUB_X1, base - TOP, NUB_X1 - NUB_X0, NUB_DEPTH, fill='none', c='#777', dash='4,3')
     rect(lcx + s * HOLE_X - SCREW_D / 2, base - SCREW_DEPTH, SCREW_D, SCREW_DEPTH, fill='white', c='#999', dash='3,2')
     ln(lcx + s * HOLE_X, base + 4, lcx + s * HOLE_X, base - SCREW_DEPTH + 1, '#555', 1.2, '2,2')
 txt(lcx, base - SLOT_TOP + 7, 'Slot B (verdeckt)', 11, '#777')
@@ -88,7 +93,8 @@ dimv(lx - 5, base - FULL_Z, base, f(FULL_Z))
 dimv(lx + CAP_L + 4, base - TOP - PIN_H, base - TOP, f(PIN_H), left=False)
 dimv(lx + CAP_L + 4, base - TOP, base - SLOT_TOP, f(PLATE), RED, left=False)
 dimh(lcx - FOOT_X, lcx + FOOT_X, base + 6, f(2 * FOOT_X) + ' Fuß')
-txt(lcx + PIN_X + 3, base - TOP - 3, 'Stift', 10, '#555', 'start')
+txt(lcx + OPN_X1 + .5, base - TOP - 3, 'Öffner', 10, '#555', 'start')
+dimv(lx + CAP_L + 9, base - TOP, base - TOP + NUB_DEPTH, f(NUB_DEPTH), RED, left=False)
 txt(lcx + HOLE_X + 2.5, base + 3.5, 'Schraube', 10, '#555', 'start')
 
 # --- Schnitt quer ---
@@ -119,20 +125,18 @@ txt(qcx - SHELL_IN_W / 2, qb - TOP - 11, 'Cartridge innen', 10, '#888', 'start')
 # --- Hinweise ---
 nx, ny = 62, 116
 notes = [('Prinzip (Stefan 15.11.2026):', '#222', True),
-         ('Kappe wird über Slot B gesteckt, oben geschlossen,', '#222', False),
-         ('nur der Schlitz für die Cartridge-Platine.', '#222', False),
-         ('Deckfläche 1,2 über dem Slot: die Kontakte', '#222', False),
-         ('sind lang genug (Toleranz laut Standard).', '#222', False),
-         ('Volle Länge 74,2 nur oben (Führung in der', '#222', False),
-         ('Cartridge), seitlich schräg zum Fuß 51.', '#222', False),
+         ('Kappe wird über Slot B gesteckt, oben geschlossen.', '#222', False),
+         ('Deckfläche 1,2 über dem Slot (Kontakte lang genug).', '#222', False),
+         ('Volle Länge 74,2 nur oben, seitlich schräg zum Fuß 51.', '#222', False),
          ('2 Schrauben M2,5 von unten durch die Platine.', '#222', False),
-         ('Stifte Ø3 separat, nach dem Druck eingepresst', '#222', False),
-         ('(Druck kopfüber auf der Deckfläche).', '#222', False),
+         ('Aus vcsslot.stl übernommen:', '#222', True),
+         ('Schlitz 35,1 × 2,5, Versatz 2,1 zu Seite B.', '#222', False),
+         ('Öffner 6,6 × 1,9, 6 hoch; Nasen-Löcher 7,8 × 2,7.', '#222', False),
+         ('Druck: stehend auf dem Fuß, Öffner mitgedruckt.', '#222', False),
+         ('Schrägen 38° zur Senkrechten, ohne Stützen.', '#222', False),
          ('Offen (rot):', RED, True),
-         ('Löcher für die Nasen der Cartridge:', RED, False),
-         ('Lage und Größe fehlen, bitte messen.', RED, False),
-         ('Versatz 2,1 aus vcsslot, nicht gemessen.', RED, False),
-         ('Stifte: Stahl-Passstift 3 × 15 oder gedruckt.', RED, False)]
+         ('Tiefe der Nasen-Löcher 16 (aus 7800cartguide),', RED, False),
+         ('unten an der Schräge offen, stört nicht.', RED, False)]
 for i, (t, c, b) in enumerate(notes):
     txt(nx, ny + i * 2.3, t, 12, c, 'start', bold=b)
 w, h = 112 * S, 160 * S
