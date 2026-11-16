@@ -57,7 +57,7 @@ MCP23017 variants: MCP23017 at I2C 0x20 (A0–A2 to GND, RESET to +5 V), SDA = A
 | C1, C2, C4 | 100 nF ceramic, 5 mm pitch | 3 | 1 (C2) | 3 |
 | C3 | 10 µF electrolytic, 5 mm, 2 mm pitch | 1 | 1 | 1 |
 | SW1, SW2 | Tactile switch 6 × 6 mm THT (SW1 reset, SW2 read) | 2 | 2 | 1 (SW2) |
-| – | Stacking headers (Uno: 6, 8, 8, 10; Mega shield set) or 2 × 15 female headers (Nano) | 1 set | 1 set | 2 |
+| – | Pin headers, cut from 1 × 40 (Uno: 6, 8, 8, 10; Mega: 8 × 5, 10 and 2 × 18 from a 2 × 40), or 2 × 15 female headers as socket (Nano) | 1 set | 1 set | 2 |
 | J1 | Slot extension: 2 × 12-pin header (male pins), 2.54 mm, cut from one 1 × 40 single-row pin header | 2 | 2 | 2 |
 | – | M2.5 screws for the slot flanges / guide | 2 | 2 | 2 |
 
