@@ -3,7 +3,7 @@ import pytest
 
 from acr import rom, updates
 from acr.demo_rom import build
-from acr.gamedb import parse_dat
+from acr.gamedb import GameDatabase, parse_dat, parse_stella
 from acr.library import Library
 from acr.reader import Reader, ReaderError
 from acr.simulator import SimulatedCartridge, SimulatedSerial
@@ -85,6 +85,24 @@ def test_parse_dat():
     text = 'game (\n\tname "Pitfall! (USA)"\n\tregion "USA"\n\trom ( name "x.a26" size 4096 crc 1 md5 ' \
            '3e90cf23106f2e08b2781e41299de556 sha1 0 )\n)\n'
     assert parse_dat(text) == {"3E90CF23106F2E08B2781E41299DE556": "Pitfall! (USA)"}
+
+
+STELLA = ('"Cart.MD5" "0123456789abcdef0123456789abcdef"\n"Cart.Name" "Freeway Rabbit (32 in 1) (1988) (Atari) (PAL)"\n'
+          '"Bezel.Name" "Freeway (USA)"\n""\n\n'
+          '"Cart.MD5" "3e90cf23106f2e08b2781e41299de556"\n"Cart.Name" "Pitfall! (1982) (Activision)"\n""\n')
+
+
+def test_parse_stella():
+    assert parse_stella(STELLA)["0123456789ABCDEF0123456789ABCDEF"] == \
+        ("Freeway Rabbit (32 in 1) (1988) (Atari) (PAL)", "Freeway (USA)")
+
+
+def test_titles_from_both_lists(tmp_path):
+    (tmp_path / "atari2600.dat").write_text('game (\n\tname "Pitfall! (USA)"\n\trom ( md5 3e90cf23106f2e08b2781e41299de556 )\n)\n')
+    (tmp_path / "stella.pro").write_text(STELLA)
+    db = GameDatabase(tmp_path)
+    assert db.title("0123456789abcdef0123456789abcdef", download=False) == "Freeway Rabbit (32 in 1) (1988) (Atari) (PAL)"
+    assert db.title("3e90cf23106f2e08b2781e41299de556", download=False) == "Pitfall! (USA)"  # No-Intro wins
 
 
 def test_library_roundtrip(tmp_path):

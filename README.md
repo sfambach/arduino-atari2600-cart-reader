@@ -76,7 +76,7 @@ python3 tools/dump.py /dev/ttyACM0 F8 game.bin
 ## Credits
 
 - [Stella](https://stella-emu.github.io/) (GPL-2), started as an external program
-- game titles and covers: [libretro-database](https://github.com/libretro/libretro-database), [libretro-thumbnails](https://github.com/libretro-thumbnails/Atari_-_2600), downloaded on demand
+- game titles and covers: [libretro-database](https://github.com/libretro/libretro-database), [Stella's game properties](https://github.com/stella-emu/stella), [libretro-thumbnails](https://github.com/libretro-thumbnails/Atari_-_2600), downloaded on demand
 - font [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) (SIL OFL 1.1)
 
 - [retrocartdumper](https://github.com/SvOlli/retrocartdumper) by Sven Oliver Moll (GPLv3)
