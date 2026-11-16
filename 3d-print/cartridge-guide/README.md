@@ -31,3 +31,7 @@ Checked by Stefan on the test print (2026-11-15): side A (closed) sits over pins
 - The openers are small (6.6 × 1.9 mm): set a minimum layer time of 15 s in the slicer so they can cool (10 s was not enough on the first print, Stefan 2026-11-15).
 - Second print: the lower slope edges looked sunken (2026-11-15). Feet widened from 51 to 60 mm, so the slopes are 25° instead of 38° from vertical; the feet stay inside the 61 mm checked free around the slot.
 - `cartridge_guide.scad` has the new foot width, but not the rounding and chamfer yet; the STL comes from `cartridge_guide.py`.
+
+## License
+
+CC BY-NC, like `vcsslot.stl` by RabbitEngineering (Thingiverse 618065) it is derived from: attribution required, no commercial use. This folder is not covered by the repository's GPLv3.

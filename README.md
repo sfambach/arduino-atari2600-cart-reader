@@ -94,4 +94,6 @@ This project is built with AI assistance. Stefan Fambach had the idea, wrote the
 
 ## License
 
-GPLv3
+GPLv3 (firmware, PC program, tools, boards), except the cartridge guide in [`3d-print/cartridge-guide/`](3d-print/cartridge-guide/): it is derived from `vcsslot.stl` (CC BY-NC) and therefore CC BY-NC as well (non-commercial use only).
+
+Atari and Arduino are trademarks of their respective owners; this project is not affiliated with them.
