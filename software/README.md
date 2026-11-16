@@ -7,7 +7,9 @@ Reads a cartridge through the reader, shows it in hex, saves it to a game collec
 
 ## Start
 
-Linux (Debian/Ubuntu refuse a system-wide pip install), once in this folder:
+Short way: `./start.sh` (Linux) or `start.bat` (Windows) in this folder. The first start creates the venv and installs the requirements, every later start runs the program right away; arguments are passed on (`./start.sh --demo`). On Linux, `sudo apt install python3-venv libxcb-cursor0` is still needed once.
+
+By hand, Linux (Debian/Ubuntu refuse a system-wide pip install), once in this folder:
 
 ```
 sudo apt install python3-venv libxcb-cursor0   # libxcb-cursor0: needed by Qt 6.5+ on X11
