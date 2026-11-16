@@ -77,6 +77,10 @@ _DE = {
         "Das Spiel steht nicht in der Spieleliste. Ist das ein Multicart (z. B. 32 in 1), sieht der Reader nur das gerade aktive Spiel. Alle Spiele des Multicarts lesen?",
     "Read as multicart": "Als Multicart lesen",
     "Multicart: in Stella, Ctrl+R starts the next game.": "Multicart: In Stella startet Strg+R das nächste Spiel.",
+    "Split multicart into the collection": "Multicart in die Sammlung aufteilen",
+    "Splitting the multicart...": "Multicart wird aufgeteilt...",
+    "{title}, game {n}": "{title}, Spiel {n}",
+    "{count} games saved, {known} of them found in the game list": "{count} Spiele gespeichert, davon {known} in der Spieleliste gefunden",
     "Demo mode: simulated reader with a demo cartridge": "Demo-Modus: simulierter Reader mit Demo-Cartridge",
     "Demo cartridge": "Demo-Cartridge",
 }

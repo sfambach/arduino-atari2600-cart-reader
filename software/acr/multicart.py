@@ -52,3 +52,17 @@ def assemble(games: list[bytes], known: dict[str, str]) -> tuple[bytes, Optional
         if title:
             return image, title
     return b"".join(games), None
+
+
+def split(image: bytes, scheme_name: str) -> list[bytes]:
+    """The single games of a Stella <n>IN1 image."""
+    count = int(scheme_name[:-3]) if scheme_name.endswith("IN1") and scheme_name[:-3].isdigit() else 0
+    if count < 2 or len(image) % count:
+        raise ValueError(f"not a multicart image: {scheme_name}, {len(image)} bytes")
+    size = len(image) // count
+    return [image[i * size:(i + 1) * size] for i in range(count)]
+
+
+def identify(games: list[bytes], known: dict[str, str]) -> list[tuple[bytes, Optional[str]]]:
+    """Each game with its title from the game list, or None when its MD5 is not listed."""
+    return [(game, known.get(md5(game))) for game in games]

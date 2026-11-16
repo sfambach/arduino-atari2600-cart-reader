@@ -148,6 +148,7 @@ class MainWindow(QMainWindow):
         file_menu = self.menuBar().addMenu(tr("File"))
         self._action(file_menu, tr("Open ROM..."), self.open_rom)
         self.save_action = self._action(file_menu, tr("Save ROM as..."), self.save_rom_as)
+        self.split_action = self._action(file_menu, tr("Split multicart into the collection"), self.split_multicart)
         file_menu.addSeparator()
         self._action(file_menu, tr("Quit"), self.close)
         reader_menu = self.menuBar().addMenu(tr("Reader"))
@@ -320,6 +321,7 @@ class MainWindow(QMainWindow):
         for b in (self.save_button, self.play_button):
             b.setEnabled(self.rom is not None and not busy)
         self.save_action.setEnabled(self.rom is not None)
+        self.split_action.setEnabled(self.rom is not None and (self.scheme or "").endswith("IN1") and not busy)
         self.connect_button.setEnabled(not busy)
         self.connect_button.setText(tr("Disconnect") if connected else tr("Connect"))
 
@@ -505,7 +507,7 @@ class MainWindow(QMainWindow):
         if not path:
             return
         data = pathlib.Path(path).read_bytes()
-        scheme = {2048: "2K", 4096: "4K", 8192: "F8", 16384: "F6", 32768: "F4"}.get(len(data), "4K")
+        scheme = {2048: "2K", 4096: "4K", 8192: "F8", 16384: "F6", 32768: "F4", 65536: "32IN1"}.get(len(data), "4K")
         title = self.gamedb.title(romlib.md5(data), download=False) or pathlib.Path(path).stem
         self.show_rom(data, scheme, title, self.gamedb.cover(title, download=False))
 
@@ -522,6 +524,37 @@ class MainWindow(QMainWindow):
         self.library.add(self.rom, self.title, self.scheme, self.cover)
         self.refresh_library()
         self.statusBar().showMessage(tr("Saved to the collection: {title}", title=self.title))
+
+    def split_multicart(self) -> None:
+        """Saves every game of a multicart on its own, named from the game list where its MD5 is listed."""
+        if self.rom is None or not (self.scheme or "").endswith("IN1"):
+            return
+        image, image_scheme, image_title = self.rom, self.scheme, self.title
+        download = self.settings.value("download_titles", True, type=bool)
+
+        def job(w: Worker):
+            try:
+                known = self.gamedb.titles(download)
+            except OSError:
+                known = {}
+            games = multicart.split(image, image_scheme)
+            found = []
+            for n, (game, title) in enumerate(multicart.identify(games, known), 1):
+                name = title or tr("{title}, game {n}", title=image_title, n=n)
+                cover = self.gamedb.cover(title, download) if title else None
+                found.append((game, name, "2K" if len(game) == 0x800 else "4K", cover, bool(title)))
+                w.progress.emit(n, len(games))
+            return found
+
+        self._progress_text = tr("Splitting the multicart...")
+        def done(found) -> None:
+            for game, name, scheme, cover, _ in found:
+                self.library.add(game, name, scheme, cover)
+            self.refresh_library()
+            self.statusBar().showMessage(tr("{count} games saved, {known} of them found in the game list",
+                                            count=len(found), known=sum(1 for f in found if f[4])))
+
+        self._run(job, done)
 
     def refresh_library(self) -> None:
         self.games.clear()

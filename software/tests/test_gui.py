@@ -69,3 +69,19 @@ def test_renamed_port_is_found_again(app, tmp_path, monkeypatch):
     window = MainWindow(settings)
     assert window.ports.currentData() == "/dev/ttyUSB1"
     window.close()
+
+
+def test_split_multicart(app, tmp_path, monkeypatch):
+    monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path))
+    monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path))
+    settings = QSettings(str(tmp_path / "s.ini"), QSettings.IniFormat)
+    settings.setValue("check_updates", False)
+    settings.setValue("download_titles", False)
+    window = MainWindow(settings)
+    games = [bytes([n]) * 0x800 for n in range(4)]
+    window.show_rom(b"".join(games), "4IN1", "Test 4 in 1", None)
+    assert window.split_action.isEnabled()
+    window.split_multicart()
+    assert wait(app, lambda: window.games.count() == 4 and not window.busy)
+    assert {g.title for g in window.library.games()} == {f"Test 4 in 1, game {n}" for n in range(1, 5)}
+    window.close()

@@ -127,3 +127,15 @@ def test_single_game_is_not_a_multicart():
     from acr import multicart
     with pytest.raises(ReaderError, match="not a power-on multicart"):
         multicart.read_all(reader_with(rom_of(4)), pause=0)
+
+
+def test_multicart_split_and_identify():
+    from acr import multicart
+    games = [rom_of(2) for _ in range(4)]
+    games = [bytes([i]) + g[1:] for i, g in enumerate(games)]
+    image = b"".join(games)
+    assert multicart.split(image, "4IN1") == games
+    found = multicart.identify(games, {rom.md5(games[1]): "Known"})
+    assert [t for _, t in found] == [None, "Known", None, None]
+    with pytest.raises(ValueError):
+        multicart.split(image, "F8")
