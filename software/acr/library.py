@@ -52,5 +52,10 @@ class Library:
     def remove(self, game: Game) -> None:
         self._write([g for g in self.games() if g.md5 != game.md5])
 
+    def clear(self) -> None:
+        for game in self.games():
+            (self.folder / game.file).unlink(missing_ok=True)
+        self.index.unlink(missing_ok=True)
+
     def rom(self, game: Game) -> bytes:
         return (self.folder / game.file).read_bytes()

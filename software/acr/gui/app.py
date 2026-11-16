@@ -153,7 +153,10 @@ class MainWindow(QMainWindow):
         self._action(file_menu, tr("Quit"), self.close)
         reader_menu = self.menuBar().addMenu(tr("Reader"))
         self._action(reader_menu, tr("Update firmware..."), self.update_firmware)
-        self._action(self.menuBar().addMenu(tr("Settings")), tr("Settings") + "...", self.edit_settings)
+        settings_menu = self.menuBar().addMenu(tr("Settings"))
+        self._action(settings_menu, tr("Settings") + "...", self.edit_settings)
+        settings_menu.addSeparator()
+        self._action(settings_menu, tr("Clear collection..."), self.clear_library)
         help_menu = self.menuBar().addMenu(tr("Help"))
         self._action(help_menu, tr("Check for updates"), lambda: self.check_updates(quiet=False))
         self._action(help_menu, tr("About"), self.about)
@@ -602,6 +605,20 @@ class MainWindow(QMainWindow):
             self._on_error(str(e))
 
     # ------------------------------------------------------------------ settings, updates
+    def clear_library(self) -> None:
+        count = len(self.library.games())
+        if not count:
+            QMessageBox.information(self, tr("Clear collection"), tr("The collection is empty."))
+            return
+        answer = QMessageBox.warning(
+            self, tr("Clear collection"),
+            tr("Delete all {count} games and their ROM files from the collection? This cannot be undone.",
+               count=count),
+            QMessageBox.Yes | QMessageBox.Cancel, QMessageBox.Cancel)
+        if answer == QMessageBox.Yes:
+            self.library.clear()
+            self.refresh_library()
+
     def edit_settings(self) -> None:
         SettingsDialog(self.settings, self).exec()
 

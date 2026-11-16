@@ -6,7 +6,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 pytest.importorskip("PySide6")
 
 from PySide6.QtCore import QSettings
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QMessageBox
 
 from acr.gui.app import MainWindow
 from acr.gui.hexview import HexView, line_of, render
@@ -84,4 +84,21 @@ def test_split_multicart(app, tmp_path, monkeypatch):
     window.split_multicart()
     assert wait(app, lambda: window.games.count() == 4 and not window.busy)
     assert {g.title for g in window.library.games()} == {f"Test 4 in 1, game {n}" for n in range(1, 5)}
+    window.close()
+
+
+def test_clear_library_asks_first(app, tmp_path, monkeypatch):
+    monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path))
+    monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path))
+    settings = QSettings(str(tmp_path / "s.ini"), QSettings.IniFormat)
+    settings.setValue("check_updates", False)
+    window = MainWindow(settings)
+    window.library.add(bytes(0x800), "Test game", "2K")
+    window.refresh_library()
+    monkeypatch.setattr(QMessageBox, "warning", lambda *a, **k: QMessageBox.Cancel)
+    window.clear_library()
+    assert window.games.count() == 1
+    monkeypatch.setattr(QMessageBox, "warning", lambda *a, **k: QMessageBox.Yes)
+    window.clear_library()
+    assert window.games.count() == 0 and not list(window.library.folder.glob("*.a26"))
     window.close()

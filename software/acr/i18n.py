@@ -47,6 +47,11 @@ _DE = {
     "Quit": "Beenden",
     "Update firmware...": "Firmware aktualisieren...",
     "Settings": "Einstellungen",
+    "Clear collection...": "Sammlung leeren...",
+    "Clear collection": "Sammlung leeren",
+    "The collection is empty.": "Die Sammlung ist leer.",
+    "Delete all {count} games and their ROM files from the collection? This cannot be undone.":
+        "Alle {count} Spiele samt ROM-Dateien aus der Sammlung löschen? Das lässt sich nicht rückgängig machen.",
     "Stella path": "Pfad zu Stella",
     "Language": "Sprache",
     "Check for updates at start": "Beim Start nach Updates suchen",
